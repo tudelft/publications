@@ -1,0 +1,6 @@
+*.log
+*.dvi
+*.blg
+*.aux
+*.bbl
+main.tex
