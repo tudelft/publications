@@ -4,5 +4,5 @@ all:
 	./validate.py
 
 bib:
-	./makecite.py > main.tex && latex main && bibtex main
+	./makecite.py > main.tex && latex main @&>1 > /dev/null && bibtex main
 
