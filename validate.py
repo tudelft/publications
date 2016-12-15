@@ -37,6 +37,10 @@ def find_url( line ):
         url = bib_tag_content(line, "url") 
         resp_code = checkUrl ( url )
         print( resp_code, "URL", url )
+    if "pdf = " in line:
+        url = bib_tag_content(line, "pdf") 
+        resp_code = checkUrl ( url )
+        print( resp_code, "PDF", url )
     if "file = " in line:
         url = bib_tag_content(line, "file") 
         resp_code = checkUrl ( url )
