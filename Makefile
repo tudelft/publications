@@ -1,0 +1,4 @@
+
+
+all:
+	./validate.py
