@@ -24,8 +24,8 @@ def noaccent( txt ):
     return ''.join(x for x in unicodedata.normalize('NFKD', txt) if x in string.ascii_letters).lower()
 
 
-def bib_tag_content( line, tag ):
-    return unlatex(line.strip().replace(tag,"").strip().lstrip("=").rstrip(",").strip().lstrip("{").rstrip("}").strip());
+def bib_tag_content( line):
+    return unlatex(line.split("=", 1)[-1].strip().lstrip("=").rstrip(",").strip().lstrip("{").rstrip("}").strip());
 
 
 with open("mavlab.bib") as ft:
@@ -34,27 +34,27 @@ with open("mavlab.bib") as ft:
 
 def find_url( line ):
     if "url = " in line:
-        url = bib_tag_content(line, "url") 
+        url = bib_tag_content(line) 
         resp_code = checkUrl ( url )
         print( resp_code, "URL", url )
     if "pdf = " in line:
-        url = bib_tag_content(line, "pdf") 
+        url = bib_tag_content(line) 
         resp_code = checkUrl ( url )
         print( resp_code, "PDF", url )
     if "file = " in line:
-        url = bib_tag_content(line, "file") 
+        url = bib_tag_content(line) 
         resp_code = checkUrl ( url )
         print( resp_code, "FILE", url )
     if "doi = " in line:
-        doi = bib_tag_content(line, "doi")
+        doi = bib_tag_content(line)
         resp_code = checkUrl ( "https://doi.org/" + doi )
         print( resp_code, "DOI", doi )
     if "isbn = " in line:
-        isbn = bib_tag_content(line, "isbn")
+        isbn = bib_tag_content(line)
         resp_code = checkUrl ( "http://isbndb.com/search/all?query=" + isbn )
         print( resp_code, "ISBN", isbn )
     if "issn = " in line:
-        issn = bib_tag_content(line, "issn")
+        issn = bib_tag_content(line)
         #resp_code = checkUrl ( "https://journals4free.com/?q=" + issn )
         resp_code = checkUrl ( "https://journals4free.com/link.jsp?l=" + issn )
         print( resp_code, "ISSN", issn )
