@@ -5,13 +5,22 @@ import httplib
 from urlparse import urlparse
 
 def checkUrl(url):
-    p = urlparse(url)
-    conn = httplib.HTTPConnection(p.netloc)
-    conn.request('HEAD', p.path)
-    resp = conn.getresponse()
-    if resp.status >= 400:
-        print ("ERROR: link to " + url + " is failing.")
-    return resp.status
+    try:
+        p = urlparse(url)
+        conn = httplib.HTTPConnection(p.netloc)
+        conn.request('HEAD', p.path)
+        resp = conn.getresponse()
+        if resp.status >= 400:
+            print ("ERROR: link to " + url + " is failing.")
+        if (resp.status >= 301) & (resp.status <= 303):
+            # MOVED:
+            new_url = resp.getheader('location')
+            #if new_url != url:
+            #    print("WARNING: MOVED from", url, " to ", new_url )
+        return resp.status
+    except ValueError:
+        print("ERROR: Failed to load")
+        return 404
     # < 400
 
 
