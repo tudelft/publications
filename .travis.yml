@@ -1,10 +1,6 @@
 language: python
 python:
   - "2.6"
-# command to install dependencies
-#install: "pip install -r requirements.txt"
-# command to run tests
-script: ./validate.py
 
 sudo: required
 dist: trusty
@@ -12,3 +8,4 @@ before_install:
 - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended
 script:
 - pdflatex -interaction=nonstopmode -halt-on-error test.tex
+- ./validate.py
