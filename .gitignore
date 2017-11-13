@@ -3,4 +3,6 @@
 *.blg
 *.aux
 *.bbl
+*.pdf
+*.synctex.gz
 main.tex
