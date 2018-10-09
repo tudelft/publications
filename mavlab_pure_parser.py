@@ -7,7 +7,7 @@ import json
 save_paper_lists = ['2018','2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009', '2008', '2007', '2006', '2005', '2004', '2003', '2002']
 
 chairs = {
-    'MAVLAB': ['coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes', 'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'host', 'tienen', 'hecke', 'li']}
+    'MAVLAB': ['Xu', 'Valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes', 'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'horst', 'tienen', 'hecke', 'li']}
 
 
 
@@ -40,8 +40,8 @@ def get_bib(url):
         except:
             pass
     return bib
-    
-    
+
+
 def download_list():
     pageno = 0
     done = False
@@ -63,7 +63,7 @@ def download_list():
                 date = re.match(r'.*([1-3][0-9]{3})', date).group(1)
                 doctype  = i.find_class('type_classification')[0].text
 
-                
+
                 if date not in totals:
                     papers[date] = {}
                     totals[date] = {key:{} for key in chairs.keys()}
@@ -72,7 +72,7 @@ def download_list():
                 curyear = totals[date]
                 curyear_paper = papers[date]
                 paperstring = title + ': ' + i.text_content().split('Research output:')[0].lstrip(title)
-                
+
                 # First always increase C&S
                 chair = curyear['MAVLAB']
                 asgnchair = []
@@ -125,7 +125,7 @@ def print_summary():
         for t in paper_types:
             fout.write(',' + t)
         fout.write('\n')
-        
+
         for i in totals:
             yeartotals = totals[i]['MAVLAB']
             print(i, yeartotals)
@@ -138,7 +138,7 @@ def print_summary():
                     v = yeartotals[t]
 
                 fout.write(', ' + str(v))
-            
+
             fout.write('\n' )
 
 download_list()
