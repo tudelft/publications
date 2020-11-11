@@ -4,6 +4,8 @@ from collections import OrderedDict
 import re
 import json
 import xml.etree.ElementTree as ET
+from bs4 import BeautifulSoup
+import codecs
 
 save_paper_lists = ['2020','2019','2018','2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009', '2008', '2007', '2006', '2005', '2004', '2003', '2002']
 
@@ -13,13 +15,21 @@ chairs = {
 
 
 
+
 #root = ET.parse('https://research.tudelft.nl/en/organisations/control-operations/publications/?format=rss&page=5').getroot()
 
-def download_list():
-    pageno = 0
+def download_list(page):
+
+    if page == 0:
+        bibf = codecs.open("mavlab.bib","w","utf-8")
+        bibf.write(u'\ufeff')
+        bibf.close()
+
+    papernr = 1
+    pageno = page
     done = False
     while not done:
-        print('Page',pageno)
+        print('- Page',pageno)
         
         p = requests.get('https://research.tudelft.nl/en/organisations/control-operations/publications/?format=rss&page=%d' % pageno)
 
@@ -29,31 +39,46 @@ def download_list():
         for pub in root.findall('channel/item'):
             title = pub.findall('title')[0].text
             link = pub.findall('link')[0].text
-            date = pub.findall('pubDate')[0].text
-            description = pub.findall('description')[0].text
-            dom = html.fromstring(description)
-            journal  = dom.body.find_class('journal')
-            print('-',title)
-            if len(journal) > 0:
-                print(' --> ', html.tostring(journal[0]))
-                vol = dom.body.find_class('volume')
-                if len(vol) > 0:
-                    print('      ', html.tostring(vol[0]))
-                nr = dom.body.find_class('journalnumber')
-                if len(nr) > 0:
-                    print('      ', html.tostring(nr[0]))
-                
+            
+            #description = pub.findall('description')[0].text
+            #dom = html.fromstring(description)
+            #journal  = dom.body.find_class('journal')
 
-            # Found something, continue
+            p = requests.get(link)
+            dom = html.fromstring(p.text)
+            
+            bib = dom.body.get_element_by_id('cite-BIBTEX').getchildren()[0]
+                        
+            print(str(papernr) + ' ',title)
+            #print('# ',link)
+            
+            bibf = codecs.open("mavlab.bib","a","utf-8")
+            bibf.write('# '+str(pageno)+', '+str(papernr)+'\n# '+title+'\n# '+link+'\n\n')
+            
+            
+            #print('')
+            for b in bib.getchildren():
+                soup = BeautifulSoup(html.tostring(b),features="lxml")
+                txt = soup.get_text()
+                if not ' abstract ' in txt:
+                    #print(txt)
+                    bibf.write(txt+'\n')
+            #print('')
+
+            bibf.close()
+
+
+            papernr += 1
             done = False
 
 
         pageno += 1
 
-        if pageno >= 1:
-            done = True
+        #if pageno >= 1:
+        #    done = True
+
+     
 
 
 
-
-download_list()
+download_list(0)
