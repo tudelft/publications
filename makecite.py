@@ -20,7 +20,7 @@ def find_cite( line ):
             if cite[0].lstrip("@").strip() != bibitem:
                 bibitem = cite[0].lstrip("@").strip()
                 #print("\\subsection{"+bibitem+"}")
-            print("\\cite{"+cite[1].rstrip(",").strip()+"}, ")
+            print("\\cite{"+cite[1].rstrip(",").strip().rstrip(",").strip()+"}, ")
         count = count + 1;
 
 if __name__ == '__main__':
