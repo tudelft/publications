@@ -31,7 +31,8 @@ def download_list(page):
     while not done:
         print('- Page',pageno)
         
-        p = requests.get('https://research.tudelft.nl/en/organisations/control-operations/publications/?format=rss&page=%d' % pageno)
+        #p = requests.get('https://research.tudelft.nl/en/organisations/control-operations/publications/?format=rss&page=%d' % pageno)
+        p = requests.get('https://research.tudelft.nl/en/organisations/control-simulation/publications/?format=rss&page=%d' % pageno)
 
         done = True
 
@@ -50,13 +51,12 @@ def download_list(page):
             bib = dom.body.get_element_by_id('cite-BIBTEX').getchildren()[0]
                         
             print(str(papernr) + ' ',title)
-            #print('# ',link)
-            
-            bibf = codecs.open("mavlab.bib","a","utf-8")
+
+            # open and add, in case of error one can continue
+            bibf = codecs.open("cs.bib","a","utf-8")
             bibf.write('# '+str(pageno)+', '+str(papernr)+'\n# '+title+'\n# '+link+'\n\n')
             
-            
-            #print('')
+            # dump bibtex into file
             for b in bib.getchildren():
                 soup = BeautifulSoup(html.tostring(b),features="lxml")
                 txt = soup.get_text()
@@ -69,16 +69,20 @@ def download_list(page):
 
 
             papernr += 1
+
+            # continue is at least 1 paper was found.
             done = False
 
 
         pageno += 1
 
+        # debug: stop after 1 page
         #if pageno >= 1:
         #    done = True
 
      
 
 
-
+# To continue downloading, type a non-zero page.
+# page=0 resets the output
 download_list(0)
