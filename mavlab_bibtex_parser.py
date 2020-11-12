@@ -1,13 +1,12 @@
 import bibtexparser
-
-from collections import OrderedDict
-import re
 import json
 
-save_paper_lists = ['2020','2019','2018','2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009', '2008', '2007', '2006', '2005', '2004', '2003', '2002']
+from collections import OrderedDict
 
 chairs = {
-    'MAVLAB': ['Xu', 'Valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes', 'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'horst', 'tienen', 'hecke', 'li']}
+    'MAVLAB': ['Xu', 'Valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes',
+               'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'horst', 'tienen', 'hecke', 'li',
+               'percin', 'tay', 'noyon']}
 
 
 def get_chair(name):
@@ -17,16 +16,22 @@ def get_chair(name):
     return None
 
 
-
-
 papers = dict()
 totals = OrderedDict()
 
+mavlabpapers = {}
 
-with open('mavlab.bib', encoding="utf8") as bibtex_file:
+
+parser = bibtexparser.bparser.BibTexParser(common_strings=True)
+with open('cs.bib', encoding="utf8") as bibtex_file:
     bibtex_str = bibtex_file.read()
 
-bib_database = bibtexparser.loads(bibtex_str)
+bib_database = bibtexparser.loads(bibtex_str, parser=parser)
+
+mavlab_database = bibtexparser.bibdatabase.BibDatabase()
+rest = bibtexparser.bibdatabase.BibDatabase()
+
+print('================================================================')
 
 for b in bib_database.entries:
     #print(b)
@@ -35,7 +40,6 @@ for b in bib_database.entries:
         print('------------------------------------------------------------------------')
         continue
 
-    #print('-----',b['year'],b['ENTRYTYPE'])
 
     # Paper
     year = b['year']
@@ -55,9 +59,17 @@ for b in bib_database.entries:
     curyear_papers.append(paperstring)
     papers[year] = curyear_papers
 
+    mavlabpaper = 0
     for person in authors.split(' and '):
-        name = person.split(',')[0].split(' ')[-1].lower()
+        if ',' in person:
+            # last name left of comma: right part
+            name = person.split(',')[0].split(' ')[-1].strip().strip('{').strip('}').strip().lower()
+        else:
+            # last name
+            name = person.split(' ')[-1].strip().strip('{').strip('}').strip().lower()
         chairname = get_chair(name)
+        if chairname == 'MAVLAB':
+            mavlabpaper = 1
 
         #print(person, name, chairname)
         if chairname:
@@ -65,60 +77,60 @@ for b in bib_database.entries:
             if doctype not in sum_pers:
                 sum_pers[doctype] = []
             sum_pers[doctype].append(paperstring)
+
+    #print('-----',b['year'],b['ENTRYTYPE'],mavlabpaper)
         
 
+    if mavlabpaper == 1:
+        key = (year, doctype)
+        if not key in mavlabpapers:
+            mavlabpapers[key] = 0
+        mavlabpapers[key] += 1
+        mavlab_database.entries.append(b)
+    else:
+        rest.entries.append(b)
+    
 
-print(papers['2019'])
+print(mavlabpapers)
     
 
 # dump back
-# bibtex_str = bibtexparser.dumps(bib_database)
+writer = bibtexparser.bwriter.BibTexWriter()
+writer.indent = '\t'     # indent entries with 4 spaces instead of one
+writer.order_entries_by = 'year'
+writer.align_values = True
+with open('cs_mav.bib', 'w', encoding='utf8') as bibfile:
+    bibfile.write(writer.write(mavlab_database))
+    
 
+
+with open('cs_nomav.bib', 'w', encoding='utf8') as bibfile:
+    bibfile.write(writer.write(rest))
 
 
 def print_summary():
-    with open('mavlab_pure_summary.txt', 'w') as fout:
-        fout.write(json.dumps(totals, sort_keys=True, indent=2, separators=(',', ': ')))
-
-    for year in save_paper_lists:
-        with open('mavlab_pure_papers_'+year+'.txt', 'w') as fout:
-            fout.write(json.dumps(papers[year], sort_keys=True, indent=2, separators=('\n', ': ')))
 
     # Excel file with papers per year
     with open('mavlab_summary.csv', 'w') as fout:
-        paper_types = ['Conference contribution','Article', 'Dissertation (TU Delft)', 'Special issue', 'Book', 'Chapter']
+        paper_types = ['article','inproceedings', 'phdthesis', 'conference', 'book', 'misc']
         fout.write('year')
         for t in paper_types:
-            fout.write(',' + t)
+            fout.write(';' + t)
         fout.write('\n')
 
-        for i in totals:
-            yeartotals = totals[i]['MAVLAB']
-            print(i, yeartotals)
-
-            fout.write(str(i))
-
+        for y in range(2003,2021):
+            fout.write(str(y) + ';')
             for t in paper_types:
-                v = 0;
-                if t in yeartotals:
-                    v = yeartotals[t]
+                key = (str(y),t)
+                #print(key)
 
-                fout.write(', ' + str(v))
-
+                if key in mavlabpapers:
+                    fout.write(str(mavlabpapers[key]) + ';')
+                else:
+                    fout.write('0;')
+                    
             fout.write('\n' )
 
-#print_summary()
-
-with open('mavlab_url.txt', encoding='utf-8', mode='w') as fout:
-    year = 9999
-    for u in biburls:
-        if (u[0] != year):
-            year = u[0]
-            fout.write("\n\n%% YEAR " + str(u[0]) + "\n\n")
-
-        fout.write("\n\n% URL " + u[1] + "\n\n")
-        bib = get_bib(u[1])
-        fout.write(bib)
-        #print(u[0], u[1])
+print_summary()
 
 print('Done')

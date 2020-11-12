@@ -6,3 +6,7 @@
 *.pdf
 *.synctex.gz
 main.tex
+cs_nomav.bib
+*.sav
+*.tmp
+
