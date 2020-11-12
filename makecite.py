@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-with open("mavlab.bib") as ft:
+with open("cs.bib", encoding="utf8") as ft:
     bibfile = ft.read().splitlines()
 
 count = 0

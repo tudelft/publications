@@ -1,27 +1,20 @@
-from lxml import html
+# Download HTML
 import requests
-from collections import OrderedDict
-import re
-import json
+from lxml import html
+# Parse RSS-XML
 import xml.etree.ElementTree as ET
+# Strip HTML
 from bs4 import BeautifulSoup
+# Store FILE
 import codecs
-
-save_paper_lists = ['2020','2019','2018','2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009', '2008', '2007', '2006', '2005', '2004', '2003', '2002']
-
-chairs = {
-    'MAVLAB': ['Xu', 'Valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes', 'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'horst', 'tienen', 'hecke', 'li']}
-
-
-
 
 
 #root = ET.parse('https://research.tudelft.nl/en/organisations/control-operations/publications/?format=rss&page=5').getroot()
 
-def download_list(page):
+def download_list(page, filename):
 
     if page == 0:
-        bibf = codecs.open("mavlab.bib","w","utf-8")
+        bibf = codecs.open(filename,'w', 'utf-8')
         bibf.write(u'\ufeff')
         bibf.close()
 
@@ -53,18 +46,24 @@ def download_list(page):
             print(str(papernr) + ' ',title)
 
             # open and add, in case of error one can continue
-            bibf = codecs.open("cs.bib","a","utf-8")
+            bibf = codecs.open(filename,'a', 'utf-8')
             bibf.write('# '+str(pageno)+', '+str(papernr)+'\n# '+title+'\n# '+link+'\n\n')
             
             # dump bibtex into file
             for b in bib.getchildren():
                 soup = BeautifulSoup(html.tostring(b),features="lxml")
                 txt = soup.get_text()
-                if not ' abstract ' in txt:
+                if '}' in txt:
+                    bibf.write('\turl       = "'+ link +'",\n')
+
+                if ' url  ' in txt:
+                    bibf.write(txt.replace(' url  ', ' url2 ')+'\n')    
+                elif not ' abstract ' in txt:
                     #print(txt)
                     bibf.write(txt+'\n')
             #print('')
 
+            bibf.write('\n')
             bibf.close()
 
 
@@ -85,4 +84,4 @@ def download_list(page):
 
 # To continue downloading, type a non-zero page.
 # page=0 resets the output
-download_list(0)
+download_list(0, 'cs.bib')
