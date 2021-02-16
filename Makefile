@@ -4,11 +4,11 @@ all: main.pdf
 	./validate.py
 
 
-main.pdf: mavlab.bib
+main.pdf: cs_mav.bib
 	make bib
 
 bib:
-	python3 ./makecite.py > main.tex && latex main 2>&1 > /dev/null && bibtex main
+	python ./makecite.py > main.tex && pdflatex main 2>&1 > /dev/null && bibtex main && pdflatex main
 
 clean:
-	rm -rf *.tex *.aux *.pdf report.txt *.log *.dvi *.blg *.bbl *.bak *.sav
+	rm -rf main.tex *.aux *.pdf report.txt *.log *.dvi *.blg *.bbl *.bak *.sav

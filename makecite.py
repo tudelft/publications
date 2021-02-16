@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-with open("cs.bib", encoding="utf8") as ft:
+bibname = 'cs_mav'
+
+with open(bibname+'.bib', encoding="utf8") as ft:
     bibfile = ft.read().splitlines()
 
 count = 0
@@ -14,7 +16,7 @@ def find_cite( line ):
     if "## " + str(year) in line:
         #print("\\section{"+str(year)+"}")
         year = year - 1
-    if "@" in line:
+    if len(line) > 0 and line[0] == '@' :
         cite=line.split("{")
         if len(cite) > 1:
             if cite[0].lstrip("@").strip() != bibitem:
@@ -28,4 +30,4 @@ if __name__ == '__main__':
     for line in bibfile:
         #update_year( line )
         find_cite( line )
-    print("\nBib file has ",count, " entries.\n\n\\bibliographystyle{unsrt}\n\\bibliography{mavlab}\n\n\\end{document}\n")
+    print("\nBib file has ",count, " entries.\n\n\\bibliographystyle{unsrt}\n\\bibliography{"+(bibname)+"}\n\n\\end{document}\n")
