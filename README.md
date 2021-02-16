@@ -9,9 +9,9 @@ This repo is meant to keep a history of all publications to do with the Micro Ai
 
 ## Website:
 
- - step 4: export publications form website plugin as ```website.bib```
+ - step 4: export publications form website plugin as ```website_export.bib``` making sure all publications are added to a user and then the userlist is exported.
  - step 5: merge pure and website with ```mavlab_bibtex_merge.py```
- - add the web_extra to pure, the pure_extra to the website until all is in merged.
+ - add the ```mavlab_web_extra.bib``` to pure, the ```mavlab_pure_extra.bib``` to the website until all is in merged.
 
 ## Contributing
 To add a new publication, you can simply add the bibitem to the mavlab.bib, either by editing the page directly using the github editor (if you have write access to the repo) or by making a pull request with your changes. The Continuous Integration tool will test your changes to ensure that the bib file still works.
