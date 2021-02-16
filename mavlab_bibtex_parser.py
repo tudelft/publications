@@ -6,7 +6,11 @@ from collections import OrderedDict
 chairs = {
     'MAVLAB': ['Xu', 'Valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes',
                'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'horst', 'tienen', 'hecke', 'li',
-               'percin', 'tay', 'noyon']}
+#                'lievens', 'lentink', 'oomkens'
+               'oliveira',
+               'percin', 'tay', 'noyon', 'ho']}
+
+remove = ['V. Ho']
 
 
 def get_chair(name):
@@ -70,6 +74,10 @@ for b in bib_database.entries:
         chairname = get_chair(name)
         if chairname == 'MAVLAB':
             mavlabpaper = 1
+
+        if person in remove:
+            print(person)
+            mavlabpaper = 0
 
         #print(person, name, chairname)
         if chairname:
