@@ -4,7 +4,7 @@ all: main.pdf
 	./validate.py
 
 
-main.pdf: cs_mav.bib
+main.pdf: ../cs_mav.bib
 	make bib
 
 bib:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-bibname = 'cs_mav'
+bibname = '../cs_mav'
 
 with open(bibname+'.bib', encoding="utf8") as ft:
     bibfile = ft.read().splitlines()
