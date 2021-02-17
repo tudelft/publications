@@ -2,20 +2,22 @@ import bibtexparser
 
 
 # Import PURE
+fname = 'cs_mav.bib'
 parser = bibtexparser.bparser.BibTexParser(common_strings=True)
-with open('cs_mav.bib', encoding="utf8") as bibtex_file:
+with open(fname, encoding="utf8") as bibtex_file:
     bibtex_str = bibtex_file.read()
 
 bib_pure = bibtexparser.loads(bibtex_str, parser=parser)
-print('cs_mav.bib contains ',len(bib_pure.entries), ' entries')
+print(fname + ' contains ',len(bib_pure.entries), ' entries')
 
 # Import WEBSITE
+fname = 'website_export.bib'
 parser2 = bibtexparser.bparser.BibTexParser(common_strings=True)
-with open('website_export.bib', encoding="utf8") as bibtex_file2:
+with open(fname , encoding="utf8") as bibtex_file2:
     bibtex_str2 = bibtex_file2.read()
 
 bib_website = bibtexparser.loads(bibtex_str2, parser=parser2)
-print('website_export.bib contains ',len(bib_website.entries), ' entries')
+print(fname + ' contains ',len(bib_website.entries), ' entries')
 
 # Results
 mavlab_missing = bibtexparser.bibdatabase.BibDatabase()
@@ -24,7 +26,7 @@ mavlab_merged  = bibtexparser.bibdatabase.BibDatabase()
 verbose = False
 
 def cleanup_title(txt):
-    txt = txt.replace('{', '').replace('}', '').strip().lower()
+    txt = txt.replace('{', '').replace('}', '').replace('¿','').strip().lower()
     txt = txt.replace(',', ' ').replace('.', ' ').replace('`', ' ').replace('?', ' ')
     txt = txt.replace('\\textquoteright','').replace('\\textquoteleft','').replace('{}','')
     txt = txt.replace('textquoteright',' ').replace('textquoteleft',' ')
