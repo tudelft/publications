@@ -60,6 +60,11 @@ def download_list(page, filename):
 
             bib = '\n'.join(bib).replace('</textarea>','')
                         
+            bib = bib.replace('Title = {','title = {')
+            bib = bib.replace('Year = {','year = {')
+            bib = bib.replace('Author = {','author = {')
+            bib = bib.replace('Eprint = {','eprint = {')
+
             # open and add, in case of error one can continue
             bibf = codecs.open(filename,'a', 'utf-8')
             bibf.write('# '+', '+str(papernr)+'\n# '+code+'\n\n')
