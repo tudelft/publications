@@ -149,7 +149,6 @@
 	url = {http://www.sciencedirect.com/science/article/pii/S0921889018306687},
 	author = {K.N. McGuire and G.C.H.E. de Croon and K. Tuyls},
 	keywords = {Bug algorithms, Robotic navigation, Comparative study, Limited sensing, Indoor navigation},
-	abstract = {This paper presents a literature survey and a comparative study of Bug Algorithms, with the goal of investigating their potential for robotic navigation. At first sight, these methods seem to provide an efficient navigation paradigm, ideal for implementations on tiny robots with limited resources. Closer inspection, however, shows that many of these Bug Algorithms assume perfect global position estimate of the robot which in GPS-denied environments implies considerable expenses of computation and memory — relying on accurate Simultaneous Localization And Mapping (SLAM) or Visual Odometry (VO) methods. We compare a selection of Bug Algorithms in a simulated robot and environment where they endure different types noise and failure-cases of their on-board sensors. From the simulation results, we conclude that the implemented Bug Algorithms’ performances are sensitive to many types of sensor-noise, which was most noticeable for odometry-drift. This raises the question if Bug Algorithms are suitable for real-world, on-board, robotic navigation as is. Variations that use multiple sensors to keep track of their progress towards the goal, were more adept in completing their task in the presence of sensor-failures. This shows that Bug Algorithms must spread their risk, by relying on the readings of multiple sensors, to be suitable for real-world deployment.},
 }
 
 @article{dewagter2019delftacoptermodeling,
@@ -231,7 +230,7 @@
 @article{ParedesValles2019tpami,
 	author = {Paredes-Vall{\'{e}}s, Federico and Scheper, Kirk Y. W. and de Croon, Guido C. H. E.},
 	title = {Unsupervised Learning of a Hierarchical Spiking Neural Network for Optical Flow Estimation: From Events to Global Motion Perception},
-	journal = {IEEE} {T}ransactions on {P}attern {A}nalysis and {M}achine {I}ntelligence},
+	journal = {{IEEE} {T}ransactions on {P}attern {A}nalysis and {M}achine {I}ntelligence},
 	year = {2019},
 	month = {Mar},
 	day = {5},
@@ -476,32 +475,8 @@
 
 # --- Conference ----
 
-@inproceedings{imav2019:d_olejnik_et_al,
-	author = {Diana A. Olejnik and Bas P. Duisterhof and Matej Kar{\'a}sek and Kirk Y.W. Scheper and Tom van Dijk and Guido C.H.E. de Croon},
-	editor = {P. Campoy},
-	title = {A Tailless Flapping Wing MAV Performing Monocular Visual Servoing Tasks},
-	year = {2019},
-	month = {Sep},
-	day = {29-04},
-	booktitle = {11th International Micro Air Vehicle Competition and Conference},
-	address = {Madrid, Spain},
-	pages = {60--66},
-	pdf = {http://www.imavs.org/papers/2019/41462.pdf},
-}
 
 
-@inproceedings{imav2019:d_wijnker_et_al,
-	author = {Dirk Wijnker and Tom van Dijk and Guido C.H.E. de Croon and Christophe De Wagter},
-	editor = {P. Campoy},
-	title = {Hear and avoid for UAVs using convolutional neural networks},
-	year = {2019},
-	month = {Sep},
-	day = {29-04},
-	booktitle = {11th International Micro Air Vehicle Competition and Conference},
-	address = {Madrid, Spain},
-	pages = {144--156},
-	pdf = {http://www.imavs.org/papers/2019/41414.pdf},
-}
 
 @inproceedings{imav2019:d_heitzig_et_al,
 	author = {Dorian N.W.M. Heitzig and Bas W. van Oudheusden and Diana A. Olejnik and Matej Kar{\'a}sek},
@@ -516,18 +491,6 @@
 	pdf = {http://www.imavs.org/papers/2019/41465.pdf},
 }
 
-@inproceedings{imav2019:c_wagter_et_al,
-	author = {Christophe De Wagter and Bart Remes and Rick Ruisink and Freek van Tienen and Erik van der Horst},
-	editor = {P. Campoy},
-	title = {Design and Testing of a Vertical take-off and Landing UAV optimized for carrying a Hydrogen Fuel-cell with Pressure Tank},
-	year = {2019},
-	month = {Sep},
-	day = {29-04},
-	booktitle = {11th International Micro Air Vehicle Competition and Conference},
-	address = {Madrid, Spain},
-	pages = {49--54},
-	pdf = {http://www.imavs.org/papers/2019/41727.pdf},
-}
 
 @InProceedings{coppola2018optimization,
 	author = {Coppola, Mario and de Croon, Guido C. H. E.},
@@ -777,9 +740,10 @@
 # ---- Journal ----
 
 @article{de2016monocular,
-	title = {Monocular distance estimation with optical flow maneuvers and efference copies: a stability-based strategy},
+	title     = {Monocular distance estimation with optical flow maneuvers and efference copies: a stability based strategy},
 	author = {de Croon, Guido C.H.E.},
 	journal = {Bioinspiration \& biomimetics},
+	doi       = {10.1088/1748-3190/11/1/016004},
 	volume = {11},
 	number = {1},
 	pages = {016004},
@@ -972,7 +936,6 @@
 # ---- Journal ----
 
 @article{Koopmans2015,
-	abstract = {Flapping Wing Micro Air Vehicles (FWMAVs) hold the potential to both cover large distances and perform precision flights when arrived at destination. However, flying at different speeds leads to a complex control problem for attitude stabilization. Inspired by nature, we present a morphing mechanism that allows tailed FW- MAVs to have a passively stabilized attitude both in fast forward flight and in slow hovering flight. The mechanism displaces the wings and hence aerodynamic center. It is implemented on the DelFly II and tested in-flight in a motion tracking arena. The experimental tests show that the morphing mechanism indeed allows to fly passively stable in multiple flight modes. Just changing the aerodynamic center allows the DelFly II to fly fast forward ({\~{}} 6 m/s, pitch attitude of 10°), transition to slow forward flight ({\~{}} 0.8 m/s, pitch attitude of 55°), and back. The proposed mechanism paves the way for FWMAVs performing long range missions such as search-and-rescue.},
 	author = {Koopmans, J.A. and Tijmons, S. and De Wagter, C. and de Croon, G. C. H. E.},
 	isbn = {10.1260/1756-8293.7.4.407},
 	journal = {International Journal of Micro Air Vehicles},
@@ -986,14 +949,6 @@
 	year = {2015},
 }
 
-@article{ArmaniniEtAl2015,
-	author = {Armanini, S.F. and de Visser, C.C. and de Croon, G.C.H.E. and  Mulder, M.},
-	title = {Time-varying model identification of flapping-wing micro aerial vehicle dynamics using flight data},
-	journal = {Journal of Guidance, Control, and Dynamics},
-	volume = {39},
-	number = {3},
-	year = {2015},
-}
 
 @article{TayEtAl2015,
 	author = {Tay, W.B. and Deng, S. and van Oudheusden, B.W. and Bijl, H.},
@@ -1116,7 +1071,6 @@
 
 
 @article{DeWagter2014,
-	abstract = {Autonomous flight of Flapping Wing Micro Air Vehicles (FWMAVs) is a major challenge in the field of robotics, due to their light weight and the flapping-induced body motions. In this article, we present the first FWMAV with onboard vision processing for autonomous flight in generic environments. In particular, we introduce the DelFly ‘Explorer', a 20-gram FWMAV equipped with a 0.98-gram autopilot and a 4.0-gram onboard stereo vision system. We explain the design choices that permit carrying the extended payload, while retaining the DelFly's hover capabilities. In addition, we introduce a novel stereo vision algorithm, LongSeq, designed specifically to cope with the flapping motion and the desire to attain a computational effort tuned to the frame rate. The onboard stereo vision system is illustrated in the context of an obstacle avoidance task in an environment with sparse obstacles.},
 	author = {De Wagter, C. and Tijmons, S and Remes, B. D. W. and de Croon, G. C. H. E.},
 	doi = {10.1109/ICRA.2014.6907589},
 	isbn = {9781479936847},
@@ -1129,7 +1083,6 @@
 }
 
 @article{Tay2014,
-	abstract = {The numerical simulation of an insect-sized 'X-wing' type biplane flapping wing configuration is performed in 3D using an immersed boundary method solver at Reynolds numbers equal to 1000 (1 k) and 5 k, based on the wing's root chord length. This X-wing type flapping configuration draws its inspiration from Delfly, a bio-inspired ornithopter MAV which has two pairs of wings flapping in anti-phase in a biplane configuration. The objective of the present investigation is to assess the aerodynamic performance when the original Delfly flapping wing micro-aerial vehicle (FMAV) is reduced to the size of an insect. Results show that the X-wing configuration gives more than twice the average thrust compared with only flapping the upper pair of wings of the X-wing. However, the X-wing's average thrust is only 40{\%} that of the upper wing flapping at twice the stroke angle. Despite this, the increased stability which results from the smaller lift and moment variation of the X-wing configuration makes it more suited for sharp image capture and recognition. These advantages make the X-wing configuration an attractive alternative design for insect-sized FMAVS compared to the single wing configuration. In the Reynolds number comparison, the vorticity iso-surface plot at a Reynolds number of 5 k revealed smaller, finer vortical structures compared to the simulation at 1 k, due to vortices' breakup. In comparison, the force output difference is much smaller between Re = 1 k and 5 k. Increasing the body inclination angle generates a uniform leading edge vortex instead of a conical one along the wingspan, giving higher lift. Understanding the force variation as the body inclination angle increases will allow FMAV designers to optimize the thrust and lift ratio for higher efficiency under different operational requirements. Lastly, increasing the spanwise flexibility of the wings increases the thrust slightly but decreases the efficiency. The thrust result is similar to one of the spanwise studies, but the efficiency result contradicts it, indicating that other flapping parameters are involved as well. Results from this study provide a deeper understanding of the underlying aerodynamics of the X-wing type, which will help to improve the performance of insect-sized FMAVs using this unique configuration.},
 	author = {Tay, W B and van Oudheusden, B W and Bijl, H},
 	doi = {10.1088/1748-3182/9/3/036001},
 	journal = {Bioinspiration {\&} biomimetics},
@@ -1179,28 +1132,6 @@
 }
 
 
-@article{Tay2014a,
-	abstract = {The numerical simulation of an insect-sized ‘X-wing' type biplane flapping wing configuration is performed in 3D using an immersed boundary method solver at Reynolds numbers equal to 1000 (1 k) and 5 k, based on the wing's root chord length. This X-wing type flapping configuration draws its inspiration from Delfly, a bio-inspired ornithopter MAV which has two pairs of wings flapping in anti-phase in a biplane configuration. The objective of the present investigation is to assess the aerodynamic performance when the original Delfly flapping wing micro-aerial vehicle (FMAV) is reduced to the size of an insect. Results show that the X-wing configuration gives more than twice the average thrust compared with only flapping the upper pair of wings of the X-wing. However, the X-wing's average thrust is only 40{\%} that of the upper wing flapping at twice the stroke angle. Despite this, the increased stability which results from the smaller lift and moment variation of the X-wing configuration makes it more suited for sharp image capture and recognition. These advantages make the X-wing configuration an attractive alternative design for insect-sized FMAVS compared to the single wing configuration. In the Reynolds number comparison, the vorticity iso-surface plot at a Reynolds number of 5 k revealed smaller, finer vortical structures compared to the simulation at 1 k, due to vortices' breakup. In comparison, the force output difference is much smaller between Re = 1 k and 5 k. Increasing the body inclination angle generates a uniform leading edge vortex instead of a conical one along the wingspan, giving higher lift. Understanding the force variation as the body inclination angle increases will allow FMAV designers to optimize the thrust and lift ratio for higher efficiency under different operational requirements. Lastly, increasing the spanwise flexibility of the wings increases the thrust slightly but decreases the efficiency. The thrust result is similar to one of the spanwise studies, but the efficiency result contradicts it, indicating that other flapping parameters are involved as well. Results from this study provide a deeper understanding of the underlying aerodynamics of the X-wing type, which will help to improve the performance of insect-sized FMAVs using this unique configuration.},
-	author = {Tay, W B and Oudheusden, B.W. Van and Bijl, H},
-	issn = {1748-3190},
-	journal = {Bioinspiration {\&} Biomimetics},
-	number = {3},
-	pages = {36001},
-	title = {Numerical simulation of X-wing type biplane flapping wings in 3D using the immersed boundary method},
-	volume = {9},
-	year = {2014},
-}
-
-@article{Caetano2014a,
-	abstract = {The determination of dynamic forces acting on a Flapping Wing Micro Aerial Vehicle (FWMAV) is a challenging task due to the unsteady nature of force generation mechanisms. To assure a proper force identification in future researches, this work compares two different methods to obtain the longitudinal forces acting on FWMAVs and discusses their applicability regions. The methods were 1) calculation of forces from the recordings of the FWMAV's position in a free flight condition; 2) direct force measurements in a tethered flight condition in a wind tunnel. The DelFly II is used as the FWMAV test platform in the measurements. During free flight experiments, its position and attitude were recorded at a rate of 200Hz using an external visual tracking system, whose acquired information was then analyzed to obtain the flight states and calculate the forces and moments that act on the platform during flight, under a set of kinematic assumptions. Subsequently, similar flight conditions were tested in the tethered situation. An ATI Nano-17 Titanium force transducer was used to measure time-resolved forces. The results for the most common flight regime of the DelFly, which is a slow forward flight at a high body pitch angle, are presented. It is shown that the tethered force balance tests agree with the free flight data when assessing the aerodynamic forces that are perpendicular to the stroke plane of the flapping wing. However, the forces that act along the stroke plane are coupled with structural dynamic terms, thus affecting the final lift and thrust identification. These results point to inadequate force identification in fixed point force measurements, due to effect the of the dynamic modes of the FWMAV body, thus advising proper cross-comparing between experimental methods. {\textcopyright} 2014 IEEE.},
-	author = {Caetano, J. V. and Percin, M. and de Visser, C. C. and Van Oudheusden, B. and de Croon, G. C. H. E. and De Wagter, C. and Remes, B. D. W. and Mulder, M.},
-	doi = {10.1109/ICUAS.2014.6842344},
-	isbn = {9781479923762},
-	journal = {2014 International Conference on Unmanned Aircraft Systems, ICUAS 2014 - Conference Proceedings},
-	pages = {942--948},
-	title = {Tethered vs. free flight force determination of the delfly II flapping wing micro air vehicle},
-	year = {2014},
-}
 
 @article{gillebaart2014modified,
 	title = {A modified ALE method for fluid flows around bodies moving in close proximity},
@@ -1228,12 +1159,10 @@
 }
 
 @inproceedings{Caetano2014,
-	abstract = {The determination of dynamic forces acting on a Flapping Wing Micro Aerial Vehicle (FWMAV) is a challenging task due to the unsteady nature of force generation mechanisms. To assure a proper force identification in future researches, this work compares two different methods to obtain the longitudinal forces acting on FWMAVs and discusses their applicability regions. The methods were 1) calculation of forces from the recordings of the FWMAV's position in a free flight condition; 2) direct force measurements in a tethered flight condition in a wind tunnel. The DelFly II is used as the FWMAV test platform in the measurements. During free flight experiments, its position and attitude were recorded at a rate of 200Hz using an external visual tracking system, whose acquired information was then analyzed to obtain the flight states and calculate the forces and moments that act on the platform during flight, under a set of kinematic assumptions. Subsequently, similar flight conditions were tested in the tethered situation. An ATI Nano-17 Titanium force transducer was used to measure time-resolved forces. The results for the most common flight regime of the DelFly, which is a slow forward flight at a high body pitch angle, are presented. It is shown that the tethered force balance tests agree with the free flight data when assessing the aerodynamic forces that are perpendicular to the stroke plane of the flapping wing. However, the forces that act along the stroke plane are coupled with structural dynamic terms, thus affecting the final lift and thrust identification. These results point to inadequate force identification in fixed point force measurements, due to effect the of the dynamic modes of the FWMAV body, thus advising proper cross-comparing between experimental methods.},
 	author = {Caetano, J.V. and Percin, M. and de Visser, C. C. and van Oudheusden, B. and de Croon, G. C. H. E. and De Wagter, C. and Remes, B. D. W. and Mulder, M.},
 	booktitle = {2014 International Conference on Unmanned Aircraft Systems (ICUAS)},
 	doi = {10.1109/ICUAS.2014.6842344},
 	isbn = {978-1-4799-2376-2},
-	keywords = {ATI Nano-17 Titanium force transducer,Aerodynamics,DelFly II,FWMAV,Force,Force measurement,Kinematics,Vehicle dynamics,Vehicles,aerodynamic forces,aerodynamics,aerospace components,direct force measurement,fixed point force measurement,flapping wing microair vehicle,force generation mechanism,force measurement,free flight force determination,lift,longitudinal forces,pitch angle,stroke plane,tethered flight force,thrust identification,visual tracking system,wind tunnel,wind tunnels},
 	month = {may},
 	pages = {942--948},
 	publisher = {IEEE},
@@ -1241,10 +1170,10 @@
 	title = {Tethered vs. free flight force determination of the DelFly II Flapping Wing Micro Air Vehicle},
 	url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=6842344},
 	year = {2014},
+  pdf = {https://www.researchgate.net/profile/Joao_V_Caetano/publication/269299791_Tethered_vs_free_flight_force_determination_of_the_DelFly_II_Flapping_Wing_Micro_Air_Vehicle/links/548feed90cf225bf66a80744.pdf},
 }
 
 @inproceedings{Deng2014a,
-	abstract = {A detailed characterization of the aerodynamic performance of a small flapping-wing micro air vehicle (MAV) 'DelFly Micro' model was addressed by combined aerodynamic force measurements and quantitative visualization of the flow field topology. A miniature six-component force sensor was used for an accurate recording of the force variation during the flapping cycle, while simulatenously measuring the power required to drive the motor allows to assess the flapping efficiency in terms of the thrust-to-power ratio. The timeresolved velocity field measurements in the wake of 'DelFly Micro' were obtained by means of Stereoscopic Particle Image Velocimetry (Stereo-PIV) technique. The PIV measurements were performed at several streamwise positions at a high framing rate, and a Kriging interpolation procedure was employed to allow reconstruction of the three-dimensional wake flow field from the separate planes. The experimental set-up is capable of temporally synchronizing the force measurements with the flow visualization, permitting to link the specificfeatures in the force generation to particular flow characteristics. The effects of flapping frequency and wing aspect ratio are examined in terms of force generation and wake structures. Finally, a temporal interpolation method to reconstruct the threedimensional wake topology from a single measurement plane is demonstrated to yield satisfactory results for a provisional flow-field analysis.},
 	author = {Deng, S. and Percin, M. and van Oudheusden, B. W. and Remes, B. D. W. and Tenaglia, A.},
 	booktitle = {32nd AIAA Applied Aerodynamics Conference},
 	isbn = {9781624102882},
@@ -1252,25 +1181,8 @@
 	year = {2014},
 }
 
-@inproceedings{Caetano2014b,
-	author = {Caetano, J.V. and Percin, M. and de Visser, C. C. and van Oudheusden, B. and de Croon, G. C. H. E. and De Wagter, C. and Remes, B. D. W. and Mulder, M.},
-	booktitle = {2014 International Conference on Unmanned Aircraft Systems (ICUAS)},
-	doi = {10.1109/ICUAS.2014.6842344},
-	isbn = {978-1-4799-2376-2},
-	keywords = {ATI Nano-17 Titanium force transducer,Aerodynamics,DelFly II,FWMAV,Force,Force measurement,Kinematics,Vehicle dynamics,Vehicles,aerodynamic forces,aerodynamics,aerospace components,direct force measurement,fixed point force measurement,flapping wing microair vehicle,force generation mechanism,force measurement,free flight force determination,lift,longitudinal forces,pitch angle,stroke plane,tethered flight force,thrust identification,visual tracking system,wind tunnel,wind tunnels},
-	language = {English},
-	month = {may},
-	pages = {942--948},
-	publisher = {IEEE},
-	title = {Tethered vs. free flight force determination of the DelFly II Flapping Wing Micro Air Vehicle},
-	url = {http://ieeexplore.ieee.org/articleDetails.jsp?arnumber=6842344},
-	year = {2014},
-	pdf = {https://www.researchgate.net/profile/Joao_V_Caetano/publication/269299791_Tethered_vs_free_flight_force_determination_of_the_DelFly_II_Flapping_Wing_Micro_Air_Vehicle/links/548feed90cf225bf66a80744.pdf},
-}
-
 
 @inproceedings{Armanini2014,
-	abstract = {This paper presents the results of a series of flight tests conducted in order to assess the steady-state flight characteristics and basic control behaviour of the DelFly, a flapping-wing micro aerial vehicle (FWMAV). Flights were conducted in an indoor motion tracking facility and included steady-level flight at a range of different velocities and turn manoeuvres. A number of different trim points were determined and approximate trim curves constructed to describe elevator effectiveness. Aileron effectiveness was then evaluated in terms of resulting turn radii and turn rates. The results provide insight into some of the basic flight properties of the DelFly and represent a starting point for further modelling work. The flight testing process also highlighted some of the major issues to be addressed in order to obtain meaningful experimental results.},
 	author = {Armanini, S.F. and Verboom, J.L. and de Croon, G. C. H. E. and de Visser, C. C.},
 	booktitle = {IMAV 2014: International Micro Air Vehicle Conference and Competition 2014, Delft, The Netherlands, August 12-15, 2014},
 	doi = {10.4233/uuid:30b89d0f-fb8a-4acd-99d9-dc8c20e819a8},
@@ -1327,7 +1239,6 @@
 }
 
 @article{Caetano2013,
-	abstract = {This paper presents an approach to the system identification of the Delfly II Flapping Wing Micro Air Vehicle (FWMAV) using flight test data. It aims at providing simple FWMAV aerodynamic models that can be used in simulations as well as in nonlinear flight control systems. The undertaken methodology builds on normal aircraft system identification methods and extends these with techniques that are specific to FWMAV model identification. The entire aircraft model identification cycle is discussed covering the set-up and automatic execution of the flight test experiments, the aircraft states, the aerodynamic forces and moments' reconstruction, the aerodynamic model structure selection, the parameter estimation and finally, the model validation. In particular, a motion capturing facility was used to record the flapper's position in time and from there compute the states and aerodynamic forces and moments that acted on it, assuming flap-averaged dynamics and linear aerodynamic model structures. It is shown th...},
 	author = {Caetano, J. and de Visser, C. C. and de Croon, G. C. H. E. and Remes, B. D. W. and De Wagter, C. and Verboom, J. and Mulder, M.},
 	doi = {10.1260/1756-8293.5.4.273},
 	issn = {1756-8293},
@@ -1420,7 +1331,6 @@
 # ---- Journal ----
 
 @article{DeClercq2010,
-	abstract = {Particle image velocimetry measurements and simultaneous force measurements have been performed on the DelFly II flapping-wing MAV, to investigate the flow-field behavior and the aerodynamic forces generated. For flapping wing motion it is expected that both the clap and peel mechanism and the occurrence of a leading edge vortex during the translational phase play an important role in unsteady lift generation. Furthermore, the flexibility of the wing foil is also considered of primary relevance. The PIV analysis shows a strong influx between the wings during the peel but no downward expelling jet during the clap. The force measurements reveal that the peel, oppositely to the clap, contributes significantly to the lift. The PIV visualization suggests the occurrence of a leading edge vortex during the first half of the in- and outstroke, which is supported by a simultaneous augmentation in lift. The early generation of a leading edge vortex during the flex cannot be assessed from the PIV images due to optical obstruction, but is likely to appear since the wing flexing is accompanied with a large increase in lift.},
 	author = {De Clercq, Kristien M.E. and de Kat, Roeland and Remes, B. D. W. and van Oudheusden, Bas W. and Bijl, Hester},
 	doi = {10.1260/175682909790291465},
 	isbn = {1756-8293},
@@ -1505,7 +1415,6 @@
 }
 
 @article{deClercqEtAl2009b,
-	abstract = {Particle image velocimetry measurements and simultaneous force measurements have been performed on the DelFly II flapping-wing MAV, to investigate the flow-field behavior and the aerodynamic forces generated. For flapping wing motion it is expected that both the clap and peel mechanism and the occurrence of a leading edge vortex during the translational phase play an important role in unsteady lift generation. Furthermore, the flexibility of the wing foil is also considered of primary relevance. The PIV analysis shows a strong influx between the wings during the peel but no downward expelling jet during the clap. The force measurements reveal that the peel, oppositely to the clap, contributes significantly to the lift. The PIV visualization suggests the occurrence of a leading edge vortex during the first half of the in- and outstroke, which is supported by a simultaneous augmentation in lift. The early generation of a leading edge vortex during the flex cannot be assessed from the PIV images due to optical obstruction, but is likely to appear since the wing flexing is accompanied with a large increase in lift.},
 	address = {Brentwood, GB},
 	author = {De Clercq, Kristien M E and de Kat, Roeland and Remes, Bart and van Oudheusden, Bas W and Bijl, Hester},
 	journal = {International Journal of Micro Air Vehicles},
@@ -1521,7 +1430,6 @@
 # ---- Conference ----
 
 @inproceedings{deClercqEtAl2009a,
-	abstract = {Particle image velocimetry measurements and simultaneous force measurements have been performed on the DelFly II flapping-wing MAV, to investigate the flow-field behavior and the aerodynamic forces generated. For flapping wing motion it is expected that both the clap and peel mechanism and the occurrence of a leading edge vortex during the translational phase play an important role in unsteady lift generation. Furthermore, the flexibility of the wing foil is also considered of primary relevance. The PIV analysis shows a strong influx between the wings during the peel but no downward expelling jet during the clap. The force measurements reveal that the peel, oppositely to the clap, contributes significantly to the lift. The PIV visualization suggests the occurrence of a leading edge vortex during the first half of the in- and outstroke, which is supported by a simultaneous augmentation in lift. The early generation of a leading edge vortex during the flex cannot be assessed from the PIV images due to optical obstruction, but is likely to appear since the wing flexing is accompanied with a large increase in lift.},
 	address = {San Antonio, US-TX},
 	author = {De Clercq, Kristien M E and Kat, Roland De and Remes, Bart and Oudheusden, Bas W Van and Bijl, Hester},
 	booktitle = {Proceedings of the 39th AIAA Fluid Dynamics Conference},
