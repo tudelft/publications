@@ -4,9 +4,9 @@ This repo is meant to keep a history of all publications to do with the Micro Ai
 ## Import
 
  - step 1A: download from pure: ```import_pure_2021.py```    -> ```cs.bib```
- - step 1B: download from dataverse: ```import_dataset_2021.py```    -> ```dataset.bib```
+ - step 1B: download from dataverse: ```import_dataverse_2021.py```    -> ```dataverse.bib```
  - step 1C: download from arXiv: ```import_arxiv_2021.py```    -> ```arxiv.bib```
- - setp 2: filter MAVLAB publications: ```filter_pure_mavlab.py```  -> ```cs_mav.bib```
+ - setp 2: filter MAVLAB publications: ```filter_pure_mavlab.py```  -> ```pure.bib```
  - step 3: check cs_nomav.bib if there are any mavlab papers left: fix the script
 
 ## Website:
