@@ -2,7 +2,7 @@ import bibtexparser
 
 
 # Import PURE
-fname = '../pure.bib'
+fname = 'all.bib'
 parser = bibtexparser.bparser.BibTexParser(common_strings=True)
 with open(fname, encoding="utf8") as bibtex_file:
     bibtex_str = bibtex_file.read()
@@ -26,7 +26,7 @@ mavlab_merged  = bibtexparser.bibdatabase.BibDatabase()
 verbose = False
 
 def cleanup_title(txt):
-    txt = txt.replace('{', '').replace('}', '').replace('¿','').strip().lower()
+    txt = txt.replace('{', '').replace('}', '').replace('¿','').strip().lower().strip('.')
     txt = txt.replace(',', ' ').replace('.', ' ').replace('`', ' ').replace('?', ' ')
     txt = txt.replace('\\textquoteright','').replace('\\textquoteleft','').replace('{}','')
     txt = txt.replace('textquoteright',' ').replace('textquoteleft',' ')
