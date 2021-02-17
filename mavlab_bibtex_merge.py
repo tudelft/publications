@@ -84,9 +84,11 @@ writer.indent = '\t'
 writer.order_entries_by = 'year'
 writer.align_values = True
 with open('mavlab_pure_extra.bib', 'w', encoding='utf8') as bibfile:
-    bibfile.write(writer.write(mavlab_missing))
+    if len(mavlab_missing.entries) > 0:
+        bibfile.write(writer.write(mavlab_missing))
+    else:
+        bibfile.write('Empty')
     
-
 
 with open('mavlab_merged.bib', 'w', encoding='utf8') as bibfile:
     bibfile.write(writer.write(mavlab_merged))
