@@ -93,11 +93,17 @@ with open('mavlab_pure_extra.bib', 'w', encoding='utf8') as bibfile:
     
 
 with open('mavlab_merged.bib', 'w', encoding='utf8') as bibfile:
-    bibfile.write(writer.write(mavlab_merged))
+    if len(mavlab_merged.entries) > 0:
+        bibfile.write(writer.write(mavlab_merged))
+    else:
+        bibfile.write('Empty')
  
 with open('mavlab_web_extra.bib', 'w', encoding='utf8') as bibfile:
-    bibfile.write(writer.write(bib_website))
- 
+    if len(bib_website.entries) > 0:
+        bibfile.write(writer.write(bib_website))
+    else:
+        bibfile.write('Empty')
+
 
 
 
