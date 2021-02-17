@@ -27,7 +27,7 @@ mavlabpapers = {}
 
 
 parser = bibtexparser.bparser.BibTexParser(common_strings=True)
-with open('cs.bib', encoding="utf8") as bibtex_file:
+with open('./pure/cs.bib', encoding="utf8") as bibtex_file:
     bibtex_str = bibtex_file.read()
 
 bib_database = bibtexparser.loads(bibtex_str, parser=parser)

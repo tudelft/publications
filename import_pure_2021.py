@@ -85,4 +85,4 @@ def download_list(page, filename):
 
 # To continue downloading, type a non-zero page.
 # page=0 resets the output
-download_list(0, 'cs.bib')
+download_list(0, './pure/cs.bib')
