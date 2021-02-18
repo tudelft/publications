@@ -54,8 +54,8 @@ def download_list(page, filename):
                     bib.append(s.strip('\r\n'))
                 if '<textarea' in s:
                     start = True
-            bib.append('url = {https://arxiv.org/abs/'+pp+'},')
-            bib.append('pdf = {https://arxiv.org/pdf/'+pp+'.pdf},')
+            bib.append('\turl = {https://arxiv.org/abs/'+pp+'},')
+            bib.append('\tpdf = {https://arxiv.org/pdf/'+pp+'.pdf},')
             bib.append('}')
 
             bib = '\n'.join(bib).replace('</textarea>','')
