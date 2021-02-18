@@ -64,6 +64,7 @@ def download_list(page, filename):
             bib = bib.replace('Year = {','\tyear = {')
             bib = bib.replace('Author = {','\tauthor = {')
             bib = bib.replace('Eprint = {','\teprint = {')
+            bib = bib.replace('Howpublished = {','\thowpublished = {')
             bib = bib.replace('Doi = {','\tdoi = {')
             #bib = bib.replace('@article','@misc')
 
