@@ -52,10 +52,12 @@ def download_list(page, filename):
 
             
             bib = '\n'.join(bib)
+            bib = bib.replace('&quot;', '\"')
+            bib = bib.replace('https://doi.org/','')
                         
             # open and add, in case of error one can continue
             bibf = codecs.open(filename,'a', 'utf-8')
-            bibf.write('# '+str(pageno)+', '+str(papernr)+'\n# '+p+'\n\n')
+            bibf.write('# '+str(pageno)+', '+str(papernr)+'\n# '+'https://dataverse.nl'+p+'\n\n')
             bibf.write(bib)
             bibf.write('\n')
             bibf.close()
