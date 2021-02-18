@@ -47,7 +47,7 @@ def bib_tag_content( line):
     return unlatex(line.split("=", 1)[-1].strip().lstrip("=").rstrip(",").strip().lstrip("\"").rstrip("\"").lstrip("{").rstrip("}").strip());
 
 
-with open("../mediacoverage.bib") as ft:
+with open("../website/all.bib") as ft:
     bibfile = ft.read().splitlines()
 
 
