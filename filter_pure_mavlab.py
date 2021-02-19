@@ -6,9 +6,7 @@ from collections import OrderedDict
 chairs = {
     'MAVLAB': ['Xu', 'Valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes',
                'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'horst', 'tienen', 'hecke', 'li',
-#                'lievens', 'oomkens'
-               'oliveira', 'lentink',
-               'percin', 'tay', 'noyon', 'ho']}
+               'oliveira', 'lentink', 'percin', 'tay', 'noyon', 'ho', 'dupeyroux']}
 
 remove = ['V. Ho']
 
