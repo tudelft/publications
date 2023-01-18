@@ -79,7 +79,8 @@ def download_list(page, filename):
 
             # open and add, in case of error one can continue
             bibf = codecs.open(filename,'a', 'utf-8')
-            bibf.write('# '+str(papernr)+'\n# '+code+ ': ' + uu + '\n\n')
+            #bibf.write('# '+str(papernr)+'\n')
+            bibf.write('# '+code+ ': ' + uu + '\n\n')
             bibf.write(bib)
             bibf.write('\n\n\n')
             bibf.close()
