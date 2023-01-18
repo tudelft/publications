@@ -48,7 +48,8 @@ def download_list(page, filename):
 
             # open and add, in case of error one can continue
             bibf = codecs.open(filename,'a', 'utf-8')
-            bibf.write('# '+str(pageno)+', '+str(papernr)+'\n# '+title+'\n# '+link+'\n\n')
+            #bibf.write('# '+str(pageno)+', '+str(papernr)+'\n')
+            bibf.write('# '+title+'\n# '+link+'\n\n')
             
             # dump bibtex into file
             for b in bib.getchildren():
