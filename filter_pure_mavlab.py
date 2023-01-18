@@ -12,7 +12,6 @@ chairs = {
 
 remove = ['V. Ho']
 
-
 def get_chair(name):
     for chair, staff in chairs.items():
         if name in staff:

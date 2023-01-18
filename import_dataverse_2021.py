@@ -2,8 +2,9 @@
 import requests
 from lxml import html
 import codecs
+import json
 
-
+#from requests_html import HTMLSession
 
 def download_list(page, filename):
 
@@ -17,13 +18,11 @@ def download_list(page, filename):
 
     papernr = 1
     pageno = page
-    done = False
-    while not done:
+    if True:
         print('- Page',pageno)
         
         p = requests.get(url) # + '&page=%d' % pageno)
         print('Downloaded...\n')
-        done = True
 
         # Download dataverse page
         dom = html.fromstring(p.text.encode('utf-8'))
@@ -37,17 +36,36 @@ def download_list(page, filename):
             pp = p.strip('/dataset.xhtml?persistentId=doi:')
             print(pp)
 
-            pa = requests.get('https://scipython.com/apps/doi2bib/?doi='+pp) #.replace('/','%2F'))
+            #session = HTMLSession()
+            #r = session.get('https://www.doi2bib.org/bib/'+ pp)
+            #r.html.render()
+            #txt = r.html.text #find('code')
+            #print(txt)
+            
+            #txt = doi_to_bib(pp, False, False)
+            #print(pp, txt)
 
+            # Accept: text/bibliography; style=bibtex
+            headers = {"Accept": "text/bibliography; style=bibtex"}
+            #headers = {"Content-Type": "text/bibliography; style=bibtex"}
+            payload = {}
+
+            #pa = requests.get('http://doi.org/'+pp, headers=headers) #.replace('/','%2F'))
+            #txt = pa.text
+            #print(txt)
+            txt = 'Fail... do manually'
             start = False
             bib = []
-            for s in pa.text.splitlines(True):
+            for s in txt.splitlines(True):
                 if '</textarea>' in s:
                     start = False
                 if start:
                     bib.append(s.replace('@misc','@data').strip('\r\n'))
                 if '<textarea' in s:
                     start = True
+            if True: #len(bib) == 0:
+                print('Error: no data:')
+                print(txt)
 
 
             
@@ -64,9 +82,9 @@ def download_list(page, filename):
 
             papernr += 1
 
-            # continue is at least 1 paper was found.
+            # continue if at least 1 paper was found.
             #done = False
-
+            #break
 
         pageno += 1
 
