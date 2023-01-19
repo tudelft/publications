@@ -1,6 +1,7 @@
 
 all:
-	cat ../arxiv.bib > all.bib
+	cd  ../ && python ./filter_arxiv.py
+	cat ../arxiv_nopub.bib > all.bib
 	cat ../dataverse.bib >> all.bib
 	cat ../mavlab_nopure.bib >> all.bib
 	cat ../mediacoverage.bib >> all.bib

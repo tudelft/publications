@@ -61,6 +61,16 @@ for b in bib_pure.entries:
                 merged = 1
                 break
 
+        # Next, check if same URL, then same item
+        if False and 'url' in b2 and 'url' in b:
+            if (b['url'].replace('https://arxiv.org/abs/','') in b2['url']) or (b['url'] == b2['url']):
+                if verbose:
+                    print('-URL merged',b['ID'],b2['ID'])
+                mavlab_merged.entries.append(b)
+                bib_website.entries.remove(b2)
+                merged = 1
+                break
+
         # Or match title and entrytype and year
         if 'title' in b2 and 'ENTRYTYPE' in b2 and 'year' in b2:
             t1 = cleanup_title(b['title'])

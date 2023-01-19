@@ -9,7 +9,8 @@ This repo is meant to keep a history of all publications to do with the Micro Ai
  - step 1D: download from M.Sc. thesis repo: ```import_repository.py``` -> ```msc.bib```
  - step 1E: fill ```mediacoverage.bib``` and ```mavlab_nopure.bib``` by hand
  - step 1F: search on https://data.4tu.nl/search?q=mavlab and import by hand in ```4tu.bib```
- - setp 2: filter MAVLAB publications from pure/cs.bib: ```filter_pure_mavlab.py```  -> ```pure.bib```
+ - setp 2A: filter MAVLAB publications from pure/cs.bib: ```filter_pure_mavlab.py```  -> ```pure.bib```
+ - setp 2B: filter published arxiv papers with DOI arxiv.bib: ```filter_arxiv.py```  -> ```arxiv_nopub.bib```
  - step 3: check pure/cs_nomav.bib if there are any mavlab papers left: fix the script
 
 ## Website:
