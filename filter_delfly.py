@@ -39,6 +39,9 @@ for b in bib_database.entries:
     if 'flapping' in title.lower():
         delflypaper = True
 
+    if 'flapper' in title.lower():
+        delflypaper = True
+
     if 'fling' in title.lower():
         delflypaper = True
 

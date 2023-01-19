@@ -6,4 +6,5 @@ all:
 	cat ../mediacoverage.bib >> all.bib
 	cat ../pure.bib >> all.bib
 	cat ../msc.bib >> all.bib
+	cat ../4tu.bib >> all.bib
 	cd  ../ && python ./filter_delfly.py
