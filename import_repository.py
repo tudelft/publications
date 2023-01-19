@@ -2,6 +2,7 @@ import csv
 import requests
 # Store FILE
 import codecs
+from unidecode import unidecode
 
 MAVLAB = ['wagter' , 'croon', 'remes',
              'karasek', 'smeur',  'dupeyroux',
@@ -46,16 +47,27 @@ for row in reader:
         else:
             name = row[3]
             school = 'Delft University of Technology'
-        bibf.write('@MastersThesis{'+row[0]+',\n')
-        bibf.write('  author   = {'+name+'},\n')
-        bibf.write('  school   = {'+school.replace(')','')+'},\n')
-        bibf.write('  keywords = {'+row[7]+'},\n')
-        bibf.write('  title    = {'+row[2]+'},\n')
-        bibf.write('  year     = {'+row[5]+'},\n')
-        bibf.write('  url      = {'+row[1]+'},\n')
-        bibf.write('  abstract = {'+row[6]+'},\n')
-        bibf.write('  note     = {'+row[4]+'},\n  type     = {mathesis},\n')
-        bibf.write('}\n\n')
+
+        # Extra checks: names should not be in the abstract but only in supervision
+        good = False
+        for M in MAVLAB:
+            MM = M.lower().replace('"','')
+            if MM in unidecode(row[4].lower()):
+                good = True
+                break
+
+        if good:
+
+            bibf.write('@MastersThesis{'+row[0]+',\n')
+            bibf.write('  author   = {'+name+'},\n')
+            bibf.write('  school   = {'+school.replace(')','')+'},\n')
+            bibf.write('  keywords = {'+row[7]+'},\n')
+            bibf.write('  title    = {'+row[2]+'},\n')
+            bibf.write('  year     = {'+row[5]+'},\n')
+            bibf.write('  url      = {'+row[1]+'},\n')
+            bibf.write('  abstract = {'+row[6]+'},\n')
+            bibf.write('  note     = {'+row[4]+'},\n  type     = {mathesis},\n')
+            bibf.write('}\n\n')
 
         #print(row[2])
 
