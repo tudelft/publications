@@ -7,13 +7,14 @@ chairs = {
     'MAVLAB': ['valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes',
                'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'horst', 'tienen', 'hecke',
                'oliveira', 'lentink', 'percin', 'tay', 'noyon', 'dupeyroux', 'hamaza', 'ferede', 'bahnam',
-               'wang', 'ma', 'mancinelli', 'stroobants', 'hagenaars', 
-               'xu', 'yu', 'wu', 'ho', 'li', 'ye',
+               'mancinelli', 'stroobants', 'hagenaars', 
+               'wang', 'ma', 'xu', 'yu', 'wu', 'ho', 'li', 'ye',
                'altena', 'zheng', 'bredenbeck',
                'ramirez', 'farinha', 'ponti', 'blaha', 'nowak' ]}
 
 remove = ['V. Ho', 'Merkus', 'Costa', 'Engelen', 'Xue Wu', 'S Wu', 'S-F Wu', 'SF Wu', 'M Wang', 'Xuerui Wang',
-        'Guangming Zeng', 'Gangoli Rao']
+        'Guangming Zeng', 'Gangoli Rao', 'Sherry Wang', 'Yanyang Wang', 'Xiaotian Wang', 'Xue Wu', 'T Chen',
+        'GT Zheng']
 
 def get_chair(name):
     for chair, staff in chairs.items():
