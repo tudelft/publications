@@ -18,7 +18,7 @@ for p in bib_database.entries:
     if 'doi' in p:
         alldoi.append(p['doi'])
 
-print(alldoi)
+#print(alldoi)
 
 # List of arXiv papers
 xparser = bibtexparser.bparser.BibTexParser(common_strings=True)
