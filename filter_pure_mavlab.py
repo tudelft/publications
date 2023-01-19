@@ -4,13 +4,16 @@ import json
 from collections import OrderedDict
 
 chairs = {
-    'MAVLAB': ['Xu', 'Valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes',
-               'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'horst', 'tienen', 'hecke', 'li',
-               'oliveira', 'lentink', 'percin', 'tay', 'noyon', 'ho', 'dupeyroux', 'hamaza', 'ferede', 'bahnam',
-               'wang', 'ma', 'mancinelli', 'stroobants', 'hagenaars', 'yu', 'wu', 'altena', 'zheng', 'bredenbeck',
-               'ramirez', 'farinha', 'ye', 'ponti', 'blaha', 'nowak' ]}
+    'MAVLAB': ['valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes',
+               'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'horst', 'tienen', 'hecke',
+               'oliveira', 'lentink', 'percin', 'tay', 'noyon', 'dupeyroux', 'hamaza', 'ferede', 'bahnam',
+               'wang', 'ma', 'mancinelli', 'stroobants', 'hagenaars', 
+               'xu', 'yu', 'wu', 'ho', 'li', 'ye',
+               'altena', 'zheng', 'bredenbeck',
+               'ramirez', 'farinha', 'ponti', 'blaha', 'nowak' ]}
 
-remove = ['V. Ho']
+remove = ['V. Ho', 'Merkus', 'Costa', 'Engelen', 'Xue Wu', 'S Wu', 'S-F Wu', 'SF Wu', 'M Wang', 'Xuerui Wang',
+        'Guangming Zeng', 'Gangoli Rao']
 
 def get_chair(name):
     for chair, staff in chairs.items():

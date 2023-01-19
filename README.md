@@ -15,7 +15,8 @@ This repo is meant to keep a history of all publications to do with the Micro Ai
 
 ## Website:
 
- - step 4: export publications form website plugin as ```website_export.bib```.
+ - step 4A: in wordpress: add all publications 'to own list' 
+ - step 4B: export publications form website plugin as ```website_export.bib```.
  - step 5: merge pure and website with ```mavlab_bibtex_merge.py```
  - add the ```mavlab_web_extra.bib``` to pure, the ```mavlab_pure_extra.bib``` to the website until all is in merged.
 
