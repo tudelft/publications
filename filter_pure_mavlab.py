@@ -13,9 +13,10 @@ chairs = {
                'altena', 'bredenbeck',
                'ramirez', 'farinha', 'ponti', 'blaha', 'nowak' ]}
 
-remove = ['V. Ho']
+# Full authors name removal
+remove = ['V. Ho', 'A. Sharma']
 #    , 'Merkus', 'Costa', 'Engelen', 'Xue Wu', 'S Wu', 'S-F Wu', 'SF Wu', 'M Wang', 'Xuerui Wang',
-#        'Guangming Zeng', 'Gangoli Rao', 'Sherry Wang', 'Yanyang Wang', 'Xiaotian Wang', 'Xue Wu', 'T Chen',
+#        'Guangming Zeng',  'Sherry Wang', 'Yanyang Wang', 'Xiaotian Wang', 'Xue Wu', 'T Chen',
 #        'GT Zheng']
 
 def get_chair(name):
@@ -78,11 +79,13 @@ for b in bib_database.entries:
             name = person.split(' ')[-1].strip().strip('{').strip('}').strip().lower()
         chairname = get_chair(name)
         if chairname == 'MAVLAB':
-            mavlabpaper = 1
+            if mavlabpaper > -1: # if not forbidden
+                mavlabpaper = 1
 
         if person in remove:
             print(person)
-            mavlabpaper = 0
+            # Store forbidden
+            mavlabpaper = -1
 
         #print(person, name, chairname)
         if chairname:
@@ -92,7 +95,6 @@ for b in bib_database.entries:
             sum_pers[doctype].append(paperstring)
 
     #print('-----',b['year'],b['ENTRYTYPE'],mavlabpaper)
-        
 
     if mavlabpaper == 1:
         key = (year, doctype)
