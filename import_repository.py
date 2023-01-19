@@ -5,7 +5,7 @@ import codecs
 
 MAVLAB = ['wagter' , 'croon', 'remes',
              'karasek', 'smeur',  'dupeyroux',
-             'hamaza']
+             'hamaza', '"Scheper, K.Y.W."']
 
 
 search = '%20OR%20'.join(MAVLAB)
