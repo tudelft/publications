@@ -32,6 +32,7 @@ def cleanup_title(txt):
     txt = txt.replace('textquoteright',' ').replace('textquoteleft',' ')
     txt = txt.replace('/', ' ').replace('-', '').replace('\'', ' ').replace('"', ' ').replace(':', ' ')
     txt = txt.replace('  ', ' ').replace('  ', ' ').replace('  ', ' ').replace('  ', ' ').strip()
+    txt = txt.replace('&amp;','&').strip()
     return txt
 
 for b in bib_pure.entries:

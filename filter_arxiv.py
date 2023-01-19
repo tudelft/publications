@@ -16,7 +16,7 @@ bib_database = bibtexparser.loads(bibtex_str, parser=parser)
 alldoi = []
 for p in bib_database.entries:
     if 'doi' in p:
-        alldoi.append(p['doi'])
+        alldoi.append(p['doi'].lower())
 
 #print(alldoi)
 
@@ -37,7 +37,7 @@ for b in x_database.entries:
     # If arxiv version has a  DOI
     if  'doi' in b:
         # check in entire PURE database if the DOI is known
-        if b['doi'] in alldoi:
+        if b['doi'].lower() in alldoi:
             hasbeenpublished = True
 
     if not hasbeenpublished:
