@@ -21,7 +21,7 @@ def download_list(page, filename):
     
     for person in search:
 
-        u = 'https://arxiv.org/search/?searchtype=all&query=' + person.replace(' ','+')
+        u = 'https://arxiv.org/search/?searchtype=all&size=200&query=' + person.replace(' ','+')
 
         bibf = codecs.open(filename,'a', 'utf-8')
         bibf.write('# Import from: ' + u + '\n')
