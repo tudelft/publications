@@ -10,6 +10,7 @@ mavlabpapers = {}
 
 
 parser = bibtexparser.bparser.BibTexParser(common_strings=True)
+parser.ignore_nonstandard_types = False
 with open('./website/all.bib', encoding="utf8") as bibtex_file:
     bibtex_str = bibtex_file.read()
 
