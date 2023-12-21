@@ -50,6 +50,8 @@ for b in bib_database.entries:
         delflypaper = True
 
     if delflypaper:
+        if ('url' in b) and (not ('pdf' in b)):
+            b['pdf'] = b['url']
         delfly_database.entries.append(b)
     else:
         rest.entries.append(b)
