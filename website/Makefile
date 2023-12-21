@@ -9,3 +9,7 @@ all:
 	cat ../msc.bib >> all.bib
 	cat ../4tu.bib >> all.bib
 	cd  ../ && python ./filter_delfly.py
+
+
+clean:
+	rm -f not_delfly.bib
