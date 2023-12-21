@@ -65,7 +65,7 @@ for b in bib_pure.entries:
                 break
 
         # Next, check if same URL, then same item
-        if False and 'url' in b2 and 'url' in b:
+        if True and 'url' in b2 and 'url' in b:
             if (b['url'].replace('https://arxiv.org/abs/','') in b2['url']) or (b['url'] == b2['url']):
                 if verbose:
                     print('-URL merged',b['ID'],b2['ID'])
