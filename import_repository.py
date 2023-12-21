@@ -58,15 +58,16 @@ for row in reader:
 
         if good:
 
-            bibf.write('@MastersThesis{'+row[0]+',\n')
-            bibf.write('  author   = {'+name+'},\n')
-            bibf.write('  school   = {'+school.replace(')','')+'},\n')
-            bibf.write('  keywords = {'+row[7]+'},\n')
-            bibf.write('  title    = {'+row[2]+'},\n')
-            bibf.write('  year     = {'+row[5]+'},\n')
-            bibf.write('  url      = {'+row[1]+'},\n')
-            bibf.write('  abstract = {'+row[6]+'},\n')
-            bibf.write('  note     = {'+row[4]+'},\n  type     = {mathesis},\n')
+            bibf.write('@mastersthesis{'+row[0]+',\n')
+            bibf.write('  abstract  = {'+row[6]+'},\n')
+            bibf.write('  author    = {'+name+'},\n')
+            bibf.write('  keywords  = {'+row[7]+'},\n')
+            bibf.write('  note      = {'+row[4]+'},\n  type     = {mathesis},\n')
+            bibf.write('  school    = {'+school.replace(')','')+'},\n')
+            bibf.write('  title     = {'+row[2]+'},\n')
+            bibf.write('  type      = {mathesis},\n')
+            bibf.write('  url       = {'+row[1]+'},\n')
+            bibf.write('  year      = {'+row[5]+'},\n')
             bibf.write('}\n\n')
 
         #print(row[2])

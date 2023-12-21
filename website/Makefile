@@ -13,3 +13,7 @@ all:
 
 clean:
 	rm -f not_delfly.bib
+	rm -f mavlab_merged.bib
+	rm -f mavlab_pure_extra.bib
+	rm -f mavlab_web_extra.bib
+	
