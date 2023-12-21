@@ -4,6 +4,7 @@ import bibtexparser
 # Import PURE
 fname = 'all.bib'
 parser = bibtexparser.bparser.BibTexParser(common_strings=True)
+parser.ignore_nonstandard_types = False
 with open(fname, encoding="utf8") as bibtex_file:
     bibtex_str = bibtex_file.read()
 
@@ -13,6 +14,7 @@ print(fname + ' contains ',len(bib_pure.entries), ' entries')
 # Import WEBSITE
 fname = 'website_export.bib'
 parser2 = bibtexparser.bparser.BibTexParser(common_strings=True)
+parser2.ignore_nonstandard_types = False
 with open(fname , encoding="utf8") as bibtex_file2:
     bibtex_str2 = bibtex_file2.read()
 
