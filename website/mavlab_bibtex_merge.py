@@ -55,7 +55,7 @@ for b in bib_pure.entries:
         
         # Prefer matching DOI
         if 'doi' in b2 and 'doi' in b:
-            if b['doi'] == b2['doi']:
+            if b['doi'].lower() == b2['doi'].lower():
                 if verbose:
                     print('-DOI merged',b['ID'],b2['ID'])
                 mavlab_merged.entries.append(b)
@@ -66,7 +66,7 @@ for b in bib_pure.entries:
 
         # Next, check if same URL, then same item
         if True and 'url' in b2 and 'url' in b:
-            if (b['url'].replace('https://arxiv.org/abs/','') in b2['url']) or (b['url'] == b2['url']):
+            if (b['url'].replace('https://arxiv.org/abs/','').lower() in b2['url'].lower()) or (b['url'].lower() == b2['url'].lower()):
                 if verbose:
                     print('-URL merged',b['ID'],b2['ID'])
                 mavlab_merged.entries.append(b)
