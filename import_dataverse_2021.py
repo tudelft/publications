@@ -48,7 +48,10 @@ def download_list(page, filename):
             # Accept: text/bibliography; style=bibtex
             headers = {"Accept": "text/bibliography; style=bibtex"}
             #headers = {"Content-Type": "text/bibliography; style=bibtex"}
-            payload = {}
+            payload = {'fromIds': True, 'input': pp, 'targetFormat': "Bibtex"}
+            url = 'https://api.paperpile.com/api/public/convert'
+            
+            print(payload, '->', url)
 
             #pa = requests.get('http://doi.org/'+pp, headers=headers) #.replace('/','%2F'))
             #txt = pa.text
