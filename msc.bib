@@ -2,6 +2,90 @@
 # Import from: https://repository.tudelft.nl/islandora/search/wagter%20OR%20croon%20OR%20remes%20OR%20karasek%20OR%20smeur%20OR%20dupeyroux%20OR%20hamaza%20OR%20"Scheper, K.Y.W."Wagter%20OR%20croon%20OR%20smeur%20OR%20remes?collection=education&display=tud_csv
 
 
+@MastersThesis{uuid:f7ec9e1c-15db-4982-b2fa-4ba0f51a5b91,
+  author   = {Jadoenathmisier, Anish },
+  school   = {TU Delft Aerospace Engineering},
+  keywords = {},
+  title    = {Aerial Perching via Ac- tive Touch: Embodying Robust Tactile Grasping on Aerial Robots},
+  year     = {2023},
+  url      = {http://resolver.tudelft.nl/uuid:f7ec9e1c-15db-4982-b2fa-4ba0f51a5b91},
+  abstract = {Aerial manipulators, characterized by their ability to actively engage with the environment, are gaining popularity for their versatility in performing diverse tasks.<br/>This research focuses on augmenting the capabilities of aerial manipulators through the integration of tactile feedback, specifically employing a compliant bio-inspired three-fingered manipulator equipped with tactile capacitive sensors on each finger. The manipulator is affixed to a drone, enabling tactile-guided navigation for precise object localization, subsequent grasping, and perching. Additionally, a grasp evaluator assesses grasp quality, allowing the system to adapt by suggesting alternative grasp locations after an initial attempt is unsuccessful. A comparative analysis between the system’s performance using tactile feedback and open-loop perching/grasping in perching scenarios demonstrates that the grasp evaluator improves the perching success rate by 55%-point and increases the allowable object uncertainty by 0.14 [m]. These findings highlight the efficacy of this approach in advancing aerial manipulator capabilities.},
+  note     = {Hamaza, S. (mentor); de Croon, G.C.H.E. (graduation committee); Delft University of Technology (degree granting institution)},
+  type     = {mathesis},
+}
+
+@MastersThesis{uuid:bfad7b0e-f6db-49d0-8642-5e4fbc6e3861,
+  author   = {Liu, Huamin },
+  school   = {TU Delft Aerospace Engineering},
+  keywords = {payload transportation; tension optimization; extended state observer; formation recovery},
+  title    = {Collaborative Payload Carrying with Multiple MAVs},
+  year     = {2023},
+  url      = {http://resolver.tudelft.nl/uuid:bfad7b0e-f6db-49d0-8642-5e4fbc6e3861},
+  abstract = {The transportation of payloads utilizing multiple drones presents a promising application for lifting heavier loads that exceed the payload capacity of a single drone. However, the cable-suspended payload introduces significant challenges to the system, and this research area remains relatively unexplored. In this work, a novel solution for payload-carrying application is proposed. First, the dynamics of cable-suspended payload transportation using multiple quadrotors, taking into account the influence of drag forces on the quadrotors are studied. A nonlinear optimization is employed to control the payload while distributing the control effort required for manipulating the suspended load over the drones in the formation while ensuring both tension constraints and collision avoidance between drones in the formation. The feasible path commands for formation agents are computed from the optimization. One of the critical aspects for controlling such a system is the load-introduced force, which exhibits rapid and complex variations. To address this, an extended state observer is employed to estimate the load force, eliminating the need for a tension sensor. In pursuit of a robust framework, a formation reset strategy is also developed, allowing to maintain load tracking performance and ensure the safety of formation agents, even in the event of a malfunction in one of the drones. A series of simulations are conducted to validate the effectiveness and robustness against disturbance and suspension failure of the proposed strategy and controllers. Results demonstrate that the whole multi-lift system can handle external disturbances, model uncertainties regarding drone inertia, mass and load mass, as well as suspension failures.},
+  note     = {Smeur, E.J.J. (mentor); Delft University of Technology (degree granting institution)},
+  type     = {mathesis},
+}
+
+@MastersThesis{uuid:34213dbf-32ad-4f8d-b0f0-ed398608d682,
+  author   = {Magri, Federico },
+  school   = {TU Delft Aerospace Engineering},
+  keywords = {Reinforcement Learning; Convolutional neural network; Nano Drones; Quantization},
+  title    = {Modular Neural Network Navigation for Autonomous Nano Drone Racing},
+  year     = {2023},
+  url      = {http://resolver.tudelft.nl/uuid:34213dbf-32ad-4f8d-b0f0-ed398608d682},
+  abstract = {In this study, we present a first step towards a cutting-edge software framework that will enable autonomous racing capabilities for nano drones. Through the integration of neural networks tailored for real-time operation on resource-constrained devices. A lightweight Convolutional Neural Network, with the Gatenet architecture, is adjusted for reduced computational demand and is successfully deployed on a GAP8 processor at a rate of 16$Hz$. This network provides gates' size and location data for the subsequent positioning algorithm. A second neural network, trained through reinforcement learning, governs the drone's guidance and control systems, demonstrating a remarkable rate of 167$Hz$ on an STM32F405 processor. The attitude rates and thrust outputted by this network are then fed to an attitude rate PID controller.<br/><br/>The research shows that state-of-the-art neural networks for drone racing can be deployed on nano drones, despite their limited processing power. Nonetheless, the study demonstrated specific limitations, such as the perception network's sensitivity to white pixels in the image reducing its effectiveness when light sources are present in the scene. These findings underscore the importance of dataset composition and the need for diverse training scenarios to enhance the neural network's generalizability and performance in real-world applications.},
+  note     = {de Wagter, C. (mentor); de Croon, G.C.H.E. (mentor); Ferede, R. (mentor); Bahnam, S.A. (mentor); Delft University of Technology (degree granting institution)},
+  type     = {mathesis},
+}
+
+@MastersThesis{uuid:c56b290f-8c43-4649-8360-13b7652710e8,
+  author   = {van Wissen, Alexis },
+  school   = {TU Delft Aerospace Engineering},
+  keywords = {UAV; Tailsitter; Tilt-rotor; Acceleration Control; Nonlinear Model Predictive Control; Behavioural Cloning},
+  title    = {Tilt-rotor Tailsitter Global Acceleration Control: Behavioural Cloning of a Nonlinear Model Predictive Controller},
+  year     = {2023},
+  url      = {http://resolver.tudelft.nl/uuid:c56b290f-8c43-4649-8360-13b7652710e8},
+  abstract = {Capable of both vertical take-off and landing and forward flight, tail-sitters are a versatile class of UAVs with a large range of potential applications. A variant of tailsitters using tilt-rotors instead of ailerons for pitch and roll control has been proposed to mitigate the reduced control authority at low to zero velocities. The control of the translational dynamics for this platform is uniquely challenging. The extended flight envelope requires the controller to be able to perform hover and forward flight which are two flight phases with very different dynamics. Additionally, the tilt-rotor mechanism used to control the system is highly nonlinear which adds to the challenge. This paper presents a novel acceleration controller using Nonlinear Model Predictive Control (NMPC) in addition to the use of behavioural cloning to mimic the NMPC using a feedforward neural network. It is shown that behavioural cloning does successfully transfer general flight characteristics but that the performance is degraded with respect to the NMPC. Additionally, a sensitivity analysis was performed to investigate the effects of improper parameter estimation on controller performance. The most interesting result from this analysis is the strong sensitivity of both controllers to changes in centre of gravity location and mass.},
+  note     = {Smeur, E.J.J. (mentor); Ma, Z. (graduation committee); Delft University of Technology (degree granting institution)},
+  type     = {mathesis},
+}
+
+@MastersThesis{uuid:bd663e11-947f-4ae1-ae2d-860d44fba7af,
+  author   = {KALYANASUNDARAM, DARSHAN },
+  school   = {TU Delft Mechanical, Maritime and Materials Engineering},
+  keywords = {Factor graphs; Inventory scanning; Warehouse},
+  title    = {Factor graphs for inventory label scanning in warehouse},
+  year     = {2023},
+  url      = {http://resolver.tudelft.nl/uuid:bd663e11-947f-4ae1-ae2d-860d44fba7af},
+  abstract = {A key important part of a warehouse operation is to keep track of the products in the warehouse. Traditionally, handheld scanners are used to scan the products to perform a stock count. The advancements in robotics have paved the way for new technologies that can improve the scanning process. This work shows how prior knowledge and warehouse structure can be used to perform scanning operations. The method uses a localized camera in the warehouse whose estimates drift over time and the knowledge about the environment to estimate the correct location of the product using factor graphs. The proposed method shows by exploiting the structure of the warehouse the drift in the VIO(Visual Inertial Odometry) can be reduced and the position estimation of the location labels can be improved},
+  note     = {de Croon, G.C.H.E. (mentor); Alonso Mora, J. (mentor); Ozo, Michaël (mentor); Caesar, H.C. (graduation committee); Delft University of Technology (degree granting institution)},
+  type     = {mathesis},
+}
+
+@MastersThesis{uuid:ab98e53a-5931-4b78-98ec-f0cb6df20986,
+  author   = {Erwich, Hajo },
+  school   = {TU Delft Aerospace Engineering},
+  keywords = {gas sensing; benchmarking; simulation; source localization; gas dispersion; odour souce localization},
+  title    = {GSL-Bench: High Fidelity Gas Source Localization Benchmarking},
+  year     = {2023},
+  url      = {http://resolver.tudelft.nl/uuid:ab98e53a-5931-4b78-98ec-f0cb6df20986},
+  abstract = {Gas Source Localization (GSL) is a challenging field of research within the robotics community. Existing methods vary widely and each has its own strengths and weaknesses. Existing GSL evaluations vary in environment size, wind conditions, and gas simulation fidelity, thereby complicating objective comparison between algorithms. They also lack photo-realistic rendering for the integration of obstacle avoidance. In this paper, we propose GSL-Bench, a benchmarking suite to evaluate the performance of GSL algorithms. GSL-Bench features high-fidelity graphics and gas simulation. Realism is further increased by simulating relevant gas and wind sensors. Scene generation is simplified with the introduction of AutoGDM+, capable of procedural environment generation, CFD and particle-based gas dispersion simulation. To illustrate GSL-Bench's capabilities, three algorithms are compared in six warehouse settings of increasing complexity: E. Coli, dung beetle and a random walker. Our results demonstrate GSL-Bench's ability to provide valuable insights into algorithm performance.},
+  note     = {de Croon, G.C.H.E. (mentor); Duisterhof, B.P. (graduation committee); Delft University of Technology (degree granting institution)},
+  type     = {mathesis},
+}
+
+@MastersThesis{uuid:6320374a-b84d-4bbf-be48-10cee914b9e0,
+  author   = {de Vries, Rinto },
+  school   = {TU Delft Aerospace Engineering},
+  keywords = {mav; mpc; mavlab; model predictive control; cbf; control barrier function; trajectory planning; esdf; euclidean signed distance field; uav; drone; collision avoidance; obstacle avoidance},
+  title    = {Application of Control Barrier Functions to Collision Free Model Predictive Control: Robust UAV Trajectories with MPC-CBF and Euclidean Signed Distance Fields},
+  year     = {2023},
+  url      = {http://resolver.tudelft.nl/uuid:6320374a-b84d-4bbf-be48-10cee914b9e0},
+  abstract = {Recent literature in real-time trajectory planning has proposed using Control Barrier Functions (CBFs) as collision constraints in Model Predictive Control (MPC) for efficient guidance, a concept referred to as MPC-CBF. This concept has been explored for both first and second-order CBFs. However, these approaches relied on an analytical description of the environment. Building upon this, we propose combining MPC-CBF with Euclidean Signed Distance Fields (ESDFs), eliminating the need for such an analytical model of the environment. Notably, we extend this approach to a new field by applying it to Unmanned Aerial Vehicles (UAVs). Through simulations, we compare flown trajectories and noise robustness for distance constraints, first-order CBF constraints and second-order CBF constraints. First-order CBF constraints outperform distance constraints, excelling in path planning and noise resilience. Second-order CBF constraints face challenges due to numerical approximations of the hessian of the ESDF and stricter dependency on an accurate acceleration model, limiting their practicality for UAVs. The proposed control framework was tested by safely maneuvering an enterprise inspection drone around a Boeing 787-9 aircraft inside an aircraft hangar, confirming its effectiveness in collision avoidance and real-world scenarios.},
+  note     = {Smeur, E.J.J. (mentor); Horstink, Thomas (graduation committee); Delft University of Technology (degree granting institution)},
+  type     = {mathesis},
+}
+
 @MastersThesis{uuid:1edec476-3b58-458d-a4a6-cbba30b783e6,
   author   = {Burgers, Tim },
   school   = {TU Delft Aerospace Engineering},
@@ -326,18 +410,6 @@
   type     = {mathesis},
 }
 
-@MastersThesis{uuid:4e4e333d-643f-43b9-99cb-650d697f5baa,
-  author   = {SURYAVANSHI, KARTIK },
-  school   = {TU Delft Mechanical, Maritime and Materials Engineering},
-  keywords = {Reactionless Force Balancing; Configurable Robot; Mechanism Design; Parallel Robot; Aerial Manipulation},
-  title    = {ADAPT: A 3 Degrees of Freedom Reconfigurable Force Balanced Parallel Manipulator for Aerial Applications},
-  year     = {2022},
-  url      = {http://resolver.tudelft.nl/uuid:4e4e333d-643f-43b9-99cb-650d697f5baa},
-  abstract = {In this work, we present the ADAPT, a novel reconfigurable force-balanced parallel manipulator with pantograph legs for spatial motions applied underneath a drone. The reconfigurable aspect allows different motion-based 3-DoF operation modes like translational, rotational, mixed, planar without disassembly. For the purpose of this study, the manipulator is used in translation mode only. A kinematic model is developed and validated for the manipulator. The design and motion capabilities are also validated both by conducting dynamics simulations of a simplified model on MSC ADAMS, and experiments on the physical setup.<br/>The force-balanced nature of this novel design decouples the motion of the manipulator’s end-effector from the base, zeroing the reaction forces, making this design ideally suited for aerial manipulation in unmanned aerial vehicles (UAVs) applications, or generic floating-base applications.},
-  note     = {van der Wijk, V. (mentor); Hamaza, S. (mentor); Herder, J.L. (graduation committee); Delft University of Technology (degree granting institution)},
-  type     = {mathesis},
-}
-
 @MastersThesis{uuid:66c34a84-5b47-49dd-b560-2836d9696e3c,
   author   = {Collicelli, Alessandro },
   school   = {TU Delft Aerospace Engineering},
@@ -347,6 +419,18 @@
   url      = {http://resolver.tudelft.nl/uuid:66c34a84-5b47-49dd-b560-2836d9696e3c},
   abstract = {Incremental Nonlinear Dynamics Inversion (INDI) flight controllers are sensor-based control systems, that are robust towards model uncertainty and with good disturbance rejection characteristics. These controllers show coupling effects in structural modes when implemented in specific flying vehicles with low-frequency structural motions. This paper investigates different INDI implementations, standard INDI, hybrid INDI, and notch filter placement in the INDI loop via simulation and flight tests on the Nederdrone. System identification of the structural characteristics of the vehicle and the system’s yaw dynamics are executed via ground vibration and hover flight tests. Closed-loop behaviour of theINDI inner-loop, disturbance rejection performance, and outer loop step-tracking performance was assessed with dedicated flight tests. The investigated INDI solutions show similar disturbance rejection and outer-loop step tracking performance, while the hybrid INDI solution performs a better nonlinear dynamic inversion. <br/>Index Terms—INDI, complementary filter, unmanned vehicle, flight control system structural motion coupling},
   note     = {Smeur, E.J.J. (mentor); Pollack, T.S.C. (mentor); Delft University of Technology (degree granting institution)},
+  type     = {mathesis},
+}
+
+@MastersThesis{uuid:4e4e333d-643f-43b9-99cb-650d697f5baa,
+  author   = {SURYAVANSHI, KARTIK },
+  school   = {TU Delft Mechanical, Maritime and Materials Engineering},
+  keywords = {Reactionless Force Balancing; Configurable Robot; Mechanism Design; Parallel Robot; Aerial Manipulation},
+  title    = {ADAPT: A 3 Degrees of Freedom Reconfigurable Force Balanced Parallel Manipulator for Aerial Applications},
+  year     = {2022},
+  url      = {http://resolver.tudelft.nl/uuid:4e4e333d-643f-43b9-99cb-650d697f5baa},
+  abstract = {In this work, we present the ADAPT, a novel reconfigurable force-balanced parallel manipulator with pantograph legs for spatial motions applied underneath a drone. The reconfigurable aspect allows different motion-based 3-DoF operation modes like translational, rotational, mixed, planar without disassembly. For the purpose of this study, the manipulator is used in translation mode only. A kinematic model is developed and validated for the manipulator. The design and motion capabilities are also validated both by conducting dynamics simulations of a simplified model on MSC ADAMS, and experiments on the physical setup.<br/>The force-balanced nature of this novel design decouples the motion of the manipulator’s end-effector from the base, zeroing the reaction forces, making this design ideally suited for aerial manipulation in unmanned aerial vehicles (UAVs) applications, or generic floating-base applications.},
+  note     = {van der Wijk, V. (mentor); Hamaza, S. (mentor); Herder, J.L. (graduation committee); Delft University of Technology (degree granting institution)},
   type     = {mathesis},
 }
 
@@ -770,18 +854,6 @@
   type     = {mathesis},
 }
 
-@MastersThesis{uuid:15f2daf8-1596-4514-8b1b-e139881cfaf3,
-  author   = {Falcão da Cruz Rodrigues Lourenço, Eduardo },
-  school   = {TU Delft Aerospace Engineering},
-  keywords = {Leader-Follower; Evolutionary Robotics; Relative Localization},
-  title    = {An intelligent leader-follower neural controller in adverse observability scenarios},
-  year     = {2020},
-  url      = {http://resolver.tudelft.nl/uuid:15f2daf8-1596-4514-8b1b-e139881cfaf3},
-  abstract = {A high-level neural controller for leader-follower flight is presented. State of the art range-based relative localization schemes that rely exclusively on onboard sensors present an additional challenge to the leader-follower control problem since they restrict the flight conditions that guarantee observability. This novel controller was developed over an evolutionary process in which the simulation environment resembled the real-life constraints a group of MAVs would encounter. During the learning stage, a group of three agents is used, where one acts as a leader and flies a random trajectory, and the other two act as followers guided by a candidate controller that dictates the desired velocity commands. In the end, when equipped with the best-evolved controller, the follower agents are able to showcase a successful following behaviour that also enhances the observability of the system, although no observability metric was included in evolution.},
-  note     = {de Croon, G.C.H.E. (mentor); Coppola, M. (graduation committee); Delft University of Technology (degree granting institution)},
-  type     = {mathesis},
-}
-
 @MastersThesis{uuid:302426ff-a4a4-4f8a-967a-331ea71b1ba1,
   author   = {Veder, Rano },
   school   = {TU Delft Aerospace Engineering},
@@ -791,6 +863,18 @@
   url      = {http://resolver.tudelft.nl/uuid:302426ff-a4a4-4f8a-967a-331ea71b1ba1},
   abstract = {Obstacle avoidance is an essential topic in the field of autonomous drone research. When choosing an avoidance algorithm, many different options are available, each with their advantages and disadvantages. As there is currently no consensus on testing methods, it is quite challenging to compare the performance between algorithms. In this paper, we present AvoidBench, a benchmarking suite capable of evaluating the performance of vision-based obstacle avoidance algorithms for multi-rotors in simulation. Utilising a set of performance metrics, AvoidBench assigns performance scores to obstacle avoidance algorithms by subjecting them to a series of tasks. Using both Airsim and Unreal engine under the hood, we are able to provide high-fidelity visuals and dynamics, leading to a relatively small gap between simulation and reality. AvoidBench comes included with a simple, but powerful C++ and Python API which provides functionality for procedural environment generation, custom benchmark design, and an easy-to-use framework for users to implement their own vision-based obstacle avoidance methods. Implementing an obstacle avoidance method can be done entirely in a single file, allowing anyone to share and compare their obstacle detection and avoidance algorithms with others.},
   note     = {de Croon, G.C.H.E. (mentor); Delft University of Technology (degree granting institution)},
+  type     = {mathesis},
+}
+
+@MastersThesis{uuid:15f2daf8-1596-4514-8b1b-e139881cfaf3,
+  author   = {Falcão da Cruz Rodrigues Lourenço, Eduardo },
+  school   = {TU Delft Aerospace Engineering},
+  keywords = {Leader-Follower; Evolutionary Robotics; Relative Localization},
+  title    = {An intelligent leader-follower neural controller in adverse observability scenarios},
+  year     = {2020},
+  url      = {http://resolver.tudelft.nl/uuid:15f2daf8-1596-4514-8b1b-e139881cfaf3},
+  abstract = {A high-level neural controller for leader-follower flight is presented. State of the art range-based relative localization schemes that rely exclusively on onboard sensors present an additional challenge to the leader-follower control problem since they restrict the flight conditions that guarantee observability. This novel controller was developed over an evolutionary process in which the simulation environment resembled the real-life constraints a group of MAVs would encounter. During the learning stage, a group of three agents is used, where one acts as a leader and flies a random trajectory, and the other two act as followers guided by a candidate controller that dictates the desired velocity commands. In the end, when equipped with the best-evolved controller, the follower agents are able to showcase a successful following behaviour that also enhances the observability of the system, although no observability metric was included in evolution.},
+  note     = {de Croon, G.C.H.E. (mentor); Coppola, M. (graduation committee); Delft University of Technology (degree granting institution)},
   type     = {mathesis},
 }
 
@@ -862,7 +946,7 @@
   year     = {2020},
   url      = {http://resolver.tudelft.nl/uuid:4b92f6b0-dc40-4946-a1ae-7efd0df79401},
   abstract = {This research presents the derivation, implementation and safety assessment of a velocity obstacle- based conflict resolution method to be used by UAVs flying within a horizontally restricted airspace by a geofence under the presence of wind. Two parameters indicating the safety of the applied conflict resolution method have been measured, i.e., the Intrusion Prevention Rate (IPR) and the Violation Prevention Rate of the Geofence (VPRG). Three coordination rule-sets have been implemented i.e., 1) geometric optimum (OPT), 2) geometric optimum from target heading (DEST) and 3) only change in heading (HDG). These rule-sets have been assessed during a safety assessment. It was concluded that the OPT rule-set performed best in terms of the IPR and the DEST rule-set performed best in terms of the VPRG under windy and wind calm conditions. The HDG rule-set performed worst in terms of both safety parameters. It was noted that both safety parameters are the lowest when conflicts occur close the geofence under windy conditions for all implemented rule-sets.},
-  note     = {Ellerbroek, J. (mentor); Remes, B.D.W. (mentor); Hoekstra, J.M. (graduation committee); Delft University of Technology (degree granting institution)},
+  note     = {Ellerbroek, Joost (mentor); Remes, B.D.W. (mentor); Hoekstra, J.M. (graduation committee); Delft University of Technology (degree granting institution)},
   type     = {mathesis},
 }
 
@@ -914,18 +998,6 @@
   type     = {mathesis},
 }
 
-@MastersThesis{uuid:88e689a1-eb19-4e48-91b2-3b122a824503,
-  author   = {Spronk, Simon },
-  school   = {TU Delft Aerospace Engineering},
-  keywords = {},
-  title    = {An NonlinearModel Predictive Control Approach to Autonomous UAV Racing Trajectory Generation &amp; Control},
-  year     = {2020},
-  url      = {http://resolver.tudelft.nl/uuid:88e689a1-eb19-4e48-91b2-3b122a824503},
-  abstract = {When observing an Autonomous Unmanned Aerial Vehicle(UAV) race, one would be hard-pressed to call it racing as the actual velocities attained are extremely low. This article addresses this shortcoming by proposing a method of generating and executing a racing trajectory for a UAV, through a series of position objectives representative of a racing environment, with the goal of significantly improving the velocity when compared to the current norm of PID controllers. The method consists of applying Nonlinear Model Predictive Control with the capability of dynamically updating the position goal based upon internal state estimation to generate a set of inputs for a UAV. To prove the viability of the proposed method we test by using numerical simulations, a flight simulator environment(Gazebo) and a series of real-world flight tests on the Bebop1 UAV. Through 2 iterations of the testing process it is proven that the method is able to significantly decrease the flight time ()through both simple and more complex short range manoeuvres(2m-4m). However model errors and an inability to fully control thrust on the UAV introduce a significant and consistent position error.},
-  note     = {de Croon, Guido (mentor); Li, Shuo (graduation committee); Delft University of Technology (degree granting institution)},
-  type     = {mathesis},
-}
-
 @MastersThesis{uuid:fc2e13cb-4ea1-4aa7-b7f2-1d8d9478daf4,
   author   = {Spronk, Simon },
   school   = {TU Delft Aerospace Engineering},
@@ -935,6 +1007,18 @@
   url      = {http://resolver.tudelft.nl/uuid:fc2e13cb-4ea1-4aa7-b7f2-1d8d9478daf4},
   abstract = {hen observing an Autonomous Unmanned Aerial Vehicle(UAV) race, one would be hard-pressed to call it racing as the actual velocities attained are extremely low. This article addresses this shortcoming by proposing a method of generating and executing a racing trajectory for a UAV, through a series of position objectives representative of a racing environment, with the goal of significantly improving the velocity when compared to the current norm of PID controllers. The method consists of applying Nonlinear Model Predictive Control with the capability of dynamically updating the position goal based upon internal state estimation to generate a set of inputs for a UAV. To prove the viability of the proposed method we test by using numerical simulations, a flight simulator environment(Gazebo) and a series of real-world flight tests on the Bebop1 UAV. Through 2 iterations of the testing process it is proven that the method is able to significantly(approximately 1s) decrease the flight time through both simple and more complex short range manoeuvres(2m-4m). However model errors and an inability to fully control thrust on the UAV introduce a significant and consistent position error.},
   note     = {de Croon, G.C.H.E. (mentor); Li, S. (graduation committee); Delft University of Technology (degree granting institution)},
+  type     = {mathesis},
+}
+
+@MastersThesis{uuid:88e689a1-eb19-4e48-91b2-3b122a824503,
+  author   = {Spronk, Simon },
+  school   = {TU Delft Aerospace Engineering},
+  keywords = {},
+  title    = {An NonlinearModel Predictive Control Approach to Autonomous UAV Racing Trajectory Generation &amp; Control},
+  year     = {2020},
+  url      = {http://resolver.tudelft.nl/uuid:88e689a1-eb19-4e48-91b2-3b122a824503},
+  abstract = {When observing an Autonomous Unmanned Aerial Vehicle(UAV) race, one would be hard-pressed to call it racing as the actual velocities attained are extremely low. This article addresses this shortcoming by proposing a method of generating and executing a racing trajectory for a UAV, through a series of position objectives representative of a racing environment, with the goal of significantly improving the velocity when compared to the current norm of PID controllers. The method consists of applying Nonlinear Model Predictive Control with the capability of dynamically updating the position goal based upon internal state estimation to generate a set of inputs for a UAV. To prove the viability of the proposed method we test by using numerical simulations, a flight simulator environment(Gazebo) and a series of real-world flight tests on the Bebop1 UAV. Through 2 iterations of the testing process it is proven that the method is able to significantly decrease the flight time ()through both simple and more complex short range manoeuvres(2m-4m). However model errors and an inability to fully control thrust on the UAV introduce a significant and consistent position error.},
+  note     = {de Croon, Guido (mentor); Li, Shuo (graduation committee); Delft University of Technology (degree granting institution)},
   type     = {mathesis},
 }
 
@@ -1010,18 +1094,6 @@
   type     = {mathesis},
 }
 
-@MastersThesis{uuid:cc607dbb-7116-4c9f-991f-988d832833a9,
-  author   = {Heitzig, Dorian },
-  school   = {TU Delft Aerospace Engineering},
-  keywords = {DelFly; Flapping Wing; Deformation; Fluid Structure Interaction},
-  title    = {Wing deformation measurements of the DelFly II in different flight conditions},
-  year     = {2019},
-  url      = {http://resolver.tudelft.nl/uuid:cc607dbb-7116-4c9f-991f-988d832833a9},
-  abstract = {This study investigates the wing deformation of the flapping-wing micro air vehicle (MAV) DelFly II in various flight configurations. Experiments were carried out with the MAV tethered in a windtunnel test section. To determine the best suited measurement approach, a trade-off study was carried out which showed that a point tracking approach with background illumination is most suitable. The therefore used high-speed camera pair and illumination were mounted on the same rotating frame with the DelFly, which allowed adequate viewing axes of the wings at for all pitch angles. Processing was done a purpose-build algorithm, allowing 136 points per wing to be measured simultaneously with an average lost point ratio of 3.4 % and an estimated accuracy of 0.25 mm. Results of hovering flight show some previously unnoticed behaviors. First, it was noted that the upper and lower wing on each side do not deform purely symmetric but show some considerable asymmetric behavior like heave and camber production. Furthermore, the upper wing shows a torsional wave and recoil behavior at faster flapping frequencies, which was shown to be beneficial in insect flight. Lastly, it was found that an air-buffer remains present between the wing surfaces at all times of the clap-and-peel motion (apart from the root trailing edge). This air-buffer increases once freestream velocity is added, which is investigated during the climbing flight study. Here, the reduced angle of attack of the wing is assumed to reduce the wing loading at faster climb, resulting in lower deformations outside the clap-and-peel motion. The isolated effect of a body pitch angle is also studied. Here, the asymmetrical freestream direction results in larger asymmetries such as wing alignment with the freestream direction and reduced camber and even camber reversal during the upstroke. In forward flight the pitch angle is changed simultaneously with the flapping frequency and freestream velocity. Due to the non-linear properties the wing deforms not directly as a superposition of the individual effects. Deviations are mostly present in increased asymmetry in incidence angle, while the camber behaves more linear and the clap-and-peel motion also remains relatively unchanged. The torsional wave and recoil are here however reduced. Descending flight was also tested. Velocities below 1m/s result in relatively minor deformation changes, while faster descent leads to large flapping frequency fluctuations, making interpretation of the results impossible.},
-  note     = {van Oudheusden, B.W. (mentor); De Breuker, R. (graduation committee); de Wagter, C. (graduation committee); Olejnik, D.A. (mentor); Delft University of Technology (degree granting institution)},
-  type     = {mathesis},
-}
-
 @MastersThesis{uuid:ce520f94-bd3c-41a5-9ddd-edfdf6ead35e,
   author   = {Chatterjee, Abhishek },
   school   = {TU Delft Aerospace Engineering},
@@ -1031,6 +1103,18 @@
   url      = {http://resolver.tudelft.nl/uuid:ce520f94-bd3c-41a5-9ddd-edfdf6ead35e},
   abstract = {The exceptional flight capabilities of insects have long amazed and inspired researchers and roboticists striving to make Micro Aerial Vehicles (MAVs) smaller and more agile. It is well known that optical flow plays a prominent role in insect flight control and navigation, and hence it is being increasingly investigated for applications in flying robots as well. However, optical flow based strategies for estimation and stabilization of orientation remain obscure in literature. In this report, we introduce a novel state estimation algorithm based on optical flow measurements and the knowledge of efference copies. The proposed technique estimates the following states of a flying robot (constrained to move with three degrees of freedom): roll angle, rate of change of roll angle, horizontal and vertical components of velocity and height. The estimator only utilizes the knowledge of control inputs and optical flow measurements obtained from a downward looking monocular camera. Through non-linear observability analysis, we theoretically prove the feasibility of estimating the attitude of a MAV using ventral flow and divergence measurements. Based on the findings of the observability analysis, an extended Kalman filter state estimator is designed and its performance is verified in simulations and through flight data recorded on a real flying robot. To the best of our knowledge, the introduced strategy is the first attitude estimation technique that utilizes monocular optical flow as the only sensory information.<br/><br/>Besides the investigation on optical flow based attitude estimation technique, this thesis presents a comprehensive literature survey on the main topics relevant to the work.},
   note     = {de Croon, G.C.H.E. (mentor); Olejnik, D.A. (graduation committee); Delft University of Technology (degree granting institution)},
+  type     = {mathesis},
+}
+
+@MastersThesis{uuid:cc607dbb-7116-4c9f-991f-988d832833a9,
+  author   = {Heitzig, Dorian },
+  school   = {TU Delft Aerospace Engineering},
+  keywords = {DelFly; Flapping Wing; Deformation; Fluid Structure Interaction},
+  title    = {Wing deformation measurements of the DelFly II in different flight conditions},
+  year     = {2019},
+  url      = {http://resolver.tudelft.nl/uuid:cc607dbb-7116-4c9f-991f-988d832833a9},
+  abstract = {This study investigates the wing deformation of the flapping-wing micro air vehicle (MAV) DelFly II in various flight configurations. Experiments were carried out with the MAV tethered in a windtunnel test section. To determine the best suited measurement approach, a trade-off study was carried out which showed that a point tracking approach with background illumination is most suitable. The therefore used high-speed camera pair and illumination were mounted on the same rotating frame with the DelFly, which allowed adequate viewing axes of the wings at for all pitch angles. Processing was done a purpose-build algorithm, allowing 136 points per wing to be measured simultaneously with an average lost point ratio of 3.4 % and an estimated accuracy of 0.25 mm. Results of hovering flight show some previously unnoticed behaviors. First, it was noted that the upper and lower wing on each side do not deform purely symmetric but show some considerable asymmetric behavior like heave and camber production. Furthermore, the upper wing shows a torsional wave and recoil behavior at faster flapping frequencies, which was shown to be beneficial in insect flight. Lastly, it was found that an air-buffer remains present between the wing surfaces at all times of the clap-and-peel motion (apart from the root trailing edge). This air-buffer increases once freestream velocity is added, which is investigated during the climbing flight study. Here, the reduced angle of attack of the wing is assumed to reduce the wing loading at faster climb, resulting in lower deformations outside the clap-and-peel motion. The isolated effect of a body pitch angle is also studied. Here, the asymmetrical freestream direction results in larger asymmetries such as wing alignment with the freestream direction and reduced camber and even camber reversal during the upstroke. In forward flight the pitch angle is changed simultaneously with the flapping frequency and freestream velocity. Due to the non-linear properties the wing deforms not directly as a superposition of the individual effects. Deviations are mostly present in increased asymmetry in incidence angle, while the camber behaves more linear and the clap-and-peel motion also remains relatively unchanged. The torsional wave and recoil are here however reduced. Descending flight was also tested. Velocities below 1m/s result in relatively minor deformation changes, while faster descent leads to large flapping frequency fluctuations, making interpretation of the results impossible.},
+  note     = {van Oudheusden, B.W. (mentor); De Breuker, R. (graduation committee); de Wagter, C. (graduation committee); Olejnik, D.A. (mentor); Delft University of Technology (degree granting institution)},
   type     = {mathesis},
 }
 
@@ -1246,7 +1330,7 @@
   year     = {2018},
   url      = {http://resolver.tudelft.nl/uuid:07bc64ba-42e3-4aa7-ba9b-ac0ac4e0e7a1},
   abstract = {Safe navigation in a cluttered environment is a key capability for the autonomous operation of Micro Aerial Vehicles (MAVs). This work explores a (deep) Reinforcement Learning (RL) based approach for monocular vision based obstacle avoidance and goal directed navigation for MAVs in cluttered environments. We investigated this problem in the context of forest flight under the tree canopy.<br/><br/>Our focus was on training an effective and practical neural control module, that is easy to integrate into conventional control hierarchies and can extend the capabilities of existing autopilot software stacks. This module has the potential to greatly improve the autonomous capabilities of MAVs, and their applicability for many interesting real world use-cases. We demonstrated training this module in a visually highly realistic virtual forest environment, created with a state-of-the-art computer game engine.},
-  note     = {de Croon, Guido (mentor); van Hecke, Kevin (mentor); Delft University of Technology (degree granting institution)},
+  note     = {de Croon, G.C.H.E. (mentor); van Hecke, K.G. (mentor); Delft University of Technology (degree granting institution)},
   type     = {mathesis},
 }
 
