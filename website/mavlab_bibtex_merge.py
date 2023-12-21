@@ -22,6 +22,7 @@ print(fname + ' contains ',len(bib_website.entries), ' entries')
 # Results
 mavlab_missing = bibtexparser.bibdatabase.BibDatabase()
 mavlab_merged  = bibtexparser.bibdatabase.BibDatabase()
+mavlab_merged_web  = bibtexparser.bibdatabase.BibDatabase()
 
 verbose = False
 
@@ -58,6 +59,7 @@ for b in bib_pure.entries:
                 if verbose:
                     print('-DOI merged',b['ID'],b2['ID'])
                 mavlab_merged.entries.append(b)
+                mavlab_merged_web.entries.append(b2)
                 bib_website.entries.remove(b2)
                 merged = 1
                 break
@@ -68,6 +70,7 @@ for b in bib_pure.entries:
                 if verbose:
                     print('-URL merged',b['ID'],b2['ID'])
                 mavlab_merged.entries.append(b)
+                mavlab_merged_web.entries.append(b2)
                 bib_website.entries.remove(b2)
                 merged = 1
                 break
@@ -80,6 +83,7 @@ for b in bib_pure.entries:
                 if verbose:
                     print('-merged',b['ID'],b2['ID'])
                 mavlab_merged.entries.append(b)
+                mavlab_merged_web.entries.append(b2)
                 bib_website.entries.remove(b2)
                 merged = 1
                 break
@@ -106,6 +110,12 @@ with open('mavlab_pure_extra.bib', 'w', encoding='utf8') as bibfile:
 with open('mavlab_merged.bib', 'w', encoding='utf8') as bibfile:
     if len(mavlab_merged.entries) > 0:
         bibfile.write(writer.write(mavlab_merged))
+    else:
+        bibfile.write('Empty')
+ 
+with open('mavlab_merged_web.bib', 'w', encoding='utf8') as bibfile:
+    if len(mavlab_merged_web.entries) > 0:
+        bibfile.write(writer.write(mavlab_merged_web))
     else:
         bibfile.write('Empty')
  
