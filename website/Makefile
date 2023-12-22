@@ -1,5 +1,6 @@
 
 all:
+	# cd  ../ && python ./filter_pure_mavlab.py
 	cd  ../ && python ./filter_arxiv.py
 	cat ../arxiv_nopub.bib > all.bib
 	cat ../dataverse.bib >> all.bib
