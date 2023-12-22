@@ -33,12 +33,15 @@ for b in bib_database.entries:
     title = b['title']
     authors = b['author']
     delflypaper = False
+    if 'keywords' in b:
+        title = title + ' ' + b['keywords']
 
     if 'delfly' in title.lower():
         delflypaper = True
     
     if 'flapping' in title.lower():
-        delflypaper = True
+        if not ('flapping dynamics' in title.lower()):
+            delflypaper = True
 
     if 'flapper' in title.lower():
         delflypaper = True
@@ -52,6 +55,8 @@ for b in bib_database.entries:
     if delflypaper:
         if ('url' in b) and (not ('pdf' in b)):
             b['pdf'] = b['url']
+        #if 'abstract' in b:
+        #    b.pop('abstract')
         delfly_database.entries.append(b)
     else:
         rest.entries.append(b)
