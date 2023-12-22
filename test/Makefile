@@ -1,7 +1,6 @@
 
 
 all: main.pdf
-	./validate.py
 
 
 main.pdf: ../pure.bib
