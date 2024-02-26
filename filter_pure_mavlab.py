@@ -14,7 +14,7 @@ chairs = {
                'ramirez', 'farinha', 'ponti', 'blaha', 'nowak' ]}
 
 # Full authors name removal
-remove = ['V. Ho', 'A. Sharma', 'Max Li']
+remove = ['V. Ho', 'A. Sharma', 'Max Li', 'Yifei Li']
 #    , 'Merkus', 'Costa', 'Engelen', 'Xue Wu', 'S Wu', 'S-F Wu', 'SF Wu', 'M Wang', 'Xuerui Wang',
 #        'Guangming Zeng',  'Sherry Wang', 'Yanyang Wang', 'Xiaotian Wang', 'Xue Wu', 'T Chen',
 #        'GT Zheng']
