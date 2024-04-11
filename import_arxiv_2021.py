@@ -7,7 +7,7 @@ import codecs
 
 def download_list(page, filename):
 
-    search= ['guido de croon', 'christophe de wagter', 'ewoud smeur', 'sjoerd tijmons', 'julien dupeyroux', 'salua hamaza']
+    search= ['guido de croon', 'christophe de wagter', 'ewoud smeur', 'sjoerd tijmons', 'julien dupeyroux', 'salua hamaza', 'marija popovic']
     
     url = 'https://arxiv.org/search/?query='
 
@@ -21,7 +21,7 @@ def download_list(page, filename):
     
     for person in search:
 
-        u = 'https://arxiv.org/search/?searchtype=all&size=200&query=' + person.replace(' ','+')
+        u = 'https://arxiv.org/search/?searchtype=author&size=200&query=' + person.replace(' ','+')
 
         bibf = codecs.open(filename,'a', 'utf-8')
         bibf.write('# Import from: ' + u + '\n')
@@ -32,7 +32,7 @@ def download_list(page, filename):
         p = requests.get(u)
 
         # Get lines with dataset links
-        interest = [s.strip("\r\n").strip().split('arXiv:')[1].strip('</a>') for s in p.text.splitlines(True) if 'arXiv:' in s ]
+        interest = [s.strip("\r\n").strip().split('arXiv:')[1].strip('</a>').strip('</span') for s in p.text.splitlines(True) if 'arXiv:' in s ]
 
         for i in interest:
             bibf.write('# - ' + i + '\n')
