@@ -10,7 +10,7 @@ MAVLAB = ['wagter' , 'croon', 'remes',
 
 
 search = '%20OR%20'.join(MAVLAB)
-url = 'https://repository.tudelft.nl/islandora/search/' + search + 'Wagter%20OR%20croon%20OR%20smeur%20OR%20remes''?collection=education&display=tud_csv'
+url = 'https://repository.tudelft.nl/islandora/search/' + search + 'Wagter%20OR%20croon%20OR%20smeur%20OR%20remes%20OR%20popovic''?collection=education&display=tud_csv'
 
 print(url)
 
