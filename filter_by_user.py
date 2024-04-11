@@ -3,7 +3,7 @@ import json
 
 from collections import OrderedDict
 
-usernames = {'wagter', 'croon', 'smeur', 'remes', 'hamaza'}
+usernames = {'wagter', 'croon', 'smeur', 'remes', 'hamaza', 'popovic'}
 
 print(' --- Read all papers ---')
 parser = bibtexparser.bparser.BibTexParser(common_strings=True)

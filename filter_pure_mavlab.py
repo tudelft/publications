@@ -4,7 +4,7 @@ import json
 from collections import OrderedDict
 
 chairs = {
-    'MAVLAB': ['valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes',
+    'MAVLAB': ['valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes', 'popovic', 'popović',
                'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'horst', 'tienen', 'hecke',
                'oliveira', 'lentink', 'percin', 'tay', 'noyon', 'dupeyroux', 'hamaza', 'ferede', 'bahnam',
                'mancinelli', 'stroobants', 'hagenaars',
