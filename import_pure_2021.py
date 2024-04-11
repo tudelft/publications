@@ -1,4 +1,5 @@
 # Download HTML
+import sys
 import requests
 from lxml import html
 # Parse RSS-XML
@@ -8,6 +9,7 @@ from bs4 import BeautifulSoup
 # Store FILE
 import codecs
 
+sys.stdout.reconfigure(encoding='utf-8')
 
 #root = ET.parse('https://research.tudelft.nl/en/organisations/control-operations/publications/?format=rss&page=5').getroot()
 
