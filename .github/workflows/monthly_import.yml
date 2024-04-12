@@ -25,8 +25,9 @@ jobs:
 
     - name: Get current date
       id: date
-      run: echo "action_state=date::$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_OUTPUT
-      run: echo "BRANCH_NAME=import-$action_state" >> $GITHUB_ENV
+      run: |
+        echo "action_state=date::$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_OUTPUT
+        echo "BRANCH_NAME=import-$action_state" >> $GITHUB_ENV
 
     - name: Test with environment variables
       run: echo "$BRANCH_NAME"
@@ -34,8 +35,7 @@ jobs:
     - name: Cleanup branches if needed
       id: cleanup-branches
       continue-on-error: true
-      run: |
-        git branch -D ${{ env.BRANCH_NAME }}
+      run: git branch -D ${{ env.BRANCH_NAME }}
 
     - name: Setup branch
       if: steps.cleanup-branches.outcome == 'failure'
@@ -43,15 +43,13 @@ jobs:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git checkout -b ${{ env.BRANCH_NAME }}
-
+    
     - name: Run python scripts
       continue-on-error: true
       run: |
-#        python ./import_arxiv_2021.py && git diff
         git add -A && git commit -m "Imported arXiv" --allow-empty
         python ./import_repository.py && git diff
         git add -A && git commit -m "Imported repository" --allow-empty
-#        python ./import_pure_2021.py && git diff
         git add -A && git commit -m "Imported PURE" --allow-empty
 
     - name: Push changes
@@ -67,7 +65,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         source_branch: ${{ env.BRANCH_NAME }}
         target_branch: master
-        title: Monthly Paper Update${{ env.BRANCH_NAME }}
+        title: Monthly Paper Update ${{ env.BRANCH_NAME }}
         body: "**Automated pull request**"
         old_string: "<!-- Monthly Paper Update ${{ env.BRANCH_NAME }} -->"
         new_string: "** Monthly Paper Update ${{ env.BRANCH_NAME }} **"
