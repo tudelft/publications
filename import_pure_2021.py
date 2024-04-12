@@ -41,8 +41,18 @@ def download_list(page, filename):
             #dom = html.fromstring(description)
             #journal  = dom.body.find_class('journal')
 
-            p = requests.get(link)
-            dom = html.fromstring(p.text)
+            htmltxt = '<html><body>txt</body></html>'
+            
+            # Try 5 times
+            for i in range(0,5):
+                try:
+                    p = requests.get(link)
+                    htmltxt = p.text
+                    break
+                except:
+                    print('Error attempt',i, link)
+                    pass
+            dom = html.fromstring(htmltxt)
             
             bib = dom.body.get_element_by_id('cite-BIBTEX').getchildren()[0]
                         
@@ -55,8 +65,17 @@ def download_list(page, filename):
             
             # dump bibtex into file
             for b in bib.getchildren():
-                soup = BeautifulSoup(html.tostring(b),features="lxml")
-                txt = soup.get_text()
+                # Try 5 times to download:
+                txt = '<html><body>txt</body></html>'
+                for i in range(0,5):
+                    try:
+                        soup = BeautifulSoup(html.tostring(b),features="lxml")
+                        txt = soup.get_text()
+                        break
+                    except:
+                        print('Error attempt',i, link)
+                        pass
+                
                 if '}' in txt:
                     bibf.write('\turl       = "'+ link +'",\n')
 
