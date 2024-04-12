@@ -1,4 +1,4 @@
-name: pilot_backup
+name: monthly_import
 
 on:
   schedule:
@@ -53,17 +53,17 @@ jobs:
       continue-on-error: true
       run: |
         python ./import_arxiv_2021.py && git diff
-        git add -A && git commit -m "Imported arXiv"
+        git add -A && git commit -m "Imported arXiv" --allow-empty
         python ./import_repository.py && git diff
-        git add -A && git commit -m "Imported repository"
+        git add -A && git commit -m "Imported repository" --allow-empty
         python ./import_pure_2021.py && git diff
-        git add -A && git commit -m "Imported PURE"
+        git add -A && git commit -m "Imported PURE" --allow-empty
       env:
         BRANCH_NAME: import-${{ steps.date.outputs.date }}
 
     - name: Push changes
       run: |
-        git push https://$USERNAME:$REPO_KEY@github.com/tudelft/Operations.git $BRANCH_NAME
+        git push https://$USERNAME:$REPO_KEY@github.com/tudelft/publications.git $BRANCH_NAME
       env:
         REPO_KEY: ${{secrets.PUSH_TOKEN}}
         USERNAME: github-actions[bot]
