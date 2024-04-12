@@ -26,8 +26,8 @@ jobs:
     - name: Get current date
       id: date
       run: |
-        echo "action_state=date::$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_OUTPUT
-        echo "BRANCH_NAME=import-$action_state" >> $GITHUB_ENV
+        echo "action_state=date::$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
+        echo "BRANCH_NAME=import-${{ env.action_state }}" >> $GITHUB_ENV
 
     - name: Test with environment variables
       run: echo "$BRANCH_NAME"
@@ -47,9 +47,11 @@ jobs:
     - name: Run python scripts
       continue-on-error: true
       run: |
+        python ./import_arxiv_2021.py && git diff
         git add -A && git commit -m "Imported arXiv" --allow-empty
         python ./import_repository.py && git diff
         git add -A && git commit -m "Imported repository" --allow-empty
+        python ./import_pure_2021.py && git diff
         git add -A && git commit -m "Imported PURE" --allow-empty
 
     - name: Push changes
