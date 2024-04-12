@@ -35,14 +35,14 @@ jobs:
       id: cleanup-branches
       continue-on-error: true
       run: |
-        git branch -D $BRANCH_NAME
+        git branch -D ${{ env.BRANCH_NAME }}
 
     - name: Setup branch
       if: steps.cleanup-branches.outcome == 'failure'
       run: |
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git checkout -b $BRANCH_NAME
+        git checkout -b ${{ env.BRANCH_NAME }}
 
     - name: Run python scripts
       continue-on-error: true
@@ -56,7 +56,7 @@ jobs:
 
     - name: Push changes
       run: |
-        git push https://$USERNAME:$REPO_KEY@github.com/tudelft/publications.git $BRANCH_NAME
+        git push https://$USERNAME:$REPO_KEY@github.com/tudelft/publications.git ${{ env.BRANCH_NAME }}
       env:
         REPO_KEY: ${{secrets.PUSH_TOKEN}}
         USERNAME: github-actions[bot]
@@ -65,10 +65,10 @@ jobs:
       uses: devops-infra/action-pull-request@v0.5.5
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        source_branch: $BRANCH_NAME
+        source_branch: ${{ env.BRANCH_NAME }}
         target_branch: master
-        title: Monthly Paper Update $BRANCH_NAME
+        title: Monthly Paper Update${{ env.BRANCH_NAME }}
         body: "**Automated pull request**"
-        old_string: "<!-- Monthly Paper Update $BRANCH_NAME -->"
-        new_string: "** Monthly Paper Update $BRANCH_NAME **"
+        old_string: "<!-- Monthly Paper Update ${{ env.BRANCH_NAME }} -->"
+        new_string: "** Monthly Paper Update ${{ env.BRANCH_NAME }} **"
         get_diff: true
