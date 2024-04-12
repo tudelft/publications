@@ -1,0 +1,83 @@
+name: pilot_backup
+
+on:
+  schedule:
+    - cron: '* * 1 * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        python -c "import sys; print('Python version:',sys.version)"
+
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M')"
+
+    - name: Test with environment variables
+      run: echo "$BRANCH_NAME"
+      env:
+        BRANCH_NAME: import-${{ steps.date.outputs.date }}
+
+    - name: Cleanup branches if needed
+      id: cleanup-branches
+      continue-on-error: true
+      run: |
+        git branch -D $BRANCH_NAME
+      env:
+        BRANCH_NAME: import-${{ steps.date.outputs.date }}
+
+    - name: Setup branch
+      if: steps.cleanup-branches.outcome == 'failure'
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git checkout -b $BRANCH_NAME
+      env:
+        BRANCH_NAME: import-${{ steps.date.outputs.date }}
+
+    - name: Run python scripts
+      continue-on-error: true
+      run: |
+        python ./import_arxiv_2021.py && git diff
+        git add -A && git commit -m "Imported arXiv"
+        python ./import_repository.py && git diff
+        git add -A && git commit -m "Imported repository"
+        python ./import_pure_2021.py && git diff
+        git add -A && git commit -m "Imported PURE"
+      env:
+        BRANCH_NAME: import-${{ steps.date.outputs.date }}
+
+    - name: Push changes
+      run: |
+        git push https://$USERNAME:$REPO_KEY@github.com/tudelft/Operations.git $BRANCH_NAME
+      env:
+        REPO_KEY: ${{secrets.PUSH_TOKEN}}
+        USERNAME: github-actions[bot]
+        BRANCH_NAME: import-${{ steps.date.outputs.date }}
+
+    - name: Make PR
+      uses: devops-infra/action-pull-request@v0.5.5
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        source_branch: $BRANCH_NAME
+        target_branch: master
+        title: Monthly Paper Update $BRANCH_NAME
+        body: "**Automated pull request**"
+        old_string: "<!-- Monthly Paper Update $BRANCH_NAME -->"
+        new_string: "** Monthly Paper Update $BRANCH_NAME **"
+        get_diff: true
+      env:
+        BRANCH_NAME: import-${{ steps.date.outputs.date }}
