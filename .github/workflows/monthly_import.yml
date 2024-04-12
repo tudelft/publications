@@ -25,20 +25,17 @@ jobs:
 
     - name: Get current date
       id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M')"
+      run: echo "action_state=date::$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_OUTPUT
+      run: echo "BRANCH_NAME=import-$action_state" >> $GITHUB_ENV
 
     - name: Test with environment variables
       run: echo "$BRANCH_NAME"
-      env:
-        BRANCH_NAME: import-${{ steps.date.outputs.date }}
 
     - name: Cleanup branches if needed
       id: cleanup-branches
       continue-on-error: true
       run: |
         git branch -D $BRANCH_NAME
-      env:
-        BRANCH_NAME: import-${{ steps.date.outputs.date }}
 
     - name: Setup branch
       if: steps.cleanup-branches.outcome == 'failure'
@@ -46,20 +43,16 @@ jobs:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git checkout -b $BRANCH_NAME
-      env:
-        BRANCH_NAME: import-${{ steps.date.outputs.date }}
 
     - name: Run python scripts
       continue-on-error: true
       run: |
-        python ./import_arxiv_2021.py && git diff
+#        python ./import_arxiv_2021.py && git diff
         git add -A && git commit -m "Imported arXiv" --allow-empty
         python ./import_repository.py && git diff
         git add -A && git commit -m "Imported repository" --allow-empty
-        python ./import_pure_2021.py && git diff
+#        python ./import_pure_2021.py && git diff
         git add -A && git commit -m "Imported PURE" --allow-empty
-      env:
-        BRANCH_NAME: import-${{ steps.date.outputs.date }}
 
     - name: Push changes
       run: |
@@ -67,7 +60,6 @@ jobs:
       env:
         REPO_KEY: ${{secrets.PUSH_TOKEN}}
         USERNAME: github-actions[bot]
-        BRANCH_NAME: import-${{ steps.date.outputs.date }}
 
     - name: Make PR
       uses: devops-infra/action-pull-request@v0.5.5
@@ -80,5 +72,3 @@ jobs:
         old_string: "<!-- Monthly Paper Update $BRANCH_NAME -->"
         new_string: "** Monthly Paper Update $BRANCH_NAME **"
         get_diff: true
-      env:
-        BRANCH_NAME: import-${{ steps.date.outputs.date }}
