@@ -26,8 +26,7 @@ jobs:
     - name: Get current date
       id: date
       run: |
-        echo "action_state=date::$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
-        echo "BRANCH_NAME=import-${{ env.action_state }}" >> $GITHUB_ENV
+        echo "BRANCH_NAME=import-$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
 
     - name: Test with environment variables
       run: echo "$BRANCH_NAME"
@@ -48,11 +47,22 @@ jobs:
       continue-on-error: true
       run: |
         python ./import_arxiv_2021.py && git diff
-        git add -A && git commit -m "Imported arXiv" --allow-empty
+        git diff --quiet || { git add -A && git commit -m "Imported arXiv";}
         python ./import_repository.py && git diff
-        git add -A && git commit -m "Imported repository" --allow-empty
+        git diff --quiet || { git add -A && git commit -m "Imported repository"; }
         python ./import_pure_2021.py && git diff
-        git add -A && git commit -m "Imported PURE" --allow-empty
+        git diff --quiet || { git add -A && git commit -m "Imported PURE"; }
+        python ./filter_pure_mavlab.py && git diff
+        git diff --quiet || { git add -A && git commit -m "Filtered MAVLab papers from PURE"; }
+        python ./filter_arxiv.py && git diff
+        git diff --quiet || { git add -A && git commit -m "Filtered arXiv papers"; }
+        make -C ./website
+        git diff --quiet || { git add -A && git commit -m "Updated list of papers for website"; }
+        git clean -df
+        python ./filter_delfly.py && git diff
+        python ./filter_by_user.py && git diff
+        git diff --quiet || { git add -A && git commit -m "Updated list of papers for DelFly and by user"; }
+
 
     - name: Push changes
       run: |
