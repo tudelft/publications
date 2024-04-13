@@ -31,7 +31,7 @@ jobs:
     - name: Test with environment variables
       run: echo "$BRANCH_NAME"
 
-    - name: Cleanup branche if needed
+    - name: Cleanup branches if needed
       id: cleanup-branches
       continue-on-error: true
       run: |
