@@ -45,15 +45,27 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git checkout -b ${{ env.BRANCH_NAME }}
     
-    - name: Run python scripts
+    - name: Import arXiv
       continue-on-error: true
       run: |
         python ./import_arxiv_2021.py && git diff
         git diff --quiet || { git add -A && git commit -m "Imported arXiv";}
+
+    - name: Import M.Sc. theses
+      continue-on-error: true
+      run: |
         python ./import_repository.py && git diff
         git diff --quiet || { git add -A && git commit -m "Imported repository"; }
+
+    - name: Import PURE - CS
+      continue-on-error: true
+      run: |
         python ./import_pure_2021.py && git diff
-        git diff --quiet || { git add -A && git commit -m "Imported PURE"; }
+#       git diff --quiet || { git add -A && git commit -m "Imported PURE"; }
+
+    - name: Filter papers and website export
+      continue-on-error: true
+      run: |
         python ./filter_pure_mavlab.py && git diff
         git diff --quiet || { git add -A && git commit -m "Filtered MAVLab papers from PURE"; }
         python ./filter_arxiv.py && git diff
@@ -63,12 +75,10 @@ jobs:
         git clean -df
         python ./filter_delfly.py && git diff
         python ./filter_by_user.py && git diff
-        git diff --quiet || { git add -A && git commit -m "Updated list of papers for DelFly and by user"; }
 
-
-    - name: Push changes
+    - name: Commit and Push changes
       run: |
-        git push https://$USERNAME:$REPO_KEY@github.com/tudelft/publications.git ${{ env.BRANCH_NAME }}
+        git diff --quiet || { git add -A && git commit -m "Updated list of papers: ${{ env.BRANCH_NAME }}" && git push https://$USERNAME:$REPO_KEY@github.com/tudelft/publications.git ${{ env.BRANCH_NAME }}; }
       env:
         REPO_KEY: ${{secrets.PUSH_TOKEN}}
         USERNAME: github-actions[bot]
