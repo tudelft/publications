@@ -60,8 +60,8 @@ jobs:
     - name: Import PURE - CS
       continue-on-error: true
       run: |
+        python ./import_pure_2021.py && git diff
         git diff --quiet || { git add -A && git commit -m "Imported PURE"; }
-#        python ./import_pure_2021.py && git diff
 
     - name: Filter papers and website export
       continue-on-error: true
@@ -71,8 +71,8 @@ jobs:
         python ./filter_arxiv.py && git diff
         git diff --quiet || { git add -A && git commit -m "Filtered arXiv papers"; }
         make -C ./website
-        git diff --quiet || { git add -A && git commit -m "Updated list of papers for website"; }
         git clean -df
+        git diff --quiet || { git add -A && git commit -m "Updated list of papers for website"; }
         python ./filter_delfly.py && git diff
         python ./filter_by_user.py && git diff
 
