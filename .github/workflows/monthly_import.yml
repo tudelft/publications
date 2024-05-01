@@ -2,7 +2,7 @@ name: monthly_import
 
 on:
   schedule:
-    - cron: '* * 1 * *'
+    - cron: '30 8 1 * *'
   workflow_dispatch:
 
 jobs:
