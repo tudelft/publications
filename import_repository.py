@@ -4,22 +4,29 @@ import requests
 import codecs
 from unidecode import unidecode
 
-MAVLAB = ['wagter' , 'croon', 'remes',
-             'karasek', 'smeur',  'dupeyroux',
-             'hamaza', '"Scheper, K.Y.W."']
 
+MAVLAB = ['wagter' , 'croon', 'remes',
+            'karasek', 'smeur',  'dupeyroux',
+            'hamaza', '"Scheper, K.Y.W."', '"popovic, marija"']
 
 search = '%20OR%20'.join(MAVLAB)
-url = 'https://repository.tudelft.nl/islandora/search/' + search + 'Wagter%20OR%20croon%20OR%20smeur%20OR%20remes%20OR%20popovic''?collection=education&display=tud_csv'
+# 'Wagter%20OR%20croon%20OR%20smeur%20OR%20remes%20OR%20popovic'
+url = 'https://repository.tudelft.nl/islandora/search/' + search + '?collection=education&display=tud_csv'
 
 print(url)
 
-p=0
-p = requests.get(url) # + '&page=%d' % pageno)
 
-with open('msc.csv', 'wb') as f:
-    f.write(p.text.encode())
-txt = p.text
+def msc_download_to_csv():
+
+    p=0
+    p = requests.get(url) # + '&page=%d' % pageno)
+
+    with open('msc.csv', 'wb') as f:
+        f.write(p.text.encode())
+    txt = p.text
+
+
+msc_download_to_csv()
 
 with open('msc.csv', 'rb') as f:
     txt = f.read().decode('utf-8')
