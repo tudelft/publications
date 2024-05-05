@@ -1,7 +1,4 @@
 import bibtexparser
-import json
-
-from collections import OrderedDict
 
 usernames = {'wagter', 'croon', 'smeur', 'remes', 'hamaza', 'popovic'}
 

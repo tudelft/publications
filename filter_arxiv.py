@@ -1,9 +1,4 @@
 import bibtexparser
-import json
-
-from collections import OrderedDict
-
-papers = dict()
 
 mavlabpapers = {}
 
