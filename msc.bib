@@ -2,6 +2,42 @@
 # Import from: https://repository.tudelft.nl/islandora/search/wagter%20OR%20croon%20OR%20remes%20OR%20karasek%20OR%20smeur%20OR%20dupeyroux%20OR%20hamaza%20OR%20"Scheper, K.Y.W."%20OR%20"popovic, marija"?collection=education&display=tud_csv
 
 
+@mastersthesis{uuid:7e9dd0aa-4d24-4100-a224-14e71f86cdda,
+	abstract  = {},
+	author    = {Gervas Montoya, Gabriel },
+	keywords  = {},
+	note      = {Smeur, E.J.J. (mentor); Varriale, Carmine (graduation committee); Georgopoulos, P. (graduation committee); Delft University of Technology (degree granting institution)},
+	school    = {TU Delft Aerospace Engineering; Grochowski, Bartłomiej },
+	title     = {IUVO: An Emergency Response Flyer},
+	type      = {mathesis},
+	url       = {http://resolver.tudelft.nl/uuid:7e9dd0aa-4d24-4100-a224-14e71f86cdda},
+	year      = {2024}
+}
+
+@mastersthesis{uuid:8649d62f-6266-44a4-89de-5b5805d83ae5,
+	abstract  = {This paper presents an encoder-decoder-style convolutional neural network (CNN) for the purpose of improving monocular and stereo depth estimation (SDE) estimates, by combining them with the corresponding monocular estimates through a fusion network, assisted by prior information to provide context for the fusion. Video cameras are commonly used for depth perception in robotics, especially weight-sensitive applications, such as on Micro Aerial Vehicles (MAV). The two primary paradigms for vision-based depth perception are monocular and stereo depth or disparity estimation, each having their own strengths and weaknesses. These strengths and weaknesses seem to be complementary, and thus a fusion of the two may result in more accurate predictions. In this paper, we investigate this fusion by training a CNN that combines stereo and monocular depth or disparity estimates. The fusion network is agnostic to the choice of the input networks, providing great flexibility. It was found that such a fusion network, while increasing the computational complexity of the depth perception pipeline, indeed improves the accuracy of the estimates. The number of outlier predictions has been significantly decreased, while also limiting some fundamental limitations of both stereo and monocular methods, such as errors arising from occluded regions.},
+	author    = {Tóth, Dani },
+	keywords  = {Computer Vision; Deep Learning; CNN; Depth Estimation},
+	note      = {de Croon, G.C.H.E. (mentor); van Dijk, Tom (mentor); de Wagter, C. (graduation committee); Eleftheroglou, N. (graduation committee); Delft University of Technology (degree granting institution)},
+	school    = {TU Delft Aerospace Engineering},
+	title     = {Deep Learning Fusion of Monocular and Stereo Depth Maps Using Convolutional Neural Networks},
+	type      = {mathesis},
+	url       = {http://resolver.tudelft.nl/uuid:8649d62f-6266-44a4-89de-5b5805d83ae5},
+	year      = {2024}
+}
+
+@mastersthesis{uuid:5aeb0475-b3d5-45a4-82c8-7b92fabbb683,
+	abstract  = {Quad-planes combine hovering and vertical takeoff and landing capability with fast and efficient forward flight. Regular Quad-planes with dedicated pusher motor can be subject to gust disturbances, and are not well-equipped to deal with actuator faults. Dual-axis Tilt-Rotor quad-planes are more maneuverable due to their overactuation. This also increases their gust resilience and allows them to hover statically after actuator failures. The vehicle in this paper uses an Incremental Nonlinear Dynamic Inversion (INDI ) controller, combined with a nonlinear Sequential Quadratic Programming (SQP) Control Allocation (CA ) algorithm, which can also find hover solutions in the case of actuator failures. We investigate both a combined allocation of linear and angular accelerations, as well as a cascaded allocation scheme. Due to large required changes in roll and pitch angles, the cascaded approach is selected in this research. Introduction of a tertiary control effort term, separation of attitude and actuator command optimization and a simulated Fault Detection and Identification ( FDI) mechanism led to repeated successful recovery from a motor failure in hover. Position tracking was demonstrated under failure in the recon- figured flight condition. Index Terms- Tilt-rotor, dual-axis tilt, quad-plane, FTC, over- actuated, control allocation},
+	author    = {Voß, Nico },
+	keywords  = {Tilt-rotor; FTC; Quadplane; control allocation; Overactuation},
+	note      = {Smeur, E.J.J. (mentor); Mancinelli, A. (mentor); Bombelli, A. (graduation committee); de Visser, C.C. (graduation committee); Delft University of Technology (degree granting institution)},
+	school    = {TU Delft Aerospace Engineering},
+	title     = {Fault Tolerant Control in Over-Actuated Hybrid Tilt-Rotor Unmanned Aerial Vehicles},
+	type      = {mathesis},
+	url       = {http://resolver.tudelft.nl/uuid:5aeb0475-b3d5-45a4-82c8-7b92fabbb683},
+	year      = {2024}
+}
+
 @mastersthesis{uuid:eb522c6b-1b1d-4988-8a7a-e2846dc697c5,
 	abstract  = {The estimation of optical flow, which determines the movement of objects in a visual scene, is a crucial problem in computer vision. It is essential for applications such as autonomous navigation, where precise motion estimation is critical for performance and safety.<br/><br/>Frame-based cameras capture sequences of still images at regular intervals, from which optical flow is traditionally extracted using optimization-based or learning-based methods. Recently, event-based cameras, which detect changes in pixel brightness asynchronously, have gained traction due to their high temporal resolution and robustness to motion blur, and many algorithms have been developed to estimate optical flow from this data. IDNet is a learning-based approach that achieves state-of-the-art performance. However, IDNet and similar models face two major challenges: they require labeled ground-truth data for training, which is scarce and difficult to collect, and they rely on recurrent neural networks (RNNs) with a fixed number of refinement iterations. This fixed iteration scheme does not adapt to scene complexity, limiting accuracy for complex flows and increasing computational effort for simpler patterns.<br/><br/>The aim of this project is to explore, implement, and evaluate potential methods to address these two mentioned limitations and enhance the capabilities of models like IDNet.<br/><br/>To remove the need for ground-truth data, a self-supervised learning paradigm was implemented by introducing a novel contrast maximization loss that assesses the blur present when accumulating raw events for a certain time interval and compensating it with the predicted flow. To assess the effectiveness of this method, models were trained on the benchmark MVSEC dataset, showing improved results over previous methods with up to 15% on some sequences and an 8% improvement on average. Based on these experiments and results, further research directions were proposed.<br/><br/>As for the problem of the current fixed iteration scheme, Deep Equilibrium Models were found to provide a promising pathway to solving it. These novel models reformulate their iterative structure into a root-finding problem and utilize traditional solvers to find a solution based on some tolerance, providing a trade-off between speed and accuracy. Moreover, they allow for direct differentiation through the network using only their final estimate, compared to previous methods that keep track of their state through all iterations, leading to an O(1) memory consumption. Implementing these and some additional ideas, the trained DEQ IDNet model reached competitive performance on the DSEC dataset while consuming 15% less memory. Yet, further work is needed to close the gap and achieve state-of-the-art performance.},
 	author    = {Shokolarov, Aleksandar },
@@ -74,18 +110,6 @@
 	year      = {2024}
 }
 
-@mastersthesis{uuid:9ab2b4ba-8f91-4891-8190-4a96f77c471e,
-	abstract  = {New insights into the landing behavior of bumblebees show an adaptive strategy where the optical flow expansion of the landing target is step-wise regulated. In this article, the potential benefits of this approach are studied by replicating the landing experiment with a quadrotor. To this end, an open-loop switching method is developed, enabling fast steps in divergence. An adaptive control law is used to deal with non-linear system dynamics, where the control gain is scheduled based on the control effectiveness of the actuator inputs during the steps. It is demonstrated that the quadrotor can reliably land on the target from varying initial positions, and the switching strategy shows a slight reduction in landing time compared to a constant divergence strategy with the same average divergence over distance. This strategy also reduces the maximum velocity during the landing.},
-	author    = {Hazelaar, Sander },
-	keywords  = {Visual Servoing; Autonomous Landing; Quadrotor Control; Non-linear systems; Computer Vision},
-	note      = {de Croon, G.C.H.E. (mentor); Yedutenko, M. (graduation committee); Delft University of Technology (degree granting institution)},
-	school    = {TU Delft Aerospace Engineering},
-	title     = {Adaptive Visual Servoing Control for Quadrotors: A Bio-inspired Strategy Using Active Vision},
-	type      = {mathesis},
-	url       = {http://resolver.tudelft.nl/uuid:9ab2b4ba-8f91-4891-8190-4a96f77c471e},
-	year      = {2024}
-}
-
 @mastersthesis{uuid:9a295d44-1e95-4911-a4a2-4a96c498fe79,
 	abstract  = {Drones are increasingly used nowadays, primarily for visual inspection tasks facilitated by onboard cameras. The field of aerial manipulation tries to expand the capabilities of drones by attaching a manipulator, enabling physical interaction. Unfortunately, the usability of aerial manipulators is hindered by disturbances resulting from the movements of the manipulator. These disturbances, including reaction forces and a shifting centre of mass, not only affect manipulation accuracy but also pose safety risks by potentially destabilizing the drone. In this thesis, a design is presented that addresses this challenge by leveraging the theory of dynamic balance. <br/>A new design approach of making a manipulator fly, instead of the common approach of mounting a manipulator arm to a drone was used. This new approach avoids interference with the drone's components, allowing to focus on the design of the manipulator arm. Furthermore, it made it possible to create a manipulator which can manipulate above, to the side and underneath itself. This makes the presented manipulator arm more versatile than common aerial manipulators whose workspace is mostly located only above or below the drone. The kinematics, workspace and balance conditions of the manipulator arm are presented. Furthermore, the design's workspace is optimised while the mass of the manipulator is minimized in a bilevel optimisation. Finally, the design is validated both by simulation and measurements performed with the built prototype.<br/>The design presented is the first inherently fully dynamically balanced manipulator with omnidirectional workspace which can be used for aerial manipulation.<br},
 	author    = {Bom, Alexander },
@@ -95,6 +119,18 @@
 	title     = {Design of an inherently fully dynamically balanced aerial manipulator with omnidirectional workspace},
 	type      = {mathesis},
 	url       = {http://resolver.tudelft.nl/uuid:9a295d44-1e95-4911-a4a2-4a96c498fe79},
+	year      = {2024}
+}
+
+@mastersthesis{uuid:9ab2b4ba-8f91-4891-8190-4a96f77c471e,
+	abstract  = {New insights into the landing behavior of bumblebees show an adaptive strategy where the optical flow expansion of the landing target is step-wise regulated. In this article, the potential benefits of this approach are studied by replicating the landing experiment with a quadrotor. To this end, an open-loop switching method is developed, enabling fast steps in divergence. An adaptive control law is used to deal with non-linear system dynamics, where the control gain is scheduled based on the control effectiveness of the actuator inputs during the steps. It is demonstrated that the quadrotor can reliably land on the target from varying initial positions, and the switching strategy shows a slight reduction in landing time compared to a constant divergence strategy with the same average divergence over distance. This strategy also reduces the maximum velocity during the landing.},
+	author    = {Hazelaar, Sander },
+	keywords  = {Visual Servoing; Autonomous Landing; Quadrotor Control; Non-linear systems; Computer Vision},
+	note      = {de Croon, G.C.H.E. (mentor); Yedutenko, M. (graduation committee); Delft University of Technology (degree granting institution)},
+	school    = {TU Delft Aerospace Engineering},
+	title     = {Adaptive Visual Servoing Control for Quadrotors: A Bio-inspired Strategy Using Active Vision},
+	type      = {mathesis},
+	url       = {http://resolver.tudelft.nl/uuid:9ab2b4ba-8f91-4891-8190-4a96f77c471e},
 	year      = {2024}
 }
 
@@ -323,6 +359,30 @@
 	title     = {Synthetic Air Data System for Pitot Tube Failure Detection on the Variable Skew Quad Plane},
 	type      = {mathesis},
 	url       = {http://resolver.tudelft.nl/uuid:5d786e19-6871-4478-bda8-43f7cab20633},
+	year      = {2023}
+}
+
+@mastersthesis{uuid:35f8de9d-98a3-457e-8f02-33d2a40de595,
+	abstract  = {},
+	author    = {Ronsse, Louis },
+	keywords  = {},
+	note      = {Hamaza, S. (mentor); Dransfeld, C.A. (mentor); van Oosterom, S.J.M. (graduation committee); Jigjid, K. (graduation committee); Delft University of Technology (degree granting institution)},
+	school    = {TU Delft Aerospace Engineering; De Vusser, Mathis },
+	title     = {Design of an Aerial-Aquatic Inspection Drone},
+	type      = {mathesis},
+	url       = {http://resolver.tudelft.nl/uuid:35f8de9d-98a3-457e-8f02-33d2a40de595},
+	year      = {2023}
+}
+
+@mastersthesis{uuid:99e01573-9ec5-4c67-8b65-e266ad83098a,
+	abstract  = {},
+	author    = {Çelebi, Doruk },
+	keywords  = {},
+	note      = {Remes, B.D.W. (mentor); Giovanardi, Bianca (graduation committee); Westerbeek, S.H.J. (graduation committee); Delft University of Technology (degree granting institution)},
+	school    = {TU Delft Aerospace Engineering; de Bruijn, Marnix },
+	title     = {Maritime Drone Swarm},
+	type      = {mathesis},
+	url       = {http://resolver.tudelft.nl/uuid:99e01573-9ec5-4c67-8b65-e266ad83098a},
 	year      = {2023}
 }
 
@@ -662,6 +722,18 @@
 	year      = {2022}
 }
 
+@mastersthesis{uuid:b43a9703-082c-47c7-a56e-d50794ee8c1c,
+	abstract  = {Developing optimal controllers for aggressive high speed quadcopter flight remains a major challenge in the field of robotics. Recent work has shown that neural networks trained with supervised learning are a good candidate for real-time optimal quadcopter control. In these methods, the networks (termed G\&amp;CNets) are trained using optimal trajectories obtained from a dynamical model of the quadcopter by means of a direct transcription method. A major problem with these methods is the effects of unmodeled dynamics. In this work we identify these effects for G\&amp;CNets trained for power optimal full state-to-rpm feedback. We propose an adaptive control strategy to mitigate the effects of unmodeled roll, pitch and yaw moments. Our method works by generating optimal trajectories with constant external moments added to the model and training a network to learn the policy that maps state and external moments to the corresponding optimal rpm command. We demonstrate the effectiveness of our method by performing power-optimal hover-to-hover flights with and without moment feedback. The flight tests show that the inclusion of this moment feedback significantly improves the controller's performance. Additionally we compare the adaptive controller's performance to a time optimal Bang-Bang controller for consecutive waypoint flight and show significantly faster lap times on a 3x4m track.},
+	author    = {Ferede, Robin },
+	keywords  = {},
+	note      = {de Wagter, C. (mentor); de Croon, G.C.H.E. (mentor); Izzo, Dario (mentor); Delft University of Technology (degree granting institution)},
+	school    = {TU Delft Aerospace Engineering},
+	title     = {An Adaptive Control Strategy for Neural Network based Optimal Quadcopter Controllers},
+	type      = {mathesis},
+	url       = {http://resolver.tudelft.nl/uuid:b43a9703-082c-47c7-a56e-d50794ee8c1c},
+	year      = {2022}
+}
+
 @mastersthesis{uuid:823d959a-17b8-4fd9-bc45-a0ace45d29ca,
 	abstract  = {Insects have — over millions of years of evolution — perfected many of the systems that roboticists aim to achieve; they can swiftly and robustly navigate through diﬀerent environments under various conditions while at the same time being highly energy eﬃcient. To reach this level of performance and efficiency one might want to look at and take inspiration from how these insects achieve their feats. Currently, no dataset exists that allows bio-inspired navigation models to be evaluated over long real- life routes. We present a novel dataset containing omnidirectional event vision, frame-based vision, depth frames, inertial measurement (IMU) readings, and centimeter-accurate GNSS positioning over kilometer long stretches in and around the TUDelft campus. The dataset is used to evaluate familiarity-based insect-inspired neural navigation models on their performance over longer sequences. It demonstrates that current scene familiarity models are not suited for long-ranged navigation, at least not in their current form.},
 	author    = {Verheyen, Jan },
@@ -674,15 +746,27 @@
 	year      = {2022}
 }
 
-@mastersthesis{uuid:b43a9703-082c-47c7-a56e-d50794ee8c1c,
-	abstract  = {Developing optimal controllers for aggressive high speed quadcopter flight remains a major challenge in the field of robotics. Recent work has shown that neural networks trained with supervised learning are a good candidate for real-time optimal quadcopter control. In these methods, the networks (termed G\&amp;CNets) are trained using optimal trajectories obtained from a dynamical model of the quadcopter by means of a direct transcription method. A major problem with these methods is the effects of unmodeled dynamics. In this work we identify these effects for G\&amp;CNets trained for power optimal full state-to-rpm feedback. We propose an adaptive control strategy to mitigate the effects of unmodeled roll, pitch and yaw moments. Our method works by generating optimal trajectories with constant external moments added to the model and training a network to learn the policy that maps state and external moments to the corresponding optimal rpm command. We demonstrate the effectiveness of our method by performing power-optimal hover-to-hover flights with and without moment feedback. The flight tests show that the inclusion of this moment feedback significantly improves the controller's performance. Additionally we compare the adaptive controller's performance to a time optimal Bang-Bang controller for consecutive waypoint flight and show significantly faster lap times on a 3x4m track.},
-	author    = {Ferede, Robin },
+@mastersthesis{uuid:83ff9b16-d3bb-4ac7-aa8a-26f4a73a6e6d,
+	abstract  = {Drones have been an emerging trend in the last few years. They are used in multiple industries<br/>already, from photography and videography to racing. More use cases are now being conceived,<br/>such as using drones to deliver packages and food to people at home, using drones for inspections,<br/>or even using them as rescue searching vehicles in hostile environments. Even more possibilities<br/>open up once the drones bundle their forces to create swarms. The lifting capabilities of drones are<br/>still somewhat limited, but in a swarm they might be able to lift heavy payloads. This report covers<br/>the design of a concept of a payload carrying swarm, intended to lift cargo up to 500 kg to even the<br/>top of a tall building.},
+	author    = {Bracke, Aaron },
 	keywords  = {},
-	note      = {de Wagter, C. (mentor); de Croon, G.C.H.E. (mentor); Izzo, Dario (mentor); Delft University of Technology (degree granting institution)},
-	school    = {TU Delft Aerospace Engineering},
-	title     = {An Adaptive Control Strategy for Neural Network based Optimal Quadcopter Controllers},
+	note      = {Smeur, E.J.J. (mentor); Eleftheroglou, N. (graduation committee); van 't Hoff, J.A. (graduation committee); Delft University of Technology (degree granting institution)},
+	school    = {TU Delft Aerospace Engineering; Džubinský, Maxim },
+	title     = {DroneCrane},
 	type      = {mathesis},
-	url       = {http://resolver.tudelft.nl/uuid:b43a9703-082c-47c7-a56e-d50794ee8c1c},
+	url       = {http://resolver.tudelft.nl/uuid:83ff9b16-d3bb-4ac7-aa8a-26f4a73a6e6d},
+	year      = {2022}
+}
+
+@mastersthesis{uuid:5184c93c-fafb-4069-a6b0-75acdb42f081,
+	abstract  = {},
+	author    = {Xausa, Marco },
+	keywords  = {},
+	note      = {Dransfeld, C.A. (mentor); Hamaza, S. (mentor); Hwang, S. (mentor); Gomes de Paula, N.C. (mentor); Delft University of Technology (degree granting institution)},
+	school    = {TU Delft Aerospace Engineering; van der Saag, Jelmer },
+	title     = {Aerial Deployment of an Autonomous Remote Sensing Network},
+	type      = {mathesis},
+	url       = {http://resolver.tudelft.nl/uuid:5184c93c-fafb-4069-a6b0-75acdb42f081},
 	year      = {2022}
 }
 
@@ -1214,18 +1298,6 @@
 	year      = {2019}
 }
 
-@mastersthesis{uuid:ce520f94-bd3c-41a5-9ddd-edfdf6ead35e,
-	abstract  = {The exceptional flight capabilities of insects have long amazed and inspired researchers and roboticists striving to make Micro Aerial Vehicles (MAVs) smaller and more agile. It is well known that optical flow plays a prominent role in insect flight control and navigation, and hence it is being increasingly investigated for applications in flying robots as well. However, optical flow based strategies for estimation and stabilization of orientation remain obscure in literature. In this report, we introduce a novel state estimation algorithm based on optical flow measurements and the knowledge of efference copies. The proposed technique estimates the following states of a flying robot (constrained to move with three degrees of freedom): roll angle, rate of change of roll angle, horizontal and vertical components of velocity and height. The estimator only utilizes the knowledge of control inputs and optical flow measurements obtained from a downward looking monocular camera. Through non-linear observability analysis, we theoretically prove the feasibility of estimating the attitude of a MAV using ventral flow and divergence measurements. Based on the findings of the observability analysis, an extended Kalman filter state estimator is designed and its performance is verified in simulations and through flight data recorded on a real flying robot. To the best of our knowledge, the introduced strategy is the first attitude estimation technique that utilizes monocular optical flow as the only sensory information.<br/><br/>Besides the investigation on optical flow based attitude estimation technique, this thesis presents a comprehensive literature survey on the main topics relevant to the work.},
-	author    = {Chatterjee, Abhishek },
-	keywords  = {Bio-inspiration; Optical Flow; Insect flight; Attitude Estimation; Micro Aerial Vehicle},
-	note      = {de Croon, G.C.H.E. (mentor); Olejnik, D.A. (graduation committee); Delft University of Technology (degree granting institution)},
-	school    = {TU Delft Aerospace Engineering},
-	title     = {Monocular Optical Flow based Attitude Estimation in Micro Aerial Vehicles: A Bio-Inspired Approach},
-	type      = {mathesis},
-	url       = {http://resolver.tudelft.nl/uuid:ce520f94-bd3c-41a5-9ddd-edfdf6ead35e},
-	year      = {2019}
-}
-
 @mastersthesis{uuid:cc607dbb-7116-4c9f-991f-988d832833a9,
 	abstract  = {This study investigates the wing deformation of the flapping-wing micro air vehicle (MAV) DelFly II in various flight configurations. Experiments were carried out with the MAV tethered in a windtunnel test section. To determine the best suited measurement approach, a trade-off study was carried out which showed that a point tracking approach with background illumination is most suitable. The therefore used high-speed camera pair and illumination were mounted on the same rotating frame with the DelFly, which allowed adequate viewing axes of the wings at for all pitch angles. Processing was done a purpose-build algorithm, allowing 136 points per wing to be measured simultaneously with an average lost point ratio of 3.4 % and an estimated accuracy of 0.25 mm. Results of hovering flight show some previously unnoticed behaviors. First, it was noted that the upper and lower wing on each side do not deform purely symmetric but show some considerable asymmetric behavior like heave and camber production. Furthermore, the upper wing shows a torsional wave and recoil behavior at faster flapping frequencies, which was shown to be beneficial in insect flight. Lastly, it was found that an air-buffer remains present between the wing surfaces at all times of the clap-and-peel motion (apart from the root trailing edge). This air-buffer increases once freestream velocity is added, which is investigated during the climbing flight study. Here, the reduced angle of attack of the wing is assumed to reduce the wing loading at faster climb, resulting in lower deformations outside the clap-and-peel motion. The isolated effect of a body pitch angle is also studied. Here, the asymmetrical freestream direction results in larger asymmetries such as wing alignment with the freestream direction and reduced camber and even camber reversal during the upstroke. In forward flight the pitch angle is changed simultaneously with the flapping frequency and freestream velocity. Due to the non-linear properties the wing deforms not directly as a superposition of the individual effects. Deviations are mostly present in increased asymmetry in incidence angle, while the camber behaves more linear and the clap-and-peel motion also remains relatively unchanged. The torsional wave and recoil are here however reduced. Descending flight was also tested. Velocities below 1m/s result in relatively minor deformation changes, while faster descent leads to large flapping frequency fluctuations, making interpretation of the results impossible.},
 	author    = {Heitzig, Dorian },
@@ -1235,6 +1307,18 @@
 	title     = {Wing deformation measurements of the DelFly II in different flight conditions},
 	type      = {mathesis},
 	url       = {http://resolver.tudelft.nl/uuid:cc607dbb-7116-4c9f-991f-988d832833a9},
+	year      = {2019}
+}
+
+@mastersthesis{uuid:ce520f94-bd3c-41a5-9ddd-edfdf6ead35e,
+	abstract  = {The exceptional flight capabilities of insects have long amazed and inspired researchers and roboticists striving to make Micro Aerial Vehicles (MAVs) smaller and more agile. It is well known that optical flow plays a prominent role in insect flight control and navigation, and hence it is being increasingly investigated for applications in flying robots as well. However, optical flow based strategies for estimation and stabilization of orientation remain obscure in literature. In this report, we introduce a novel state estimation algorithm based on optical flow measurements and the knowledge of efference copies. The proposed technique estimates the following states of a flying robot (constrained to move with three degrees of freedom): roll angle, rate of change of roll angle, horizontal and vertical components of velocity and height. The estimator only utilizes the knowledge of control inputs and optical flow measurements obtained from a downward looking monocular camera. Through non-linear observability analysis, we theoretically prove the feasibility of estimating the attitude of a MAV using ventral flow and divergence measurements. Based on the findings of the observability analysis, an extended Kalman filter state estimator is designed and its performance is verified in simulations and through flight data recorded on a real flying robot. To the best of our knowledge, the introduced strategy is the first attitude estimation technique that utilizes monocular optical flow as the only sensory information.<br/><br/>Besides the investigation on optical flow based attitude estimation technique, this thesis presents a comprehensive literature survey on the main topics relevant to the work.},
+	author    = {Chatterjee, Abhishek },
+	keywords  = {Bio-inspiration; Optical Flow; Insect flight; Attitude Estimation; Micro Aerial Vehicle},
+	note      = {de Croon, G.C.H.E. (mentor); Olejnik, D.A. (graduation committee); Delft University of Technology (degree granting institution)},
+	school    = {TU Delft Aerospace Engineering},
+	title     = {Monocular Optical Flow based Attitude Estimation in Micro Aerial Vehicles: A Bio-Inspired Approach},
+	type      = {mathesis},
+	url       = {http://resolver.tudelft.nl/uuid:ce520f94-bd3c-41a5-9ddd-edfdf6ead35e},
 	year      = {2019}
 }
 
