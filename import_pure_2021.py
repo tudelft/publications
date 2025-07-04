@@ -35,8 +35,8 @@ def download_list(page, filename):
         root = ET.fromstring(p.text)
         for pub in root.findall('channel/item'):
             title = pub.findall('title')[0].text
-            link = pub.findall('link')[0].text
-            
+            link = pub.findall('guid')[0].text
+
             #description = pub.findall('description')[0].text
             #dom = html.fromstring(description)
             #journal  = dom.body.find_class('journal')
@@ -46,15 +46,58 @@ def download_list(page, filename):
             # Try 5 times
             for i in range(0,5):
                 try:
-                    p = requests.get(link)
+                    # p = requests.get(link)
+                    # htmltxt = p.text
+
+                    headers = {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+                        'Accept-Language': 'en-US,en;q=0.9',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                    }
+                    p = requests.get(link, headers=headers)
                     htmltxt = p.text
+
+                    if p.status_code == 404:
+                        print('Page not found', link)
+                        break
+                    elif p.status_code != 200:
+                        print('Error', p.status_code, link)
+                        continue
+                    else:
+                        print('Downloaded', link)
+
                     break
                 except:
                     print('Error attempt',i, link)
                     pass
+
+            # If the page is not found, continue
+
             dom = html.fromstring(htmltxt)
+
+            # Check if the page is not empty
+            if dom is None:
+                print('Empty page for', link)
+                continue
+
+            if dom.body is None:
+                print('Empty body for', link)
+                continue
+
+
+            bib = dom.body.get_element_by_id('cite-BIBTEX')
             
-            bib = dom.body.get_element_by_id('cite-BIBTEX').getchildren()[0]
+            if bib is None:
+                print('No bibtex found for', link)
+                continue
+
+            bib = bib.getchildren()
+
+            if len(bib) == 0:
+                print('No bibtex found for', link)
+                continue
+
+            bib = bib[0]
                         
             print(str(papernr) + ' ',title)
 
