@@ -9,6 +9,21 @@ from bs4 import BeautifulSoup
 # Store FILE
 import codecs
 
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+
+opts = Options()
+opts.add_argument("--headless")
+opts.add_argument("--disable-gpu")
+opts.add_argument("--no-sandbox")
+opts.add_argument("start-maximized")
+opts.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) ...")
+
+driver = webdriver.Chrome(options=opts)
+
+
 sys.stdout.reconfigure(encoding='utf-8')
 
 #root = ET.parse('https://research.tudelft.nl/en/organisations/control-operations/publications/?format=rss&page=5').getroot()
@@ -49,20 +64,37 @@ def download_list(page, filename):
                     # p = requests.get(link)
                     # htmltxt = p.text
 
-                    headers = {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
-                        'Accept-Language': 'en-US,en;q=0.9',
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-                    }
-                    p = requests.get(link, headers=headers)
-                    htmltxt = p.text
+                    # headers = {
+                    #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                    #                 "(KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
+                    #     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                    #     "Accept-Language": "en-US,en;q=0.9",
+                    #     "Accept-Encoding": "gzip, deflate, br",
+                    #     "Connection": "keep-alive",
+                    #     "Referer": "https://research.tudelft.nl/",
+                    # }
+
+                    # session = requests.Session()
+                    # session.headers.update(headers)
+
+                    # p = session.get(link)
+                    # htmltxt = p.text
+
+                    driver.get(link)
+
+                    # Wait for the page to load
+                    htmltxt = driver.page_source
+
+                    # p = requests.get(link, headers=headers)
+                    # htmltxt = p.text
 
                     if p.status_code == 404:
                         print('Page not found', link)
                         break
                     elif p.status_code != 200:
                         print('Error', p.status_code, link)
-                        continue
+                        # print(htmltxt)
+                        break
                     else:
                         print('Downloaded', link)
 
@@ -84,7 +116,17 @@ def download_list(page, filename):
                 print('Empty body for', link)
                 continue
 
+            # Check if the dom.body has elements
+            if len(dom.body) == 0:
+                print('Empty body for', link)
+                continue
 
+            # Check if the body has the id 'cite-BIBTEX'
+            if dom.body.get_element_by_id is None:
+                print('No body element with id cite-BIBTEX for', link)
+                continue
+
+            print(dom.body)
             bib = dom.body.get_element_by_id('cite-BIBTEX')
             
             if bib is None:
