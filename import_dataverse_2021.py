@@ -16,7 +16,7 @@ bib_database = bibtexparser.bibdatabase.BibDatabase()
 
 def download_list(page, filename):
 
-    url = 'https://dataverse.nl/dataverse/mavlab'
+    url = 'https://dataverse.nl/dataverse/mavlab?q=&types=dataverses%3Adatasets&sort=dateSort&order=desc'
 
     if page == 0:
         bibf = codecs.open(filename,'w', 'utf-8')
@@ -26,13 +26,21 @@ def download_list(page, filename):
 
     # add some text to the bib_database
 
+    page = 1
 
     papernr = 1
     pageno = page
-    if True:
+    continue_download = True
+    while continue_download:
         print('- Page',pageno)
         
-        p = requests.get(url) # + '&page=%d' % pageno)
+        p = requests.get(url + '&page=%d' % pageno)
+
+        if p.status_code != 200:
+            print('Error downloading page', pageno, 'status code:', p.status_code)
+            continue_download = False
+            break
+
         print('Downloaded...\n')
 
         # Download dataverse page
@@ -43,6 +51,12 @@ def download_list(page, filename):
 
         #parser = etree.HTMLParser(recover=True)
         #tree = etree.fromstring(url, parser=parser)
+
+        if len(interest) == 0:
+            print('No datasets found on page', pageno)
+            continue_download = False
+            break
+
         for p in interest:
             doitxt = p.strip('/dataset.xhtml?persistentId=doi:')
             print(doitxt)
