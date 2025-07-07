@@ -57,6 +57,7 @@ def download_list(page, filename):
             #journal  = dom.body.find_class('journal')
 
             htmltxt = '<html><body>txt</body></html>'
+            bib = None
             
             # Try 5 times
             for i in range(0,5):
@@ -88,60 +89,65 @@ def download_list(page, filename):
                     # p = requests.get(link, headers=headers)
                     # htmltxt = p.text
 
-                    if p.status_code == 404:
-                        print('Page not found', link)
-                        break
-                    elif p.status_code != 200:
-                        print('Error', p.status_code, link)
-                        # print(htmltxt)
-                        break
-                    else:
-                        print('Downloaded', link)
+                    # if p.status_code == 404:
+                    #     print('Page not found', link)
+                    #     break
+                    # elif p.status_code != 200:
+                    #     print('Error', p.status_code, link)
+                    #     # print(htmltxt)
+                    #     break
+                    # else:
+                        # print('Downloaded', link)
 
+                    # If the page is not found, continue
+
+                    dom = html.fromstring(htmltxt)
+
+                    # Check if the page is not empty
+                    if dom is None:
+                        print('Empty page for', link)
+                        continue
+
+                    if dom.body is None:
+                        print('Empty body for', link)
+                        continue
+
+                    # Check if the dom.body has elements
+                    if len(dom.body) == 0:
+                        print('Empty body for', link)
+                        continue
+
+                    # Check if the body has the id 'cite-BIBTEX'
+                    if dom.body.get_element_by_id is None:
+                        print('No body element with id cite-BIBTEX for', link)
+                        continue
+
+                    # print(dom.body)
+                    bib = dom.body.get_element_by_id('cite-BIBTEX')
+                    
+                    if bib is None:
+                        print('No bibtex found for', link)
+                        continue
+
+                    bib = bib.getchildren()
+
+                    if len(bib) == 0:
+                        print('No bibtex found for', link)
+                        continue
+
+                    bib = bib[0]
                     break
                 except:
                     print('Error attempt',i, link)
                     pass
 
-            # If the page is not found, continue
 
-            dom = html.fromstring(htmltxt)
 
-            # Check if the page is not empty
-            if dom is None:
-                print('Empty page for', link)
-                continue
+            print(str(papernr) + ' ',title)
 
-            if dom.body is None:
-                print('Empty body for', link)
-                continue
-
-            # Check if the dom.body has elements
-            if len(dom.body) == 0:
-                print('Empty body for', link)
-                continue
-
-            # Check if the body has the id 'cite-BIBTEX'
-            if dom.body.get_element_by_id is None:
-                print('No body element with id cite-BIBTEX for', link)
-                continue
-
-            print(dom.body)
-            bib = dom.body.get_element_by_id('cite-BIBTEX')
-            
             if bib is None:
                 print('No bibtex found for', link)
                 continue
-
-            bib = bib.getchildren()
-
-            if len(bib) == 0:
-                print('No bibtex found for', link)
-                continue
-
-            bib = bib[0]
-                        
-            print(str(papernr) + ' ',title)
 
             # open and add, in case of error one can continue
             bibf = codecs.open(filename,'a', 'utf-8')
