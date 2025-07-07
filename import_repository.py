@@ -4,6 +4,20 @@ import requests
 import codecs
 from unidecode import unidecode
 
+Authors = {
+    'croon': 'https://repository.tudelft.nl/person/supervised/Person_c7471550-0ab7-415d-b600-6aab41b170ce', # ?page=1
+    'wagter': 'https://repository.tudelft.nl/person/supervised/Person_283a4bdd-9d21-4e56-9f7c-d83c582f6032',
+    'smeur': 'https://repository.tudelft.nl/person/supervised/Person_5b52f579-173a-4ba6-9692-5a13e80e29db',
+    'remes': 'https://repository.tudelft.nl/person/supervised/Person_82e35d90-9b89-4e86-8a61-74f4fdd86b64',
+    'karasek': 'https://repository.tudelft.nl/person/supervised/Person_2f0b1c3d-4a5e-4f6b-8d7c-9e0a1f3c5b2b',
+    'hamaza': 'https://repository.tudelft.nl/person/supervised/Person_c2be371b-2204-410d-8d16-af98b68972ff',
+    'popovic': 'https://repository.tudelft.nl/person/supervised/Person_8588464f-4d22-4ba2-a530-50d9a50b2554'
+}
+
+
+# For all pages
+# Collect all  'href="/record/uuid:'
+# The line below is the Title
 
 MAVLAB = ['wagter' , 'croon', 'remes',
             'karasek', 'smeur',  'dupeyroux',
