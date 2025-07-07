@@ -7,7 +7,7 @@ import codecs
 
 def download_list(page, filename):
 
-    search= ['guido de croon', 'christophe de wagter', 'ewoud smeur', 'sjoerd tijmons', 'julien dupeyroux', 'salua hamaza', 'marija popovic']
+    search= ['guido de croon', 'christophe de wagter', 'ewoud smeur', 'sjoerd tijmons', 'salua hamaza', 'marija popovic']
     
     url = 'https://arxiv.org/search/?query='
 
