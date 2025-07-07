@@ -28,7 +28,8 @@ list_of_dois = []
 
 def download_list(search, bibf):
 
-    url = URL_4TU + '/search?q=' + search
+    # https://data.4tu.nl/search?institutions=28586&search=de%20croon
+    url = URL_4TU + '/search?institutions=28586&search=' + search
 
     bibf.write('\n# Searching: '+  url +'\n')  
 
@@ -86,7 +87,7 @@ def get_doi(doi):
     return html_content[start_index + len('https://doi.org/'):end_index]
 
 
-searchterms = ['de croon', 'de wagter', 'smeur', 'remes', 'tijmons', 'hamaza', 'popovic']
+searchterms = ['de%20croon', 'de%20wagter', 'smeur', 'remes', 'tijmons', 'hamaza', 'popovic']
 
 
 bibf = codecs.open( 'fourtu.bib', 'w', 'utf-8')
