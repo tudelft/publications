@@ -10,6 +10,5 @@ cs_nomav.bib
 *.sav
 *.tmp
 *.bak
-*.csv
 arxiv_nopub.bib
 arxiv_pub.bib
