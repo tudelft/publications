@@ -106,7 +106,7 @@ print('Found ' + str(len(unique)) + ' unique DOIs.\n')
 for doi in unique:
     print('Downloading bibtex for ' + doi)
 
-    bibf.write('# UUID: ' + doi + '\n\n')
+    bibf.write('# UUID: ' + doi + '\n')
     doi = get_doi(doi)
     bibf.write('# DOI:  ' + doi + '\n\n')
 
@@ -120,5 +120,26 @@ for doi in unique:
         print('Error downloading bibtex for ' + doi + ': ' + str(e))
         continue
 
-
 bibf.close()
+
+# Read the file and sort the lines based on the UUID
+with open('4tu.bib', 'r', encoding='utf-8') as f:
+    lines = f.readlines()
+
+# Split the file in blocks of lines based on the UUID and sort the blocks
+blocks = []
+current_block = []
+for line in lines:
+    if line.startswith('# UUID: '):
+        if current_block:
+            blocks.append(current_block)
+            current_block = []
+    current_block.append(line)
+if current_block:
+    blocks.append(current_block)
+
+blocks.sort(key=lambda x: x[0].split('# UUID: ')[1] if x[0].startswith('# UUID: ') else '')
+with open('4tu.bib', 'w', encoding='utf-8') as f:
+    for block in blocks:
+        f.writelines(block  + ['\n'])
+
