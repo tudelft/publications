@@ -63,9 +63,15 @@ def download_list(page, filename):
                     bib.append(s.strip('\r\n'))
                 if '<textarea' in s:
                     start = True
-            bib.append('\turl = {https://arxiv.org/abs/'+pp+'},')
-            bib.append('\tpdf = {https://arxiv.org/pdf/'+pp+'.pdf},')
-            bib.append('}')
+            if len(bib) == 0:
+                bib.append('# Error: could not find bibtex for ' + code)
+                print('ERROR: URL: ' + uu )
+                # Maybe consider directly using arxiv API instead of this website, but for now this works.
+                # https://info.arxiv.org/help/api/basics.html#quickstart
+            else:
+                bib.append('\turl = {https://arxiv.org/abs/'+pp+'},')
+                bib.append('\tpdf = {https://arxiv.org/pdf/'+pp+'.pdf},')
+                bib.append('}')
 
             bib = '\n'.join(bib).replace('</textarea>','')
                         
