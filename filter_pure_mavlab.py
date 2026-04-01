@@ -131,7 +131,7 @@ def print_summary():
         paper_types = ['article','inproceedings', 'phdthesis', 'conference', 'book', 'misc']
         fout.write('year')
         for t in paper_types:
-            fout.write(';' + t)
+            fout.write(',' + t)
         fout.write('\n')
 
         for y in range(2003,2026):
@@ -141,9 +141,9 @@ def print_summary():
                 #print(key)
 
                 if key in mavlabpapers:
-                    fout.write(str(mavlabpapers[key]) + ';')
+                    fout.write(str(mavlabpapers[key]) + ',')
                 else:
-                    fout.write('0;')
+                    fout.write('0,')
                     
             fout.write('\n' )
 
