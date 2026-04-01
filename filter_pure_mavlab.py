@@ -135,15 +135,15 @@ def print_summary():
         fout.write('\n')
 
         for y in range(2003,2026):
-            fout.write(str(y) + ',')
+            fout.write(str(y))
             for t in paper_types:
                 key = (str(y),t)
                 #print(key)
 
                 if key in mavlabpapers:
-                    fout.write(str(mavlabpapers[key]) + ',')
+                    fout.write(',' + str(mavlabpapers[key]))
                 else:
-                    fout.write('0,')
+                    fout.write(',0')
                     
             fout.write('\n' )
 
