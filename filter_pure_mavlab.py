@@ -135,7 +135,7 @@ def print_summary():
         fout.write('\n')
 
         for y in range(2003,2026):
-            fout.write(str(y) + ';')
+            fout.write(str(y) + ',')
             for t in paper_types:
                 key = (str(y),t)
                 #print(key)
