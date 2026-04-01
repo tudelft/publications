@@ -2,6 +2,7 @@
 import requests
 from lxml import html
 import codecs
+import time
 
 
 
@@ -47,6 +48,9 @@ def download_list(page, filename):
 
         if True:
         
+            # wait for 20 seconds
+            time.sleep(10)
+
             pp = code
             print(pp)
 
