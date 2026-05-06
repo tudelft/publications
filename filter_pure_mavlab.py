@@ -20,6 +20,7 @@ remove = ['V. Ho', 'A. Sharma', 'Max Li', 'Yifei Li', 'Y.D. Li']
 #        'GT Zheng']
 
 def get_chair(name):
+    global chairs
     for chair, staff in chairs.items():
         if name in staff:
             return chair
@@ -73,11 +74,12 @@ for b in bib_database.entries:
     for person in authors.split(' and '):
         if ',' in person:
             # last name left of comma: right part
-            name = person.split(',')[0].split(' ')[-1].strip().strip('{').strip('}').strip().lower()
+            name = person.split(',')[0].split(' ')[-1].strip().strip('\\{').strip('\\}').strip('{').strip('}').strip().lower()
         else:
             # last name
-            name = person.split(' ')[-1].strip().strip('{').strip('}').strip().lower()
+            name = person.split(' ')[-1].strip().strip('\\{').strip('\\}').strip('{').strip('}').strip().lower()
         chairname = get_chair(name)
+        print(person, '|', name, '|', chairname)
         if chairname == 'MAVLAB':
             if mavlabpaper > -1: # if not forbidden
                 mavlabpaper = 1
@@ -134,7 +136,7 @@ def print_summary():
             fout.write(',' + t)
         fout.write('\n')
 
-        for y in range(2003,2026):
+        for y in range(2003,2027):
             fout.write(str(y))
             for t in paper_types:
                 key = (str(y),t)
