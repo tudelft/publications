@@ -37,7 +37,7 @@ def download_list(search, bibf):
     while not done:
 
         driver.get(url)
-        sleep(5)
+        sleep(25)
         html = driver.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
         # print(html)
 
