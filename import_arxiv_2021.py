@@ -49,7 +49,7 @@ def download_list(page, filename):
         if True:
         
             # wait for 20 seconds
-            time.sleep(10)
+            time.sleep(20)
 
             pp = code
             print(pp)
