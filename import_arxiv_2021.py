@@ -43,16 +43,20 @@ def download_list(page, filename):
         #for p in interest:
         bibf.close()
 
+    
+
     papernr = 0
+    counter = 0
     for code in listofcodes:
 
         if True:
         
-            # wait for 20 seconds
-            time.sleep(20)
+            # wait for 30 seconds
+            time.sleep(30)
 
             pp = code
-            print(pp)
+            counter += 1
+            print(counter, '/' , len(listofcodes), ': ', pp)
 
             uu = 'https://arxiv2bibtex.org/?format=bibtex&q='+pp
 
