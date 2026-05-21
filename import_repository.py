@@ -29,9 +29,11 @@ MAVLAB = ['wagter' , 'croon', 'remes',
 
 
 search = "+OR+".join(MAVLAB)
-url2 = "https://repository.tudelft.nl/search?search_term=" + search + "&page=1&sort=relevance&record_type=master_thesis"
+url2_msc = "https://repository.tudelft.nl/search?search_term=" + search + "&page=1&sort=relevance&record_type=master_thesis"
+url2_phd = "https://repository.tudelft.nl/search?search_term=" + search + "&page=1&sort=relevance&record_type=doctoral_thesis"
 
-print(' - V2:', url2)
+
+print(' - V2 MSC:', url2_msc)
 
 #############################################################
 # V3
@@ -54,7 +56,7 @@ for author in Authors:
 
 ###
 
-
+# Old V1 downloader
 def msc_download_to_csv():
 
     p=0
@@ -91,6 +93,8 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 download_dir = script_dir
 
+print('Download directory:', download_dir)
+
 prefs = {
     "download.default_directory": download_dir,
     "download.prompt_for_download": False,
@@ -105,21 +109,38 @@ driver = webdriver.Chrome(options=opts)
 sys.stdout.reconfigure(encoding='utf-8')
 
 
-def wait_for_csv(download_dir, timeout=30):
+def wait_for_csv(download_dir, timeout=30, export_filename='pure/msc.csv'):
     end_time = time.time() + timeout
     print('Waiting for CSV download to complete...')
+    # First wait for the .crdownload file to appear (indicating download has started)
     while time.time() < end_time:
         files = os.listdir(download_dir)
-        if any(f.endswith(".csv") for f in files) and not any(f.endswith(".crdownload") for f in files):
+        if any(f.endswith(".crdownload") for f in files):
+            print('CSV download started. (.crdownload file detected)')
+            break
+        time.sleep(1)
+        print('.')
+    else:
+        raise TimeoutError("CSV download did not start")
+    # Then wait for the .crdownload file to disappear (indicating download has finished)
+    while time.time() < end_time:
+        files = os.listdir(download_dir)
+        if any(f.endswith("output.csv") for f in files) and not any(f.endswith(".crdownload") for f in files):
+            print('CSV download complete. (.crdownload file gone)')
+            # Remove previous export file if it exists
+            if os.path.exists(os.path.join(download_dir, export_filename)):
+                os.remove(os.path.join(download_dir, export_filename))
+            # Move the 'output.csv' file to the specified export filename
+            os.rename(os.path.join(download_dir, 'output.csv'), os.path.join(download_dir, export_filename))
             return True
         time.sleep(1)
         print('.')
     raise TimeoutError("CSV download did not complete")
 
-def msc_download_to_csv_selenium():
-    driver.get(url2)
+def repo_download_to_csv_selenium(url, export_filename='pure/msc.csv'):
+    driver.get(url)
 
-    wait = WebDriverWait(driver, 30)
+    wait = WebDriverWait(driver, 40)
 
     export_button = wait.until(
         EC.element_to_be_clickable(
@@ -130,7 +151,7 @@ def msc_download_to_csv_selenium():
     # click on the "Export" button
     export_button.click()
 
-    wait_for_csv(download_dir,180)
+    wait_for_csv(download_dir,180, export_filename)
     
     # Wait for the page to load
     # htmltxt = driver.page_source   
@@ -138,8 +159,18 @@ def msc_download_to_csv_selenium():
     
 
 
+# Remove any output*.csv or *.crdownload files from previous runs
+for f in os.listdir(download_dir):
+    if f.startswith('output') and f.endswith('.csv'):
+        os.remove(os.path.join(download_dir, f))
+    if f.endswith('.crdownload'):
+        os.remove(os.path.join(download_dir, f))
+
 # msc_download_to_csv()
-msc_download_to_csv_selenium()
+repo_download_to_csv_selenium(url2_msc, export_filename='pure/msc.csv')
+# repo_download_to_csv_selenium(url2_phd, export_filename='pure/phd.csv')
+
+
 
 with open('./pure/msc.csv', 'rb') as f:
     txt = f.read().decode('utf-8')
