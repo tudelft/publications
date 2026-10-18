@@ -12,3 +12,4 @@ cs_nomav.bib
 *.bak
 arxiv_nopub.bib
 arxiv_pub.bib
+__pycache__/
