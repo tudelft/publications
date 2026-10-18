@@ -1,5 +1,6 @@
 import bibtexparser
 import json
+import datetime
 
 from collections import OrderedDict
 
@@ -136,7 +137,7 @@ def print_summary():
             fout.write(',' + t)
         fout.write('\n')
 
-        for y in range(2003,2027):
+        for y in range(2003, datetime.date.today().year + 1):
             fout.write(str(y))
             for t in paper_types:
                 key = (str(y),t)
