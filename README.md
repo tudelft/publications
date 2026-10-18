@@ -30,7 +30,7 @@ The GitHub Action `.github/workflows/monthly_import.yml` runs on the 1st of ever
 ### Import
  - step 1A: download from Pure: `import_pure_2021.py` -> `pure/cs.bib`
  - step 1B: download from Dataverse: `import_dataverse_2021.py` -> `dataverse.bib` (not in the monthly import)
- - step 1C: download from arXiv: `import_arxiv_2021.py` -> `arxiv.bib`
+ - step 1C: download from arXiv: `import_arxiv_2021.py` -> `arxiv.bib`. arxiv2bibtex.org often stops answering when asked too often: entries that fail keep their previous version and the summary lists them. Run the script again later (it only retries entries that are not up to date) until it reports that all entries are up to date; `--all` downloads everything again.
  - step 1D: download from 4TU: `import_4tu_2021.py` -> `4tu.bib`, or search https://data.4tu.nl/search?q=mavlab and add by hand
  - step 1E: download M.Sc./PhD theses: `import_repository.py` -> `pure/msc.csv`, `pure/phd.csv` (needs a visible Chrome window), then `msc_csv2bib.py` -> `msc_new.bib`, `phd.bib`; check and merge into `msc.bib` by hand
  - step 1F: fill `mediacoverage.bib` and `mavlab_nopure.bib` by hand

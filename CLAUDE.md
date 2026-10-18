@@ -7,7 +7,7 @@ Pipeline that collects MAVLab (TU Delft, Control & Simulation) publications into
 - Scripts are run from the repo root (the website ones via `make -C website`).
 
 ## Known issues
-- **arXiv import** (`import_arxiv_2021.py`): arxiv.org and arxiv2bibtex.org often throttle the importer and return zero results. The script truncates `arxiv.bib` before fetching, so a failed run empties it (or leaves `# Error: could not find bibtex` lines), and the CI step has `continue-on-error`, so the gutted file propagates to `website/all.bib` and `userbibs/`. Fix direction: official arXiv API (export.arxiv.org, ~3 s rate limit), retries with backoff, only replace `arxiv.bib` on success / merge with existing entries.
+- **arXiv import** (`import_arxiv_2021.py`): arxiv2bibtex.org (and sometimes the arxiv.org search) returns empty pages when asked too often. The importer retries with pauses, stops after `MAX_FAILURES` failed entries in a row, keeps the previous version of entries it could not download, never drops papers when a search fails, and marks each entry `[updated|failed <date>]`. A rerun only downloads new, failed and outdated (> `MAX_AGE_DAYS`) entries; `--all` downloads everything. If throttling gets worse, the official arXiv API (export.arxiv.org) is the next step.
 - **M.Sc./PhD thesis import** (`import_repository.py` + `msc_csv2bib.py`) does not work well yet and needs fixing:
   - needs a visible Chrome to click the repository "excel" export, so it is commented out of the monthly CI;
   - `contributor_names` mixes student and committee members and `contributor_roles` is not aligned per name; the converter takes the first name as author, often a supervisor;
