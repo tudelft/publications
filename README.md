@@ -1,26 +1,63 @@
 # MAVLab Publication List
-This repo is meant to keep a history of all publications to do with the Micro Air Vehicle Laboratory at the Delft University of Technology.
+This repo keeps a history of all publications of the Micro Air Vehicle Laboratory (MAVLab) at the Delft University of Technology, part of the Control & Simulation (C&S) section. It collects them from several sources, filters the MAVLab entries and exports them for the website https://mavlab.tudelft.nl.
 
-## Import
+## Overview
 
- - step 1A: download from pure: ```import_pure_2021.py```    -> ```cs.bib```
- - step 1B: download from dataverse: ```import_dataverse_2021.py```    -> ```dataverse.bib```
- - step 1C: download from arXiv: ```import_arxiv_2021.py```    -> ```arxiv.bib```
- - step 1D: download from M.Sc. thesis repo: ```import_repository.py``` -> ```msc.bib```
- - step 1E: fill ```mediacoverage.bib``` and ```mavlab_nopure.bib``` by hand
- - step 1F: search on https://data.4tu.nl/search?q=mavlab and import by hand in ```4tu.bib```
- - setp 2A: filter MAVLAB publications from pure/cs.bib: ```filter_pure_mavlab.py```  -> ```pure.bib```
- - setp 2B: filter published arxiv papers with DOI arxiv.bib: ```filter_arxiv.py```  -> ```arxiv_nopub.bib```
- - step 3: check pure/cs_nomav.bib if there are any mavlab papers left: fix the script
+| File | Content | Source |
+|------|---------|--------|
+| `pure/cs.bib` | all C&S publications | `import_pure_2021.py` (research.tudelft.nl) |
+| `pure.bib` | MAVLab publications filtered from `pure/cs.bib` | `filter_pure_mavlab.py` |
+| `mavlab_summary.csv` | MAVLab publications per year and type | `filter_pure_mavlab.py` |
+| `arxiv.bib` | arXiv preprints of MAVLab staff | `import_arxiv_2021.py` |
+| `arxiv_nopub.bib` | arXiv preprints whose DOI is not in `pure.bib` (not committed) | `filter_arxiv.py` |
+| `4tu.bib` | datasets on data.4tu.nl | `import_4tu_2021.py` |
+| `dataverse.bib` | datasets on dataverse.nl/dataverse/mavlab | `import_dataverse_2021.py` |
+| `msc.bib` | M.Sc. theses from repository.tudelft.nl | `import_repository.py` + `msc_csv2bib.py` |
+| `mediacoverage.bib` | media coverage | by hand |
+| `mavlab_nopure.bib` | publications missing in Pure / the repository | by hand |
+| `website/all.bib` | all of the above combined | `make -C website` |
+| `website/delfly.bib` | DelFly / flapping-wing subset of `all.bib` | `filter_delfly.py` |
+| `userbibs/user_*.bib` | per-staff subsets of `all.bib` | `filter_by_user.py` |
+| `website/website_export.bib` | export of the WordPress publication plugin | by hand |
 
-## Website:
+Install the dependencies with `pip install -r requirements.txt`. The Pure, 4TU and repository imports use Selenium and need Chrome.
 
- - step 4A: in wordpress: add all publications 'to own list' 
- - step 4B: export publications form website plugin as ```website_export.bib```.
- - step 5: merge pure and website with ```mavlab_bibtex_merge.py```
- - add the ```mavlab_web_extra.bib``` to pure, the ```mavlab_pure_extra.bib``` to the website until all is in merged.
+## Monthly import (automated)
+The GitHub Action `.github/workflows/monthly_import.yml` runs on the 1st of every month (or manually via *workflow_dispatch*). It imports arXiv, 4TU and Pure, runs all filters and the website build, and opens a pull request `Monthly Paper Update import-YYYY-MM-DD-HH-MM`. Review the diff before merging: a failed import can show up as mass deletions.
+
+## Manual steps
+
+### Import
+ - step 1A: download from Pure: `import_pure_2021.py` -> `pure/cs.bib`
+ - step 1B: download from Dataverse: `import_dataverse_2021.py` -> `dataverse.bib` (not in the monthly import)
+ - step 1C: download from arXiv: `import_arxiv_2021.py` -> `arxiv.bib`
+ - step 1D: download from 4TU: `import_4tu_2021.py` -> `4tu.bib`, or search https://data.4tu.nl/search?q=mavlab and add by hand
+ - step 1E: download M.Sc./PhD theses: `import_repository.py` -> `pure/msc.csv`, `pure/phd.csv` (needs a visible Chrome window), then `msc_csv2bib.py` -> `msc_new.bib`, `phd.bib`; check and merge into `msc.bib` by hand
+ - step 1F: fill `mediacoverage.bib` and `mavlab_nopure.bib` by hand
+
+### Filter
+ - step 2A: filter MAVLab publications from `pure/cs.bib`: `filter_pure_mavlab.py` -> `pure.bib`, `mavlab_summary.csv` and `pure/cs_nomav.bib` (the rest)
+ - step 2B: remove arXiv preprints that have been published: `filter_arxiv.py` -> `arxiv_nopub.bib`
+ - step 3: check `pure/cs_nomav.bib` for MAVLab papers that were missed, and `pure.bib` for papers that are not MAVLab. Fix the staff list (`chairs`) or the `remove` list in `filter_pure_mavlab.py`.
+
+`make` in the root runs steps 2A, 4 and the per-user export.
+
+### Website
+ - step 4: `make -C website` combines all bib files into `website/all.bib`, writes `website/delfly.bib` and runs `website/mavlab_bibtex_merge.py`
+ - step 5: `filter_by_user.py` -> `userbibs/user_*.bib`
+ - step 6A: in WordPress: add all publications 'to own list'
+ - step 6B: export the publications from the website plugin as `website/website_export.bib`
+ - step 7: run `make -C website` again. The merge (matching on DOI, URL, then title + type + year) writes:
+   - `mavlab_pure_extra.bib`: in this repo but not on the website -> import into WordPress
+   - `mavlab_web_extra.bib`: on the website but not in this repo -> add to Pure or `mavlab_nopure.bib`
+   - `mavlab_merged.bib` / `mavlab_merged_web.bib`: matched pairs
+
+   Repeat until both extra files are empty.
+
+## Test
+`test/test.tex` builds all bib files with LaTeX/BibTeX to check that they still compile: `cd test && pdflatex test && bibtex test && pdflatex test`.
 
 ## Contributing
-To add a new publication, you can simply add the bibitem to the mavlab.bib, either by editing the page directly using the github editor (if you have write access to the repo) or by making a pull request with your changes. The Continuous Integration tool will test your changes to ensure that the bib file still works.
+To add a publication that is not in Pure, add the bibitem to `mavlab_nopure.bib` (or `mediacoverage.bib` for media), either by editing directly on GitHub (with write access) or with a pull request. Do not edit files marked `# AUTOGENERATED`; they are overwritten by the import.
 
-Also check the default self-archiving style of the MavLab at: https://github.com/tudelft/latex_style
+Also check the default self-archiving style of the MAVLab at: https://github.com/tudelft/latex_style
