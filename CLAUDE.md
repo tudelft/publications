@@ -13,7 +13,6 @@ Pipeline that collects MAVLab (TU Delft, Control & Simulation) publications into
   - `contributor_names` mixes student and committee members and `contributor_roles` is not aligned per name; the converter takes the first name as author, often a supervisor;
   - output goes to `msc_new.bib` / `phd.bib`, merging into `msc.bib` is manual;
   - repository links contain `uuid:uuid:` (patched in the converter).
-- `mavlab_summary.csv` only covers the years in the hard-coded `range(2003, 2027)` in `filter_pure_mavlab.py`.
 - The surname matching in `filter_pure_mavlab.py` includes short names (`ho`, `li`) that match non-MAVLab authors; the `remove` list is the workaround. Check `pure/cs_nomav.bib` and `pure.bib` after changes.
 - The CI runs `git clean -df` after `make -C ./website`, which deletes the untracked merge outputs (`website/mavlab_*_extra.bib`, `website/mavlab_merged*.bib`).
 - `test/test.tex` references `arxiv` instead of `arxiv_nopub` and omits `msc` and `4tu`; `.travis.yml` (Python 2.6, trusty) is dead; `import_dataverse_2021.py` writes a stray `test.bib`; `website/reformat.py` and `old/` are legacy.
