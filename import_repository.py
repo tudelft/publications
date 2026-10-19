@@ -111,7 +111,11 @@ def to_bibtex(uuid, record):
     bib += '\tkeywords  = {' + clean('; '.join(value(record, 'keywords') or [])) + '},\n'
     bib += '\tnote      = {' + clean('; '.join(note)) + '},\n'
     bib += '\tschool    = {' + ('TU Delft ' + faculty[0] if faculty else 'Delft University of Technology') + '},\n'
-    bib += '\ttitle     = {' + clean(value(record, 'title')) + '},\n'
+    # the repository stores the subtitle separately; the website and Pure show 'title: subtitle'
+    title = clean(value(record, 'title'))
+    if clean(value(record, 'sub_title')):
+        title += ': ' + clean(value(record, 'sub_title'))
+    bib += '\ttitle     = {' + title + '},\n'
     bib += '\ttype      = {mathesis},\n'
     bib += '\turl       = {https://resolver.tudelft.nl/uuid:' + uuid + '},\n'
     bib += '\tyear      = {' + str(value(record, 'publication_year')) + '}\n'
