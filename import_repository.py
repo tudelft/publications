@@ -1,168 +1,214 @@
-import requests
-# Store FILE
-from unidecode import unidecode
-
+# Download the M.Sc. theses supervised by MAVLab staff from repository.tudelft.nl
+#
+#   msc.bib      theses with a MAVLab member as supervisor (mentor, supervisor, coach)
+#   msc_all.bib  theses with a MAVLab member in any role, also graduation committee only
+#
+# The repository has no documented export (the old CSV export is gone, #83). This
+# uses the JSON endpoints of its own website:
+#   /search/data?search_term=...&record_type=master_thesis&page=N   list of theses
+#   /api/record/uuid:<id>                                          roles, date, faculty
+#
+# Entries that cannot be downloaded keep their previous version, and theses that
+# the search no longer returns are kept, so a failed run never empties the files.
+import codecs
 import os
-import sys
+import re
 import time
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import unicodedata
+
+import requests
 
 
+REPOSITORY = 'https://repository.tudelft.nl'
 
-#############################################################
-# V1
-# For all pages
-# Collect all  'href="/record/uuid:'
-# The line below is the Title
+# MAVLab staff: last name -> first initial (to skip e.g. J. Popovic and T.M. Croon)
+STAFF = {'wagter': 'C', 'croon': 'G', 'remes': 'B', 'karasek': 'M', 'smeur': 'E',
+         'dupeyroux': 'J', 'hamaza': 'S', 'scheper': 'K', 'popovic': 'M'}
+SUPERVISOR_ROLES = ['mentor', 'supervisor', 'coach']
 
-MAVLAB = ['wagter' , 'croon', 'remes',
-            'karasek', 'smeur',  'dupeyroux',
-            'hamaza', '"Scheper, K.Y.W."', '"popovic, marija"']
+SEARCH = ' OR '.join(STAFF)
+PAUSE = 0.5         # seconds between requests
+RETRIES = 3
 
-search = '%20OR%20'.join(MAVLAB)
-url = 'https://repository.tudelft.nl/islandora/search/' + search + '?collection=education&display=tud_csv'
-
-print(' - V1:', url)
-
-#############################################################
-# V2
-
-MAVLAB = ['wagter' , 'croon', 'remes',
-            'karasek', 'smeur',  'dupeyroux',
-            'hamaza', '"Scheper, K.Y.W."', 'popovic']
+FILES = {'msc.bib': 'supervisor', 'msc_all.bib': 'any role'}
 
 
-search = "+OR+".join(MAVLAB)
-url2_msc = "https://repository.tudelft.nl/search?search_term=" + search + "&page=1&sort=relevance&record_type=master_thesis"
-url2_phd = "https://repository.tudelft.nl/search?search_term=" + search + "&page=1&sort=relevance&record_type=doctoral_thesis"
+def get_json(path, params=None):
+    for attempt in range(1, RETRIES + 1):
+        time.sleep(PAUSE)
+        try:
+            p = requests.get(REPOSITORY + path, params=params, timeout=60)
+            if p.status_code == 200:
+                return p.json()
+            print('  HTTP', p.status_code, path)
+        except (requests.RequestException, ValueError) as e:
+            print('  error:', e)
+        time.sleep(10 * attempt)
+    return None
 
 
-print(' - V2 MSC:', url2_msc)
-
-#############################################################
-# V3
-
-Authors = {
-    'croon': 'https://repository.tudelft.nl/person/supervised/Person_c7471550-0ab7-415d-b600-6aab41b170ce', # ?page=1
-    'wagter': 'https://repository.tudelft.nl/person/supervised/Person_283a4bdd-9d21-4e56-9f7c-d83c582f6032',
-    'smeur': 'https://repository.tudelft.nl/person/supervised/Person_5b52f579-173a-4ba6-9692-5a13e80e29db',
-    'remes': 'https://repository.tudelft.nl/person/supervised/Person_82e35d90-9b89-4e86-8a61-74f4fdd86b64',
-    'karasek': 'https://repository.tudelft.nl/person/supervised/Person_2f0b1c3d-4a5e-4f6b-8d7c-9e0a1f3c5b2b',
-    'hamaza': 'https://repository.tudelft.nl/person/supervised/Person_c2be371b-2204-410d-8d16-af98b68972ff',
-    'popovic': 'https://repository.tudelft.nl/person/supervised/Person_8588464f-4d22-4ba2-a530-50d9a50b2554'
-}
-
-msc_thesis = "?object_type=master_thesis"
-
-for author in Authors:
-    url = Authors[author] + msc_thesis
-    # print(' -', author, url)
-
-###
-
-# Old V1 downloader
-def msc_download_to_csv():
-
-    p=0
-    p = requests.get(url) # + '&page=%d' % pageno)
-
-    with open('./pure/msc.csv', 'wb') as f:
-        f.write(p.text.encode())
-    txt = p.text
-
-    print('Downloaded...\n')
-    #print(txt.encode('UTF-8'))
+def ascii_lower(s):
+    return unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
 
 
+def is_staff(person):
+    last = ascii_lower(person['last_name']).replace('-', ' ').split()
+    first = person['first_name'].strip().upper()
+    return bool(last) and last[-1] in STAFF and first.startswith(STAFF[last[-1]])
 
-def wait_for_csv(download_dir, timeout=30, export_filename='pure/msc.csv'):
-    end_time = time.time() + timeout
-    print('Waiting for CSV download to complete...')
-    # Then wait for the .crdownload file to disappear (indicating download has finished)
-    while time.time() < end_time:
-        files = os.listdir(download_dir)
-        if any(f.endswith("output.csv") for f in files) and not any(f.endswith(".crdownload") for f in files):
-            print('CSV download complete. (.crdownload file gone)')
-            # Remove previous export file if it exists
-            if os.path.exists(os.path.join(download_dir, export_filename)):
-                os.remove(os.path.join(download_dir, export_filename))
-            # Move the 'output.csv' file to the specified export filename
-            os.rename(os.path.join(download_dir, 'output.csv'), os.path.join(download_dir, export_filename))
-            return True
-        time.sleep(1)
-        print('.')
-    raise TimeoutError("CSV download did not complete")
 
-def repo_download_to_csv_selenium(driver, url, export_filename='pure/msc.csv'):
-    driver.get(url)
+def search_theses():
+    theses, page = [], 1
+    while True:
+        d = get_json('/search/data', {'search_term': SEARCH, 'record_type': 'master_thesis',
+                                      'page': page, 'sort': 'relevance'})
+        if d is None:
+            return None
+        theses += d['records']
+        print('- Search page', page, ':', len(theses), 'of', d['total'])
+        if not d['records'] or len(theses) >= d['total']:
+            return theses
+        page += 1
 
-    wait = WebDriverWait(driver, 40)
 
-    export_button = wait.until(
-        EC.element_to_be_clickable(
-            (By.XPATH, '//button[contains(., "excel")]')
-        )
-    )
+def field(record, name):
+    for section in record.get('metadata', {}).values():
+        for item in section:
+            if item.get('field') == name:
+                return item.get('value')
+    return None
 
-    # click on the "Export" button
-    export_button.click()
 
-    wait_for_csv(download_dir,180, export_filename)
-    
-    # Wait for the page to load
-    # htmltxt = driver.page_source   
-    # print(htmltxt) 
-    
+def value(record, name):
+    v = record.get(name)
+    return v.get('value') if isinstance(v, dict) else v
 
+
+def clean(txt):
+    txt = re.sub(r'<[^>]+>', ' ', txt or '')
+    return ' '.join(txt.replace('{', '(').replace('}', ')').split())
+
+
+def bib_name(person):
+    # name_part often has the full first name ('Jari Blom'), first_name only initials ('J.')
+    last, full = person['last_name'].strip(), person.get('name_part', '').strip()
+    first = full[:-len(last)].strip() if last and full.endswith(last) and len(full) > len(last) else person['first_name'].strip()
+    return (last + ', ' + first).strip(', ')
+
+
+def to_bibtex(uuid, record):
+    authors = field(record, 'authors') or []
+    contributors = field(record, 'contributors') or []
+    faculty = [o['name'] for o in field(record, 'managing_organisation') or [] if o.get('type') == 'Faculty']
+    note = ['%s (%s)' % (bib_name(c['person']), c.get('role', '')) for c in contributors]
+    note.append('Delft University of Technology (degree granting institution)')
+    if field(record, 'award_date'):
+        note.append('graduation ' + field(record, 'award_date'))
+
+    bib = '@mastersthesis{uuid:' + uuid + ',\n'
+    bib += '\tabstract  = {' + clean(value(record, 'abstract')) + '},\n'
+    bib += '\tauthor    = {' + ' and '.join(bib_name(a['person']) for a in authors) + '},\n'
+    bib += '\tkeywords  = {' + clean('; '.join(value(record, 'keywords') or [])) + '},\n'
+    bib += '\tnote      = {' + clean('; '.join(note)) + '},\n'
+    bib += '\tschool    = {' + ('TU Delft ' + faculty[0] if faculty else 'Delft University of Technology') + '},\n'
+    bib += '\ttitle     = {' + clean(value(record, 'title')) + '},\n'
+    bib += '\ttype      = {mathesis},\n'
+    bib += '\turl       = {https://resolver.tudelft.nl/uuid:' + uuid + '},\n'
+    bib += '\tyear      = {' + str(value(record, 'publication_year')) + '}\n'
+    bib += '}'
+    return bib
+
+
+def read_previous(filename):
+    entries = {}
+    if os.path.exists(filename):
+        with open(filename, encoding='utf-8-sig') as f:
+            for bib in re.findall(r'^@mastersthesis\{uuid:.*?^\}', f.read(), re.S | re.M):
+                entries[bib.split('uuid:', 1)[1].split(',', 1)[0]] = bib
+    return entries
+
+
+def year_of(bib):
+    m = re.search(r'year\s*=\s*\{(\d+)', bib)
+    return m.group(1) if m else '0'
+
+
+def write(filename, entries):
+    tmp = filename + '.tmp'
+    bibf = codecs.open(tmp, 'w', 'utf-8')
+    bibf.write(u'﻿')
+    bibf.write('# AUTOGENERATED by import_repository.py: M.Sc. theses with MAVLab staff as ' + FILES[filename] + '\n')
+    bibf.write('# Import from: ' + REPOSITORY + '/search?search_term=' + SEARCH.replace(' ', '+') + '&record_type=master_thesis\n\n\n')
+    for uuid in sorted(entries, key=lambda u: (year_of(entries[u]), u), reverse=True):
+        bibf.write(entries[uuid] + '\n\n')
+    bibf.close()
+    os.replace(tmp, filename)
+
+
+def import_theses():
+    previous = {f: read_previous(f) for f in FILES}
+    theses = search_theses()
+    if not theses:
+        print('The repository search does not answer: nothing changed, run the script again later.')
+        return
+
+    new = {f: {} for f in FILES}
+    report = {'committee only': [], 'not MAVLab': 0, 'kept previous version': [], 'failed': []}
+    found = set()
+    for n, t in enumerate(theses, 1):
+        uuid = t['id'].replace('Thing_', '')
+        found.add(uuid)
+        # the search result has no roles: skip theses without MAVLab contributor before downloading details
+        if not any(is_staff(p) for p in t.get('contributors', [])):
+            report['not MAVLab'] += 1
+            continue
+        record = get_json('/api/record/uuid:' + uuid)
+        if record is None or not field(record, 'contributors'):
+            for f in FILES:
+                if uuid in previous[f]:
+                    new[f][uuid] = previous[f][uuid]
+            (report['kept previous version'] if any(uuid in previous[f] for f in FILES) else report['failed']).append(uuid)
+            continue
+
+        staff_roles = [c.get('role', '') for c in field(record, 'contributors') if is_staff(c['person'])]
+        if not staff_roles:
+            report['not MAVLab'] += 1
+            continue
+        bib = to_bibtex(uuid, record)
+        new['msc_all.bib'][uuid] = bib
+        if any(r in role for role in staff_roles for r in SUPERVISOR_ROLES):
+            new['msc.bib'][uuid] = bib
+        else:
+            report['committee only'].append(uuid)
+        print(n, '/', len(theses), uuid, '|', ', '.join(staff_roles))
+
+    # theses the search no longer returns (deleted, renamed people, broken records) are kept
+    kept_unfound = {f: [u for u in previous[f] if u not in found] for f in FILES}
+    for f in FILES:
+        for u in kept_unfound[f]:
+            new[f][u] = previous[f][u]
+    # every supervised thesis is also in msc_all.bib
+    for u in new['msc.bib']:
+        new['msc_all.bib'].setdefault(u, new['msc.bib'][u])
+    for f in FILES:
+        write(f, new[f])
+
+    print('================================================================')
+    for f in FILES:
+        added = [u for u in new[f] if u not in previous[f]]
+        removed = [u for u in previous[f] if u not in new[f]]
+        print(f, ':', len(new[f]), 'theses,', len(added), 'new,', len(removed), 'removed,',
+              len(kept_unfound[f]), 'kept although the search no longer finds them')
+        if removed:
+            print('   removed:', ' '.join(removed))
+        if kept_unfound[f]:
+            print('   kept:', ' '.join(kept_unfound[f]))
+    print(len(report['committee only']), 'theses with MAVLab staff only in the graduation committee (msc_all.bib only)')
+    print(report['not MAVLab'], 'search results without MAVLab staff (other people with the same name)')
+    if report['kept previous version'] or report['failed']:
+        print(len(report['kept previous version']) + len(report['failed']), 'theses could not be downloaded:',
+              ' '.join(report['kept previous version'] + report['failed']), '-> run the script again later.')
 
 
 if __name__ == '__main__':
-
-    # get script folder
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    download_dir = script_dir
-
-    print('Download directory:', download_dir)
-
-    # Remove any output*.csv or *.crdownload files from previous runs
-    for f in os.listdir(download_dir):
-        if f.startswith('output') and f.endswith('.csv'):
-            os.remove(os.path.join(download_dir, f))
-        if f.endswith('.crdownload'):
-            os.remove(os.path.join(download_dir, f))
-
-    # Create a Selenium WebDriver instance (make sure to specify the path to your chromedriver)
-    # print(selenium.__version__)
-
-    opts = Options()
-    # opts.add_argument("--headless")
-    opts.add_argument("--disable-gpu")
-    opts.add_argument("--no-sandbox")
-    opts.add_argument("start-maximized")
-    opts.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) ...")
-
-    prefs = {
-        "download.default_directory": download_dir,
-        "download.prompt_for_download": False,
-        "download.directory_upgrade": True,
-        "safebrowsing.enabled": True
-    }
-    opts.add_experimental_option("prefs", prefs)
-
-    driver = webdriver.Chrome(options=opts)
-
-
-    sys.stdout.reconfigure(encoding='utf-8')
-
-
-    # msc_download_to_csv()
-    repo_download_to_csv_selenium(driver, url2_msc, export_filename='pure/msc.csv')
-
-    time.sleep(5)
-
-    repo_download_to_csv_selenium(driver, url2_phd, export_filename='pure/phd.csv')
+    import_theses()
