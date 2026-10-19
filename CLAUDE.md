@@ -6,6 +6,18 @@ Pipeline that collects MAVLab (TU Delft, Control & Simulation) publications into
 - The monthly GitHub Action (`.github/workflows/monthly_import.yml`) opens a PR; never commit directly to `master`, use a branch and a pull request.
 - Scripts are run from the repo root (the website ones via `make -C website`).
 
+## Website (https://mavlab.tudelft.nl)
+WordPress with the teachPress plugin (9.0.12). The publication list on the website is maintained by hand in teachPress; this repo finds what is missing:
+1. **Export what is online**: `make -C website download` (`website/download_website.py`) rebuilds `website/website_export.bib` from the public pages `/publications/` (50 per page, all types except media) and `/media-coverage/` (teachPress type `online`). This replaces the manual teachPress export in wp-admin; the public BibTeX lacks teachPress tags (`keywords`), which the merge does not use.
+2. **Merge**: `make -C website` concatenates all local bib files into `website/all.bib` and runs `mavlab_bibtex_merge.py`, matching on DOI, then URL, then title + type + year.
+3. **Result** (untracked files in `website/`):
+   - `mavlab_pure_extra.bib`: local entries that are **not yet on the website** (the historical "pure only" list) -> import these in teachPress (wp-admin, teachPress > Import, BibTeX)
+   - `mavlab_web_extra.bib`: on the website but not in this repo
+   - `mavlab_merged.bib` / `mavlab_merged_web.bib`: matched pairs
+4. After importing in teachPress, run step 1 and 2 again: `mavlab_pure_extra.bib` should be (nearly) empty.
+
+teachPress exposes no REST route to list or add publications (only `teachpress/v1/autopublish/update_all`, which triggers its auto-publish import from configured BibTeX URLs; do not call it without asking). Never commit WordPress credentials or screenshots of them.
+
 ## Known issues
 - **arXiv import** (`import_arxiv_2021.py`) uses the official arXiv API (export.arxiv.org): author search plus batched metadata lookups, ~10 requests with 3 s pauses. It replaced one arxiv2bibtex.org request per paper, which got throttled after ~50 calls (#102). On failures it keeps the previous entries (and all previously found papers when a search fails) and its summary says to rerun. The output format matches arxiv2bibtex.
 - **M.Sc. thesis import** (`import_repository.py`, #83): the repository's CSV export is gone; the importer uses the undocumented JSON endpoints of repository.tudelft.nl (`/search/data` for the list, `/api/record/uuid:<id>` for roles). `msc.bib` = MAVLab staff as mentor/supervisor/coach, `msc_all.bib` = any role. Staff are matched on surname + first initial (`STAFF`), since J. Popovic, T.M. Croon and Olga Popovic Larsen are other people. A run takes ~7 min (one record request per thesis). If the endpoints change, the previous entries are kept. Older MAVLab PhD theses often have no promotor in the repository, so PhDs still come from Pure.
