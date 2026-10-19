@@ -13,6 +13,11 @@ all:
 	python ./mavlab_bibtex_merge.py
 
 
+# Download the publications that are online on the website into website_export.bib
+download:
+	python ./download_website.py
+
+
 clean:
 	rm -f not_delfly.bib
 	rm -f mavlab_merged.bib

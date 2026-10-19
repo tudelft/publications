@@ -19,7 +19,7 @@ This repo keeps a history of all publications of the Micro Air Vehicle Laborator
 | `website/all.bib` | all of the above combined | `make -C website` |
 | `website/delfly.bib` | DelFly / flapping-wing subset of `all.bib` | `filter_delfly.py` |
 | `userbibs/user_*.bib` | per-staff subsets of `all.bib` | `filter_by_user.py` |
-| `website/website_export.bib` | export of the WordPress publication plugin | by hand |
+| `website/website_export.bib` | publications online on the website (teachPress) | `make -C website download` |
 
 Install the dependencies with `pip install -r requirements.txt`. The Pure and 4TU imports use Selenium and need Chrome.
 
@@ -47,7 +47,7 @@ The GitHub Action `.github/workflows/monthly_import.yml` runs on the 1st of ever
  - step 4: `make -C website` combines all bib files into `website/all.bib`, writes `website/delfly.bib` and runs `website/mavlab_bibtex_merge.py`
  - step 5: `filter_by_user.py` -> `userbibs/user_*.bib`
  - step 6A: in WordPress: add all publications 'to own list'
- - step 6B: export the publications from the website plugin as `website/website_export.bib`
+ - step 6B: download the publications that are online: `make -C website download` -> `website/website_export.bib` (or export them from the teachPress plugin in WordPress)
  - step 7: run `make -C website` again. The merge (matching on DOI, URL, then title + type + year) writes:
    - `mavlab_pure_extra.bib`: in this repo but not on the website -> import into WordPress
    - `mavlab_web_extra.bib`: on the website but not in this repo -> add to Pure or `mavlab_nopure.bib`
