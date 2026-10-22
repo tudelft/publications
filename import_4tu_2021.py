@@ -1,145 +1,180 @@
-# Download HTML
-import requests
-from lxml import html
+# Download the 4TU.ResearchData datasets of MAVLab staff into 4tu.bib
+#
+# Every dataset on data.4tu.nl gets a DataCite DOI with prefix 10.4121, so the
+# DataCite REST API (https://support.datacite.org/docs/api) is used to find and
+# describe them: no scraping of data.4tu.nl and one request per staff member.
+#
+# - one entry per dataset, keyed by its concept DOI (without .v1, .v2): it always
+#   points to the latest version, so a new version updates the entry in place
+# - @data is the teachPress type for datasets
+# - entries are sorted by year (newest first), type, first author and title, so
+#   new datasets appear at the top and existing entries never move
+# - when a search fails, or far fewer datasets are found than before (use --force
+#   when that is intended), 4tu.bib is not changed
+import argparse
 import codecs
-from time import sleep # this should go at the top of the file
+import os
+import re
+import time
 
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-
-from habanero import cn
-
-
-opts = Options()
-opts.add_argument("--headless")
-opts.add_argument("--disable-gpu")
-opts.add_argument("--no-sandbox")
-opts.add_argument("start-maximized")
-opts.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) ...")
-
-driver = webdriver.Chrome(options=opts)
+import requests
 
 
-URL_4TU = 'https://data.4tu.nl'
+API = 'https://api.datacite.org/dois'
+PREFIX = '10.4121'
+OUTPUT = '4tu.bib'
+
+# MAVLab staff: last name -> first initial (skips other people with the same last name)
+STAFF = {'croon': 'G', 'wagter': 'C', 'smeur': 'E', 'remes': 'B', 'tijmons': 'S',
+         'hamaza': 'S', 'popovic': 'M', 'karasek': 'M', 'dupeyroux': 'J', 'scheper': 'K'}
 
 
-list_of_dois = []
+def search(last_name):
+    # all DOIs with this last name among the creators, all pages
+    records, url = [], API
+    params = {'query': 'prefix:%s AND creators.name:*%s*' % (PREFIX, last_name), 'page[size]': 1000}
+    while url:
+        for attempt in range(3):
+            try:
+                p = requests.get(url, params=params, timeout=60)
+                if p.status_code == 200:
+                    break
+                print('  HTTP', p.status_code)
+            except requests.RequestException as e:
+                print('  error:', e)
+            time.sleep(10 * (attempt + 1))
+        else:
+            return None
+        d = p.json()
+        records += d['data']
+        url, params = d.get('links', {}).get('next'), None
+    return records
 
 
-def download_list(search, bibf):
+def ascii_lower(s):
+    return s.lower().replace('ć', 'c').replace('č', 'c')
 
-    # https://data.4tu.nl/search?institutions=28586&search=de%20croon
-    url = URL_4TU + '/search?institutions=28586&search=' + search
 
-    bibf.write('\n# Searching: '+  url +'\n')  
+def is_staff(creator):
+    family = creator.get('familyName') or creator.get('name', '').split(',')[0]
+    given = creator.get('givenName') or (creator.get('name', '').split(',') + [''])[1]
+    last = ascii_lower(family).replace('-', ' ').split()
+    return bool(last) and last[-1] in STAFF and given.strip().upper().startswith(STAFF[last[-1]])
 
-    done = False
-    while not done:
 
-        driver.get(url)
-        sleep(25)
-        html = driver.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-        # print(html)
+def concept_doi(doi):
+    return re.sub(r'\.v\d+$', '', doi.lower())
 
-        print('Downloaded ' + url + '.\n')
 
-        f = html.split('https://data.4tu.nl/datasets/')
-        for ff in f:
-            if '<head>' in ff:
+def version(doi):
+    m = re.search(r'\.v(\d+)$', doi.lower())
+    return int(m.group(1)) if m else 0
+
+
+def clean(txt):
+    txt = re.sub(r'<[^>]+>', ' ', txt or '')
+    return ' '.join(txt.replace('{', '(').replace('}', ')').split())
+
+
+def bib_name(creator):
+    if creator.get('familyName'):
+        return (creator['familyName'] + ', ' + creator.get('givenName', '')).strip(', ')
+    return creator.get('name', '')
+
+
+def to_bibtex(doi, a):
+    title = clean(a['titles'][0]['title']) if a.get('titles') else ''
+    abstract = [clean(d.get('description')) for d in a.get('descriptions', []) if d.get('descriptionType') == 'Abstract']
+    keywords = [clean(s['subject']) for s in a.get('subjects', []) if s.get('subject')]
+    rights = [r['rights'] for r in a.get('rightsList', []) if r.get('rights')]
+    fields = [
+        ('author', ' and '.join(bib_name(c) for c in a.get('creators', []))),
+        ('title', title),
+        ('year', str(a.get('publicationYear', ''))),
+        ('publisher', clean(a.get('publisher') if isinstance(a.get('publisher'), str) else (a.get('publisher') or {}).get('name'))),
+        ('doi', doi),
+        ('url', 'https://doi.org/' + doi),
+        ('keywords', ', '.join(dict.fromkeys(keywords))),
+        ('abstract', abstract[0] if abstract else ''),
+        ('copyright', clean(rights[0]) if rights else ''),
+        ('note', clean(a.get('types', {}).get('resourceTypeGeneral', ''))),
+    ]
+    bib = '@data{' + doi + ',\n'
+    bib += ',\n'.join('\t%-9s = {%s}' % (k, v) for k, v in fields if v)
+    return bib + '\n}'
+
+
+def sort_key(e):
+    # newest first; within a year a fixed order on type, first author and title
+    first_author = e['author'].split(' and ')[0].lower()
+    return (-int(e['year'] or 0), e['type'], first_author, e['title'].lower())
+
+
+def read_previous(filename):
+    entries = {}
+    if os.path.exists(filename):
+        with open(filename, encoding='utf-8-sig') as f:
+            for m in re.finditer(r'^@\w+\{([^,\n]+),.*?^\}', f.read(), re.S | re.M):
+                entries[concept_doi(m.group(1).replace('https://doi.org/', ''))] = m.group(0)
+    return entries
+
+
+def import_4tu(force=False):
+    previous = read_previous(OUTPUT)
+
+    # newest record per concept DOI, for datasets with a MAVLab staff member among the creators
+    found = {}
+    for name in sorted(STAFF):
+        records = search(name)
+        if records is None:
+            print('DataCite does not answer: %s not changed, run the script again later.' % OUTPUT)
+            return
+        n = 0
+        for r in records:
+            a = r['attributes']
+            if not any(is_staff(c) for c in a.get('creators', [])):
                 continue
+            doi = concept_doi(a['doi'])
+            # the concept DOI carries the metadata of the latest version; versioned DOIs are a fallback
+            rank = (version(a['doi']) == 0, version(a['doi']))
+            if doi not in found or rank > found[doi][0]:
+                found[doi] = (rank, a)
+            n += 1
+        print('- %-10s %3d DataCite records, %3d with MAVLab staff' % (name, len(records), n))
 
-            doi = ff.split('">')[0]
-            doi = '10.4121/' + doi.replace('/','.v')
+    entries = []
+    for doi, (_, a) in found.items():
+        entries.append({'doi': doi, 'bib': to_bibtex(doi, a), 'year': str(a.get('publicationYear', '')),
+                        'type': 'data', 'author': bib_name((a.get('creators') or [{}])[0]),
+                        'title': clean(a['titles'][0]['title']) if a.get('titles') else ''})
+    entries.sort(key=sort_key)
 
-            bibf.write('#  - '+  doi +'\n')  
-            print(doi)
-            list_of_dois.append(doi)
+    if len(entries) < 0.8 * len(previous) and not force:
+        print('Only %d datasets found, %d before: %s not changed. Check the DataCite search, or run with --force.' % (len(entries), len(previous), OUTPUT))
+        return
 
-        done = True
+    tmp = OUTPUT + '.tmp'
+    bibf = codecs.open(tmp, 'w', 'utf-8')
+    bibf.write(u'﻿')
+    bibf.write('# AUTOGENERATED by import_4tu_2021.py: 4TU.ResearchData datasets of MAVLab staff\n')
+    bibf.write('# Import from: ' + API + '?query=prefix:' + PREFIX + ' AND creators.name:<staff>\n')
+    bibf.write('# Sorted by year (newest first), type, first author and title\n\n')
+    for e in entries:
+        bibf.write(e['bib'] + '\n\n')
+    bibf.close()
+    os.replace(tmp, OUTPUT)
 
-
-
-
-def get_doi(doi):
-
-    # remove the '10.4121/' prefix and everything after the trailing '.v'
-    doi = doi.replace('10.4121/', '')
-    if '.v' in doi:
-        doi = doi.split('.v')[0]
-
-    url = 'https://data.4tu.nl/datasets/' + doi
-
-    # download the page and find the first occurrence of 'https://doi.org/'
-    response = requests.get(url)
-    if response.status_code != 200:
-        print('Error: Could not access URL ' + url)
-        return ''
-    html_content = response.text
-    start_index = html_content.find('https://doi.org/')
-    if start_index == -1:
-        print('Error: DOI not found in the page content.')
-        return ''
-    end_index = html_content.find('"', start_index)
-    if end_index == -1:
-        print('Error: Could not find the end of the DOI link.')
-        return ''
-
-    return html_content[start_index + len('https://doi.org/'):end_index]
-
-
-searchterms = ['de%20croon', 'de%20wagter', 'smeur', 'remes', 'tijmons', 'hamaza', 'popovic']
+    new = [e['doi'] for e in entries if e['doi'] not in previous]
+    removed = [d for d in previous if d not in found]
+    print('================================================================')
+    print(len(entries), 'datasets,', len(new), 'new,', len(removed), 'no longer found')
+    for d in new:
+        print('   new:', d)
+    for d in removed:
+        print('   no longer found:', d)
 
 
-bibf = codecs.open( '4tu.bib', 'w', 'utf-8')
-bibf.write(u'\ufeff')
-bibf.write('# AUTOGENERATED\n# Import from: '+  URL_4TU +'\n\n\n')
-
-
-for s in searchterms:
-    download_list(s, bibf)
-
-
-unique = set(list_of_dois)
-print('Found ' + str(len(unique)) + ' unique DOIs.\n')
-
-# Iterate over unique DOIs and download bibtex entries
-for doi in unique:
-    print('Downloading bibtex for ' + doi)
-
-    bibf.write('# UUID: ' + doi + '\n')
-    doi = get_doi(doi)
-    bibf.write('# DOI:  ' + doi + '\n\n')
-
-    print('Converted DOI to ' + doi)
-
-    try:
-        bib = cn.content_negotiation(ids=doi, format="bibentry")
-        bib = bib.replace('}, ', '},\n\t')
-        bibf.write(bib + '\n\n')
-    except Exception as e:
-        print('Error downloading bibtex for ' + doi + ': ' + str(e))
-        continue
-
-bibf.close()
-
-# Read the file and sort the lines based on the UUID
-with open('4tu.bib', 'r', encoding='utf-8') as f:
-    lines = f.readlines()
-
-# Split the file in blocks of lines based on the UUID and sort the blocks
-blocks = []
-current_block = []
-for line in lines:
-    if line.startswith('# UUID: '):
-        if current_block:
-            blocks.append(current_block)
-            current_block = []
-    current_block.append(line)
-if current_block:
-    blocks.append(current_block)
-
-blocks.sort(key=lambda x: x[0].split('# UUID: ')[1] if x[0].startswith('# UUID: ') else '')
-with open('4tu.bib', 'w', encoding='utf-8') as f:
-    for block in blocks:
-        f.writelines(block  + ['\n'])
-
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Download the 4TU.ResearchData datasets of MAVLab staff')
+    parser.add_argument('--force', action='store_true', help='write 4tu.bib even when far fewer datasets are found than before')
+    import_4tu(parser.parse_args().force)

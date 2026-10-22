@@ -1,3 +1,4 @@
+import re
 import bibtexparser
 
 
@@ -39,6 +40,11 @@ def cleanup_title(txt):
     txt = txt.replace('\\&','&').replace('\\$','$').replace(' ', '').strip()
     return txt
 
+def doi_id(txt):
+    # 10.4121/abc.v2 and https://doi.org/10.4121/abc are the same dataset as 10.4121/abc
+    txt = txt.strip().lower().replace('https://doi.org/', '').replace('http://dx.doi.org/', '')
+    return re.sub(r'\.v\d+$', '', txt)
+
 for b in bib_pure.entries:
     #print(b)
     if not ('year' in b) or not ('author' in b) or not ('ENTRYTYPE' in b) or not ('title' in b):
@@ -58,7 +64,7 @@ for b in bib_pure.entries:
         
         # Prefer matching DOI
         if 'doi' in b2 and 'doi' in b:
-            if b['doi'].lower() == b2['doi'].lower():
+            if doi_id(b['doi']) == doi_id(b2['doi']):
                 if verbose:
                     print('-DOI merged',b['ID'],b2['ID'])
                 mavlab_merged.entries.append(b)
