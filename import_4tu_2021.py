@@ -105,9 +105,10 @@ def to_bibtex(doi, a):
 
 
 def sort_key(e):
-    # newest first; within a year a fixed order on type, first author and title
+    # newest first; within a year a fixed order on type, first author and title,
+    # and the DOI so that entries with the same author and title never swap places
     first_author = e['author'].split(' and ')[0].lower()
-    return (-int(e['year'] or 0), e['type'], first_author, e['title'].lower())
+    return (-int(e['year'] or 0), e['type'], first_author, e['title'].lower(), e['doi'])
 
 
 def read_previous(filename):
