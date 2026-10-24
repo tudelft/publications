@@ -1,4 +1,14 @@
-# Download HTML
+# Download the C&S publications from Pure (research.tudelft.nl) into pure/cs.bib
+#
+# The download goes to a temporary file. pure/cs.bib is only replaced when the
+# publication list could be read and Pure did not remove more than MAX_REMOVED
+# papers; otherwise it is left untouched and the script exits with code 1, so
+# the import can be tried again later (e.g. when Pure is being worked on).
+#
+#   python import_pure_2021.py           safe import
+#   python import_pure_2021.py --force   replace pure/cs.bib even when many papers were removed
+import argparse
+import os
 import sys
 import requests
 from lxml import html
@@ -28,6 +38,34 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 #root = ET.parse('https://research.tudelft.nl/en/organisations/control-operations/publications/?format=rss&page=5').getroot()
 
+OUTPUT = './pure/cs.bib'
+MAX_REMOVED = 10    # more papers removed by Pure than this: do not replace pure/cs.bib
+
+
+class PureUnavailable(Exception):
+    pass
+
+
+def read_previous(filename):
+    # previous entries keyed by their Pure link: '# <title>\n# <link>\n\n@...}\n\n'
+    blocks = {}
+    if not os.path.exists(filename):
+        return blocks
+    with open(filename, encoding='utf-8-sig') as f:
+        lines = f.read().split('\n')
+    starts = [i - 1 for i in range(1, len(lines))
+              if lines[i].startswith('# https://research.tudelft.nl/') and lines[i - 1].startswith('# ')]
+    for n, s in enumerate(starts):
+        end = starts[n + 1] if n + 1 < len(starts) else len(lines)
+        blocks[lines[s + 1][2:].strip()] = '\n'.join(lines[s:end]).rstrip('\n') + '\n\n'
+    return blocks
+
+
+previous = read_previous(OUTPUT)
+found_links = []
+kept_links = []
+
+
 def download_list(page, filename):
 
     if page == 0:
@@ -47,10 +85,19 @@ def download_list(page, filename):
 
         done = True
 
-        root = ET.fromstring(p.text)
+        # a blocked or failing Pure answers with an HTML page (e.g. a bot check) instead of RSS
+        try:
+            if p.status_code != 200:
+                raise ET.ParseError('HTTP %d' % p.status_code)
+            root = ET.fromstring(p.text)
+        except ET.ParseError as e:
+            raise PureUnavailable('page %d of the publication list is not readable (%s)%s' % (
+                pageno, e, ': blocked by a bot check' if 'Just a moment' in p.text else ''))
         for pub in root.findall('channel/item'):
             title = pub.findall('title')[0].text
             link = pub.findall('guid')[0].text
+            found_links.append(link)
+            done = False
 
             #description = pub.findall('description')[0].text
             #dom = html.fromstring(description)
@@ -147,6 +194,13 @@ def download_list(page, filename):
 
             if bib is None:
                 print('No bibtex found for', link)
+                # keep the previous entry instead of losing the paper
+                if link in previous:
+                    bibf = codecs.open(filename, 'a', 'utf-8')
+                    bibf.write(previous[link])
+                    bibf.close()
+                    kept_links.append(link)
+                    done = False
                 continue
 
             # open and add, in case of error one can continue
@@ -196,6 +250,41 @@ def download_list(page, filename):
      
 
 
-# To continue downloading, type a non-zero page.
-# page=0 resets the output
-download_list(0, './pure/cs.bib')
+def report_and_replace(tmp, force):
+    removed = [l for l in previous if l not in set(found_links)]
+    added = [l for l in dict.fromkeys(found_links) if l not in previous]
+    print('================================================================')
+    print('Pure lists %d publications: %d new, %d removed since the previous import, %d kept from the previous import (BibTeX not downloadable)'
+          % (len(set(found_links)), len(added), len(removed), len(kept_links)))
+    for l in removed:
+        print('   removed by Pure:', previous[l].split('\n')[0][2:], '|', l)
+    if not found_links:
+        print('No publications found: %s not changed, try again later.' % OUTPUT)
+        return False
+    if len(removed) > MAX_REMOVED and not force:
+        print('Pure removed %d publications (more than %d): Pure may be working on its database.' % (len(removed), MAX_REMOVED))
+        print('%s not changed. Try again later, or run with --force if the removals are real.' % OUTPUT)
+        return False
+    os.replace(tmp, OUTPUT)
+    print(OUTPUT, 'updated.')
+    return True
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Download the C&S publications from Pure')
+    parser.add_argument('--force', action='store_true', help='replace pure/cs.bib even when many papers were removed')
+    args = parser.parse_args()
+
+    tmp = OUTPUT + '.tmp'
+    try:
+        download_list(0, tmp)
+        ok = report_and_replace(tmp, args.force)
+    except PureUnavailable as e:
+        print('Pure is not available:', e)
+        print('%s not changed, try again later.' % OUTPUT)
+        ok = False
+    finally:
+        driver.quit()
+        if os.path.exists(tmp):
+            os.remove(tmp)
+    sys.exit(0 if ok else 1)
