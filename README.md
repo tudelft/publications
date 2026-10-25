@@ -24,7 +24,7 @@ This repo keeps a history of all publications of the Micro Air Vehicle Laborator
 Install the dependencies with `pip install -r requirements.txt`. The Pure and 4TU imports use Selenium and need Chrome.
 
 ## Monthly import (automated)
-The GitHub Action `.github/workflows/monthly_import.yml` runs on the 1st of every month (or manually via *workflow_dispatch*). It imports arXiv, 4TU and Pure, runs all filters and the website build, and opens a pull request `Monthly Paper Update import-YYYY-MM-DD-HH-MM`. Review the diff before merging: a failed import can show up as mass deletions.
+The GitHub Action `.github/workflows/monthly_import.yml` runs on the 1st of every month (or manually via *workflow_dispatch*). It imports arXiv, M.Sc. theses, 4TU and Pure, runs all filters and the website build, and opens a pull request `Monthly Paper Update import-YYYY-MM-DD-HH-MM` when anything changed. An import that is incomplete keeps its previous data and shows up as a warning on the run (exit code 1 of the script); run the action again later. Review the diff before merging.
 
 ## Manual steps
 

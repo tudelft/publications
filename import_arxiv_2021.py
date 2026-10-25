@@ -6,10 +6,12 @@
 #
 # When the API does not answer, the previous version of the affected entries is
 # kept, and when a search fails no papers are removed. The summary lists what
-# changed and what failed; run the script again later to retry.
+# changed and what failed; run the script again later to retry. The exit code is
+# 1 when not everything could be downloaded.
 import codecs
 import os
 import re
+import sys
 import time
 import xml.etree.ElementTree as ET
 
@@ -180,11 +182,13 @@ def import_arxiv(filename):
     for k in ['new', 'updated', 'kept previous version', 'failed', 'removed']:
         if report[k]:
             print(' -', k + ':', ' '.join(report[k]))
-    if report['kept previous version'] or report['failed'] or '# Search failed' in header:
-        print('Not everything could be downloaded: run the script again later.')
-    else:
+    complete = not (report['kept previous version'] or report['failed'] or '# Search failed' in header)
+    if complete:
         print('All', len(codes), 'entries are up to date.')
+    else:
+        print('Not everything could be downloaded: run the script again later.')
+    return complete
 
 
 if __name__ == '__main__':
-    import_arxiv('arxiv.bib')
+    sys.exit(0 if import_arxiv('arxiv.bib') else 1)

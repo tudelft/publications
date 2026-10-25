@@ -45,51 +45,62 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git checkout -b ${{ env.BRANCH_NAME }}
     
+    # Each step commits its own changes. A script that cannot import everything exits
+    # with code 1: it keeps its previous data and the run shows a warning, not a failure.
     - name: Import arXiv
-      continue-on-error: true
       run: |
-        python ./import_arxiv_2021.py && git diff
-        git diff --quiet || { git add -A && git commit -m "Imported arXiv";}
+        python ./import_arxiv_2021.py || echo "::warning title=arXiv import::incomplete, previous entries kept; run it again later (see the log)"
+        git add -A && git diff --cached --stat
+        git diff --cached --quiet || git commit -q -m "Imported arXiv"
 
     - name: Import M.Sc. theses
-      continue-on-error: true
       run: |
-        python ./import_repository.py && git diff --stat
-        git diff --quiet || { git add -A && git commit -m "Imported M.Sc. theses";}
+        python ./import_repository.py || echo "::warning title=M.Sc. thesis import::incomplete, previous entries kept; run it again later (see the log)"
+        git add -A && git diff --cached --stat
+        git diff --cached --quiet || git commit -q -m "Imported M.Sc. theses"
 
     - name: Import 4TU
-      continue-on-error: true
       run: |
-        python ./import_4tu_2021.py && git diff
-        git diff --quiet || { git add -A && git commit -m "Imported 4TU";}
+        python ./import_4tu_2021.py || echo "::warning title=4TU import::4tu.bib not changed; run it again later (see the log)"
+        git add -A && git diff --cached --stat
+        git diff --cached --quiet || git commit -q -m "Imported 4TU"
 
     - name: Import PURE - CS
-      continue-on-error: true
       run: |
-        python ./import_pure_2021.py && git diff
-        git diff --quiet || { git add -A && git commit -m "Imported PURE"; }
+        python ./import_pure_2021.py || echo "::warning title=Pure import::bad time to import, pure/cs.bib not changed; run it again later (see the log)"
+        git add -A && git diff --cached --stat
+        git diff --cached --quiet || git commit -q -m "Imported PURE"
 
     - name: Filter papers and website export
-      continue-on-error: true
       run: |
-        python ./filter_pure_mavlab.py && git diff
-        git diff --quiet || { git add -A && git commit -m "Filtered MAVLab papers from PURE"; }
-        python ./filter_arxiv.py && git diff
-        git diff --quiet || { git add -A && git commit -m "Filtered arXiv papers"; }
-        make -C ./website
+        python ./filter_pure_mavlab.py || echo "::warning title=filter_pure_mavlab.py::failed (see the log)"
+        git add -A && { git diff --cached --quiet || git commit -q -m "Filtered MAVLab papers from PURE"; }
+        python ./filter_arxiv.py || echo "::warning title=filter_arxiv.py::failed (see the log)"
+        git add -A && { git diff --cached --quiet || git commit -q -m "Filtered arXiv papers"; }
+        make -C ./website || echo "::warning title=website merge::failed (see the log)"
         git clean -df
-        git diff --quiet || { git add -A && git commit -m "Updated list of papers for website"; }
-        python ./filter_delfly.py && git diff
-        python ./filter_by_user.py && git diff
+        git add -A && { git diff --cached --quiet || git commit -q -m "Updated list of papers for website"; }
+        python ./filter_delfly.py || echo "::warning title=filter_delfly.py::failed (see the log)"
+        python ./filter_by_user.py || echo "::warning title=filter_by_user.py::failed (see the log)"
 
+    # Push and open a pull request when anything differs from the commit this run started from
     - name: Commit and Push changes
+      id: push
       run: |
-        git diff --quiet || { git add -A && git commit -m "Updated list of papers: ${{ env.BRANCH_NAME }}" && git push https://$USERNAME:$REPO_KEY@github.com/tudelft/publications.git ${{ env.BRANCH_NAME }}; }
+        git add -A && { git diff --cached --quiet || git commit -q -m "Updated list of papers: ${{ env.BRANCH_NAME }}"; }
+        if git diff --quiet $GITHUB_SHA HEAD; then
+          echo "Nothing changed: no pull request."
+        else
+          git diff --stat $GITHUB_SHA HEAD
+          git push https://$USERNAME:$REPO_KEY@github.com/tudelft/publications.git ${{ env.BRANCH_NAME }}
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+        fi
       env:
         REPO_KEY: ${{secrets.PUSH_TOKEN}}
         USERNAME: github-actions[bot]
 
     - name: Make PR
+      if: steps.push.outputs.pushed == 'true'
       uses: devops-infra/action-pull-request@v0.5.5
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
