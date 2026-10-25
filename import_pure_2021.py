@@ -1,4 +1,14 @@
-# Download HTML
+# Download the C&S publications from Pure (research.tudelft.nl) into pure/cs.bib
+#
+# Every run is a full import into IMPORT (pure/cs_import.bib, not in git): a
+# complete copy of what Pure lists, nothing is taken over from earlier imports.
+# Pure often fails or temporarily drops many papers (e.g. while the library works
+# on its database), so the import is compared with pure/cs.bib first:
+# - all pages read and at most MAX_REMOVED papers gone: it replaces pure/cs.bib
+# - otherwise it was a bad time to import: pure/cs.bib is not changed, the import
+#   is left in IMPORT for inspection, and the script exits with code 1. Try again
+#   later, or when the removals are real: mv pure/cs_import.bib pure/cs.bib
+import os
 import sys
 import requests
 from lxml import html
@@ -28,6 +38,31 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 #root = ET.parse('https://research.tudelft.nl/en/organisations/control-operations/publications/?format=rss&page=5').getroot()
 
+OUTPUT = './pure/cs.bib'
+IMPORT = './pure/cs_import.bib'
+MAX_REMOVED = 10    # more papers gone than this: bad time to import, do not replace pure/cs.bib
+
+
+class PureUnavailable(Exception):
+    pass
+
+
+def read_links(filename):
+    # Pure link -> title of the entries in a cs.bib file: '# <title>', '# <link>', '', '@...'
+    links = {}
+    if os.path.exists(filename):
+        with open(filename, encoding='utf-8-sig') as f:
+            lines = f.read().split('\n')
+        for i in range(1, len(lines)):
+            if lines[i].startswith('# https://research.tudelft.nl/') and lines[i - 1].startswith('# '):
+                links[lines[i][2:].strip()] = lines[i - 1][2:]
+    return links
+
+
+listed_links = []    # publications in the Pure list
+failed_links = []    # listed, but their BibTeX could not be downloaded
+
+
 def download_list(page, filename):
 
     if page == 0:
@@ -47,10 +82,19 @@ def download_list(page, filename):
 
         done = True
 
-        root = ET.fromstring(p.text)
+        # a blocked or failing Pure answers with an HTML page (e.g. a bot check) instead of RSS
+        try:
+            if p.status_code != 200:
+                raise ET.ParseError('HTTP %d' % p.status_code)
+            root = ET.fromstring(p.text)
+        except ET.ParseError as e:
+            raise PureUnavailable('page %d of the publication list is not readable (%s)%s' % (
+                pageno, e, ': blocked by a bot check' if 'Just a moment' in p.text else ''))
         for pub in root.findall('channel/item'):
             title = pub.findall('title')[0].text
             link = pub.findall('guid')[0].text
+            listed_links.append(link)
+            done = False
 
             #description = pub.findall('description')[0].text
             #dom = html.fromstring(description)
@@ -147,6 +191,7 @@ def download_list(page, filename):
 
             if bib is None:
                 print('No bibtex found for', link)
+                failed_links.append(link)
                 continue
 
             # open and add, in case of error one can continue
@@ -196,6 +241,39 @@ def download_list(page, filename):
      
 
 
-# To continue downloading, type a non-zero page.
-# page=0 resets the output
-download_list(0, './pure/cs.bib')
+def check_and_replace(complete):
+    previous = read_links(OUTPUT)
+    imported = read_links(IMPORT)
+    gone = [l for l in previous if l not in imported]
+    new = [l for l in imported if l not in previous]
+    print('================================================================')
+    print('Imported %d publications: %d new, %d gone since the previous import' % (len(imported), len(new), len(gone)))
+    for l in gone if complete else []:
+        why = 'BibTeX not downloadable' if l in failed_links else 'not listed by Pure'
+        print('   gone (%s): %s | %s' % (why, previous[l], l))
+    if not complete:
+        problem = 'the publication list could not be read completely'
+    elif not imported:
+        problem = 'no publications imported'
+    elif len(gone) > MAX_REMOVED:
+        problem = '%d publications gone (more than %d), Pure may be working on its database' % (len(gone), MAX_REMOVED)
+    else:
+        os.replace(IMPORT, OUTPUT)
+        print(OUTPUT, 'updated.')
+        return True
+    print('Bad time to import: %s.' % problem)
+    print('%s not changed, the import is left in %s. Try again later, or when the removals are real: mv %s %s'
+          % (OUTPUT, IMPORT, IMPORT, OUTPUT))
+    return False
+
+
+if __name__ == '__main__':
+    complete = True
+    try:
+        download_list(0, IMPORT)
+    except PureUnavailable as e:
+        print('Pure is not available:', e)
+        complete = False
+    finally:
+        driver.quit()
+    sys.exit(0 if check_and_replace(complete) else 1)
