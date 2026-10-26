@@ -13,6 +13,7 @@
 import codecs
 import os
 import re
+import sys
 import time
 import unicodedata
 
@@ -154,7 +155,7 @@ def import_theses():
     theses = search_theses()
     if not theses:
         print('The repository search does not answer: nothing changed, run the script again later.')
-        return
+        return False
 
     new = {f: {} for f in FILES}
     report = {'committee only': [], 'not MAVLab': 0, 'kept previous version': [], 'failed': []}
@@ -212,7 +213,9 @@ def import_theses():
     if report['kept previous version'] or report['failed']:
         print(len(report['kept previous version']) + len(report['failed']), 'theses could not be downloaded:',
               ' '.join(report['kept previous version'] + report['failed']), '-> run the script again later.')
+        return False
+    return True
 
 
 if __name__ == '__main__':
-    import_theses()
+    sys.exit(0 if import_theses() else 1)

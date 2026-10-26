@@ -10,11 +10,12 @@
 # - entries are sorted by year (newest first), type, first author and title, so
 #   new datasets appear at the top and existing entries never move
 # - when a search fails, or far fewer datasets are found than before (use --force
-#   when that is intended), 4tu.bib is not changed
+#   when that is intended), 4tu.bib is not changed and the exit code is 1
 import argparse
 import codecs
 import os
 import re
+import sys
 import time
 
 import requests
@@ -129,7 +130,7 @@ def import_4tu(force=False):
         records = search(name)
         if records is None:
             print('DataCite does not answer: %s not changed, run the script again later.' % OUTPUT)
-            return
+            return False
         n = 0
         for r in records:
             a = r['attributes']
@@ -152,7 +153,7 @@ def import_4tu(force=False):
 
     if len(entries) < 0.8 * len(previous) and not force:
         print('Only %d datasets found, %d before: %s not changed. Check the DataCite search, or run with --force.' % (len(entries), len(previous), OUTPUT))
-        return
+        return False
 
     tmp = OUTPUT + '.tmp'
     bibf = codecs.open(tmp, 'w', 'utf-8')
@@ -173,9 +174,10 @@ def import_4tu(force=False):
         print('   new:', d)
     for d in removed:
         print('   no longer found:', d)
+    return True
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Download the 4TU.ResearchData datasets of MAVLab staff')
     parser.add_argument('--force', action='store_true', help='write 4tu.bib even when far fewer datasets are found than before')
-    import_4tu(parser.parse_args().force)
+    sys.exit(0 if import_4tu(parser.parse_args().force) else 1)
