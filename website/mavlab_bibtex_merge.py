@@ -35,10 +35,15 @@ def cleanup_title(txt):
     txt = txt.replace('\\textquoteright','').replace('\\textquoteleft','').replace('{}','')
     txt = txt.replace('textquoteright',' ').replace('textquoteleft',' ')
     txt = txt.replace('/', ' ').replace('-', '').replace('\'', ' ').replace('"', ' ').replace(':', ' ')
+    txt = txt.replace('‘', ' ').replace('’', ' ').replace('“', ' ').replace('”', ' ')
     txt = txt.replace('  ', ' ').replace('  ', ' ').replace('  ', ' ').replace('  ', ' ').strip()
     txt = txt.replace('&amp;','&').replace(' ', '').strip()
     txt = txt.replace('\\&','&').replace('\\$','$').replace(' ', '').strip()
     return txt
+
+def url_id(txt):
+    # http://resolver.tudelft.nl/x and https://resolver.tudelft.nl/x are the same link
+    return txt.strip().lower().replace('https://', '').replace('http://', '')
 
 def doi_id(txt):
     # 10.4121/abc.v2 and https://doi.org/10.4121/abc are the same dataset as 10.4121/abc
@@ -75,7 +80,7 @@ for b in bib_pure.entries:
 
         # Next, check if same URL, then same item
         if True and 'url' in b2 and 'url' in b:
-            if (b['url'].replace('https://arxiv.org/abs/','').lower() in b2['url'].lower()) or (b['url'].lower() == b2['url'].lower()):
+            if (b['url'].replace('https://arxiv.org/abs/','').lower() in b2['url'].lower()) or (url_id(b['url']) == url_id(b2['url'])):
                 if verbose:
                     print('-URL merged',b['ID'],b2['ID'])
                 mavlab_merged.entries.append(b)
