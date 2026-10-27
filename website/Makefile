@@ -14,6 +14,14 @@ all:
 check:
 	python ./check_duplicates.py $(SOURCES)
 
+# download what is on the website into website_export.bib
+download:
+	python ./download_website.py
+
+# publications that are on the website more than once (exit code 1)
+check-web:
+	python ./check_duplicates.py website_export.bib
+
 
 clean:
 	rm -f not_delfly.bib
