@@ -4,28 +4,22 @@ import datetime
 
 from collections import OrderedDict
 
-chairs = {
-    'MAVLAB': ['valles', 'coppola', 'scheper', 'mcguire', 'olejnik', 'dijk', 'wagter', 'croon', 'remes', 'popovic', 'popović',
-               'ruijsink', 'karasek', 'armanini', 'caetano', 'tijmons', 'smeur', 'horst', 'tienen', 'hecke',
-               'oliveira', 'lentink', 'percin', 'tay', 'noyon', 'dupeyroux', 'hamaza', 'ferede', 'bahnam',
-               'mancinelli', 'stroobants', 'hagenaars',
-               'ho', 'li',
-#               'wang', 'ma', 'xu', 'yu', 'wu',  'ye', 'zheng', 
-               'altena', 'bredenbeck',
-               'ramirez', 'farinha', 'ponti', 'blaha', 'nowak' ]}
+from mavlab_members import MEMBERS, member
 
-# Full authors name removal
-remove = ['V. Ho', 'A. Sharma', 'Max Li', 'Yifei Li', 'Y.D. Li']
-#    , 'Merkus', 'Costa', 'Engelen', 'Xue Wu', 'S Wu', 'S-F Wu', 'SF Wu', 'M Wang', 'Xuerui Wang',
-#        'Guangming Zeng',  'Sherry Wang', 'Yanyang Wang', 'Xiaotian Wang', 'Xue Wu', 'T Chen',
-#        'GT Zheng']
+chairs = {'MAVLAB': list(MEMBERS)}
 
-def get_chair(name):
-    global chairs
-    for chair, staff in chairs.items():
-        if name in staff:
-            return chair
-    return None
+# Full authors name removal: other people that match a MAVLab last name and first initial
+remove = ['Yan Wu']
+
+def get_chair(person):
+    # last name and chair of a Pure author ('Last, First' or 'First Last')
+    person = person.replace('{', '').replace('}', '').strip()
+    if ',' in person:
+        last, first = person.split(',', 1)
+    else:
+        first, _, last = person.rpartition(' ')
+    name = member(last, first)
+    return name, ('MAVLAB' if name else None)
 
 
 papers = dict()
@@ -73,13 +67,7 @@ for b in bib_database.entries:
 
     mavlabpaper = 0
     for person in authors.split(' and '):
-        if ',' in person:
-            # last name left of comma: right part
-            name = person.split(',')[0].split(' ')[-1].strip().strip('\\{').strip('\\}').strip('{').strip('}').strip().lower()
-        else:
-            # last name
-            name = person.split(' ')[-1].strip().strip('\\{').strip('\\}').strip('{').strip('}').strip().lower()
-        chairname = get_chair(name)
+        name, chairname = get_chair(person)
         print(person, '|', name, '|', chairname)
         if chairname == 'MAVLAB':
             if mavlabpaper > -1: # if not forbidden

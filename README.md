@@ -12,7 +12,7 @@ This repo keeps a history of all publications of the Micro Air Vehicle Laborator
 | `arxiv_nopub.bib` | arXiv preprints whose DOI is not in `pure.bib` (not committed) | `filter_arxiv.py` |
 | `4tu.bib` | datasets on data.4tu.nl | `import_4tu_2021.py` |
 | `dataverse.bib` | datasets on dataverse.nl/dataverse/mavlab | `import_dataverse_2021.py` |
-| `msc.bib` | M.Sc. theses supervised (mentor) by MAVLab staff, from repository.tudelft.nl | `import_repository.py` |
+| `msc.bib` | M.Sc. theses supervised (mentor) by a MAVLab member (staff, postdoc or PhD student), from repository.tudelft.nl | `import_repository.py` |
 | `msc_all.bib` | M.Sc. theses with MAVLab staff in any role, also graduation committee only | `import_repository.py` |
 | `mediacoverage.bib` | media coverage | by hand |
 | `mavlab_nopure.bib` | publications missing in Pure / the repository | by hand |
@@ -33,13 +33,13 @@ The GitHub Action `.github/workflows/monthly_import.yml` runs on the 1st of ever
  - step 1B: download from Dataverse: `import_dataverse_2021.py` -> `dataverse.bib` (not in the monthly import)
  - step 1C: download from arXiv: `import_arxiv_2021.py` -> `arxiv.bib` (arXiv API). If the API does not answer, the previous entries are kept and the summary asks to run the script again later.
  - step 1D: download from 4TU: `import_4tu_2021.py` -> `4tu.bib`, or search https://data.4tu.nl/search?q=mavlab and add by hand
- - step 1E: download M.Sc. theses: `import_repository.py` -> `msc.bib` (MAVLab staff as mentor/supervisor) and `msc_all.bib` (also graduation committee only). Theses that cannot be downloaded or are no longer found keep their previous entry; the summary lists what changed.
+ - step 1E: download M.Sc. theses: `import_repository.py` -> `msc.bib` (a MAVLab member as mentor/supervisor) and `msc_all.bib` (also graduation committee only). Theses that cannot be downloaded or are no longer found keep their previous entry; the summary lists what changed.
  - step 1F: fill `mediacoverage.bib` and `mavlab_nopure.bib` by hand
 
 ### Filter
  - step 2A: filter MAVLab publications from `pure/cs.bib`: `filter_pure_mavlab.py` -> `pure.bib`, `mavlab_summary.csv` and `pure/cs_nomav.bib` (the rest)
  - step 2B: remove arXiv preprints that have been published: `filter_arxiv.py` -> `arxiv_nopub.bib`
- - step 3: check `pure/cs_nomav.bib` for MAVLab papers that were missed, and `pure.bib` for papers that are not MAVLab. Fix the staff list (`chairs`) or the `remove` list in `filter_pure_mavlab.py`.
+ - step 3: check `pure/cs_nomav.bib` for MAVLab papers that were missed, and `pure.bib` for papers that are not MAVLab. Fix the member list in `mavlab_members.py` (also used for the M.Sc. theses) or the `remove` list in `filter_pure_mavlab.py`.
 
 `make` in the root runs steps 2A, 4 and the per-user export.
 
