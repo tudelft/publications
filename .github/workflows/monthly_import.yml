@@ -78,6 +78,7 @@ jobs:
         python ./filter_arxiv.py || echo "::warning title=filter_arxiv.py::failed (see the log)"
         git add -A && { git diff --cached --quiet || git commit -q -m "Filtered arXiv papers"; }
         make -C ./website || echo "::warning title=website merge::failed (see the log)"
+        make -C ./website check || echo "::warning title=Duplicate publications::the same publication is in all.bib more than once (see the log)"
         git add -A && { git diff --cached --quiet || git commit -q -m "Updated list of papers for website"; }
         python ./filter_delfly.py || echo "::warning title=filter_delfly.py::failed (see the log)"
         python ./filter_by_user.py || echo "::warning title=filter_by_user.py::failed (see the log)"

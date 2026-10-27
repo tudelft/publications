@@ -9,7 +9,7 @@ Pipeline that collects MAVLab (TU Delft, Control & Simulation) publications into
 ## Website (https://mavlab.tudelft.nl)
 WordPress with the teachPress plugin (9.0.12). The publication list on the website is maintained by hand in teachPress; this repo finds what is missing:
 1. **Export what is online**: `make -C website download` (`website/download_website.py`) rebuilds `website/website_export.bib` from the public pages `/publications/` (50 per page, all types except media) and `/media-coverage/` (teachPress type `online`). This replaces the manual teachPress export in wp-admin; the public BibTeX lacks teachPress tags (`keywords`), which the merge does not use.
-2. **Merge**: `make -C website` concatenates all local bib files into `website/all.bib` and runs `mavlab_bibtex_merge.py`, matching on DOI, then URL, then title + type + year.
+2. **Merge**: `make -C website` concatenates all local bib files into `website/all.bib` and runs `mavlab_bibtex_merge.py`, matching on DOI, then URL, then title + type + year. It ends with `check_duplicates.py` (also `make -C website check`, a warning in the monthly run): the same publication in two source files (e.g. a paper that is back in Pure but still in `mavlab_nopure.bib`) must be removed from the hand-maintained file; duplicates within `pure.bib` are Pure records for the library to merge.
 3. **Result** (git-ignored files in `website/`):
    - `mavlab_pure_extra.bib`: local entries that are **not yet on the website** (the historical "pure only" list) -> import these in teachPress (wp-admin, teachPress > Import, BibTeX)
    - `mavlab_web_extra.bib`: on the website but not in this repo
