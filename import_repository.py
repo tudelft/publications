@@ -1,7 +1,10 @@
 # Download the M.Sc. theses supervised in MAVLab from repository.tudelft.nl
 #
 #   msc.bib      theses with a MAVLab member (staff, postdoc or PhD student, see
-#                mavlab_members.py) as supervisor (mentor, supervisor, coach)
+#                mavlab_members.py) as supervisor (mentor, supervisor, coach), and
+#                theses of other faculties with MAVLab staff in any role: there the
+#                mentor must come from the student's own faculty, so the MAVLab
+#                daily supervisor is listed as graduation committee member
 #   msc_all.bib  theses with MAVLab staff in any role, also graduation committee only
 #
 # Only theses with MAVLab staff in the record are searched and kept: the repository
@@ -28,12 +31,13 @@ from mavlab_members import STAFF, member, staff
 REPOSITORY = 'https://repository.tudelft.nl'
 
 SUPERVISOR_ROLES = ['mentor', 'supervisor', 'coach']
+OWN_FACULTY = 'Aerospace Engineering'
 
 SEARCH = ' OR '.join(STAFF)
 PAUSE = 0.5         # seconds between requests
 RETRIES = 3
 
-FILES = {'msc.bib': 'a MAVLab member as supervisor', 'msc_all.bib': 'MAVLab staff in any role'}
+FILES = {'msc.bib': 'a MAVLab member as supervisor (other faculties: MAVLab staff in any role)', 'msc_all.bib': 'MAVLab staff in any role'}
 
 
 def get_json(path, params=None):
@@ -182,7 +186,9 @@ def import_theses():
         bib = to_bibtex(uuid, record)
         new['msc_all.bib'][uuid] = bib
         member_roles = [c.get('role', '') for c in field(record, 'contributors') if is_member(c['person'])]
-        if any(r in role for role in member_roles for r in SUPERVISOR_ROLES):
+        faculties = [o['name'] for o in field(record, 'managing_organisation') or [] if o.get('type') == 'Faculty']
+        other_faculty = bool(faculties) and OWN_FACULTY not in faculties
+        if other_faculty or any(r in role for role in member_roles for r in SUPERVISOR_ROLES):
             new['msc.bib'][uuid] = bib
         else:
             report['committee only'].append(uuid)
@@ -209,7 +215,7 @@ def import_theses():
             print('   removed:', ' '.join(removed))
         if kept_unfound[f]:
             print('   kept:', ' '.join(kept_unfound[f]))
-    print(len(report['committee only']), 'theses with MAVLab members only in the graduation committee (msc_all.bib only)')
+    print(len(report['committee only']), 'Aerospace Engineering theses with MAVLab members only in the graduation committee (msc_all.bib only)')
     print(report['not MAVLab'], 'search results without MAVLab staff (other people with the same name)')
     if report['kept previous version'] or report['failed']:
         print(len(report['kept previous version']) + len(report['failed']), 'theses could not be downloaded:',
