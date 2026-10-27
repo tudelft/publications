@@ -489,6 +489,23 @@
 	year      = {2020}
 }
 
+@article{ac96e69aede24041a9248f437fece863,
+	author    = {Mat{\v e}j Kar{\'a}sek},
+	day       = {30},
+	doi       = {10.1126/scirobotics.abe4544},
+	issn      = {2470-9476},
+	journal   = {Science Robotics},
+	language  = {English},
+	month     = {September},
+	number    = {46},
+	pdf       = {https://research.tudelft.nl/en/publications/good-vibrations-for-flapping-wing-flyers/},
+	publisher = {American Association for the Advancement of Science},
+	title     = {Good vibrations for flapping-wing flyers},
+	url       = {https://research.tudelft.nl/en/publications/good-vibrations-for-flapping-wing-flyers/},
+	volume    = {5},
+	year      = {2020}
+}
+
 @article{3a7d8134df9a4f6fa8b927a82cb76026,
 	author    = {\{de Croon\}, Guido},
 	day       = {22},
@@ -555,6 +572,21 @@
 	year      = {2018}
 }
 
+@article{6552199608804bf1b31ac7230d71f51b,
+	author    = {\{Mart{\'i}nez Gallar\}, B. and \{van Oudheusden\}, \{B. W.\} and A. Sciacchitano and M. Kar{\'a}sek},
+	doi       = {10.1007/s00348-019-2854-7},
+	issn      = {0723-4864},
+	journal   = {Experiments in Fluids},
+	language  = {English},
+	number    = {1},
+	pdf       = {https://research.tudelft.nl/en/publications/large-scale-volumetric-flow-visualization-of-the-unsteady-wake-of/},
+	publisher = {Springer},
+	title     = {Large-scale volumetric flow visualization of the unsteady wake of a flapping-wing micro air vehicle},
+	url       = {https://research.tudelft.nl/en/publications/large-scale-volumetric-flow-visualization-of-the-unsteady-wake-of/},
+	volume    = {61},
+	year      = {2020}
+}
+
 @article{f3ffc69e27334e15b7f881517ef73117,
 	author    = {Mat{\v e}j Kar{\'a}sek and Mustafa Percin and Torbj{\o}rn Cunis and \{van Oudheusden\}, \{Bas W.\} and \{De Wagter\}, Christophe and Remes, \{Bart D.W.\} and \{de Croon\}, \{Guido C.H.E.\}},
 	doi       = {10.1177/1756829319833683},
@@ -584,6 +616,21 @@
 	title     = {A minimal longitudinal dynamic model of a tailless flapping wing robot for control design},
 	url       = {https://research.tudelft.nl/en/publications/a-minimal-longitudinal-dynamic-model-of-a-tailless-flapping-wing-/},
 	volume    = {14},
+	year      = {2019}
+}
+
+@article{4d0a158785e740cbac04a019078e536b,
+	author    = {H. Altartouri and A. Roshanbin and G. Andreolli and L. Fazzi and M. Kar{\'a}sek and M. Lalami and A. Preumont},
+	doi       = {10.1177/1756829319841817},
+	issn      = {1756-8293},
+	journal   = {International Journal of Micro Air Vehicles},
+	keywords  = {aero-dampers, Micro air vehicles, passive stabilization, stability derivatives},
+	language  = {English},
+	pdf       = {https://research.tudelft.nl/en/publications/passive-stability-enhancement-with-sails-of-a-hovering-flapping-t/},
+	publisher = {SAGE Publications Inc.},
+	title     = {Passive stability enhancement with sails of a hovering flapping twin-wing robot},
+	url       = {https://research.tudelft.nl/en/publications/passive-stability-enhancement-with-sails-of-a-hovering-flapping-t/},
+	volume    = {11},
 	year      = {2019}
 }
 
@@ -867,6 +914,25 @@
 	publisher = {IEEE},
 	title     = {Analysis of a mechanical resonance in the flapping wing actuation},
 	url       = {https://research.tudelft.nl/en/publications/analysis-of-a-mechanical-resonance-in-the-flapping-wing-actuation/},
+	year      = {2017}
+}
+
+@article{0d73701c866a4286b2b8821b52fce089,
+	author    = {A. Roshanbin and H. Altartouri and M. Kar{\'a}sek and Andr{\'e} Preumont},
+	day       = {1},
+	doi       = {10.1177/1756829317695563},
+	issn      = {1756-8293},
+	journal   = {International Journal of Micro Air Vehicles},
+	keywords  = {active stabilization, Hovering flapping wing robot, hummingbird, wing twist modulation},
+	language  = {English},
+	month     = {December},
+	number    = {4},
+	pages     = {270--282},
+	pdf       = {https://research.tudelft.nl/en/publications/colibri-a-hovering-flapping-twin-wing-robot/},
+	publisher = {SAGE Publications Inc.},
+	title     = {COLIBRI: A hovering flapping twin-wing robot},
+	url       = {https://research.tudelft.nl/en/publications/colibri-a-hovering-flapping-twin-wing-robot/},
+	volume    = {9},
 	year      = {2017}
 }
 
@@ -1804,6 +1870,19 @@
 	year      = {2014}
 }
 
+@mastersthesis{uuid:6b1796a0-4c41-43b9-ae07-f11ce44f1f83,
+	abstract  = {Flapping-Wing Micro Air Vehicles (FWMAVs) operate under severe Size, Weight, and Power (SWaP) constraints, and their high-frequency flapping produces strong oscillatory dynamics that degrade conventional frame-based visual perception. Event cameras are well suited to these conditions, but event-based visual-inertial odometry (EVIO) methods typically rely on short time-window, locally linear motion assumptions that flapping flight breaks: under flapping, event-alignment methods such as plane fitting and contrast maximization recover mostly the high-frequency flapping-induced body rotation rather than the platform's translation. This work presents the first full EVIO pipeline running entirely on-board a small, high-frequency flapping-wing platform. The front-end deliberately avoids short-window alignment and instead exploits the abundance of flapping-induced events: it detects corner features event-by-event, clusters them into compact spatiotemporal features, and tracks these while discarding the fine oscillatory structure. The resulting feature tracks are fused with inertial measurements in a tightly coupled Extended Kalman Filter. The complete pipeline runs in real time on an on-board microcontroller within a sensing-and-compute payload of roughly 21 g. On flight datasets recorded on-board the FWMAV, the pipeline recovers velocity and attitude during flapping flight, and in a closed-loop flight test the on-board position estimate is accurate enough to hold a stationary hover in the horizontal plane. The same event stream that breaks conventional EVIO assumptions is thus sufficient not only for on-board state estimation, but for closing a position-control loop in flight.},
+	author    = {Vennink, T.},
+	keywords  = {state estimation; flapping-wing micro air vehicle; event-based visual-inertial odometry},
+	note      = {de Croon, G.C.H.E. (graduation committee member); Shyrokau, B. (graduation committee member); de Wagter, C. (graduation committee member); Kober, J. (mentor); Stroobants, S. (mentor); Delft University of Technology (degree granting institution); graduation 24-07-2026},
+	pdf       = {https://resolver.tudelft.nl/uuid:6b1796a0-4c41-43b9-ae07-f11ce44f1f83},
+	school    = {TU Delft Mechanical Engineering},
+	title     = {Asynchronous Event-Based Visual-Inertial Odometry for Flapping-Wing MAVs},
+	type      = {mathesis},
+	url       = {https://resolver.tudelft.nl/uuid:6b1796a0-4c41-43b9-ae07-f11ce44f1f83},
+	year      = {2026}
+}
+
 @mastersthesis{uuid:f4f3dc1b-26f2-4107-8c28-8baf1451be6c,
 	abstract  = {In recent years, flapping wing micro aerial vehicles (FWMAVs) have garnered significant attention due to their agility in cluttered environments and the safety advantages offered by their soft wings during close-proximity operations. These vehicles are subject to numerous constraints: limited power supply, restricted payload capacity, high drag and vibration from the flapping mechanism, and susceptibility to environmental disturbances such as wind gusts—making indoor operation preferable. However, these vehicles have not achieved autonomous navigation yet. The platform used in this study, the Flapper Nimble+, is attitude-stable, meaning it lacks access to egomotion or positional information and is only capable of controlling its thrust, pitch, roll, and yaw. Given the strict SWaP (Size, Power and Weight) constraints, lightweight Time-of-Flight (ToF) sensors are among the most practical sensing solutions. This thesis investigates the question: How can obstacle avoidance be achieved in an attitude-stable flapping wing air vehicle equipped with Time-of-Flight sensors? Two control approaches were implemented and tested in the IsaacGym simulator: a simple PID controller with confidence-based yaw adjustment, and a reinforcement learning (RL) policy trained using Proximal Policy Optimization. Two sensor configurations were considered: a minimal two-sensor setup (front and downward) and a richer five-sensor array for broader perception. The PID controller successfully avoided collisions in all environments, demonstrating high reliability but limited exploration, averaging 35% coverage. In contrast, the RL policy with five sensors achieved greater spatial exploration—averaging 49.5% coverage—at the cost of an average of 3.5 collisions per episode. When reduced to two sensors, the RL agent’s performance declined significantly, with average coverage dropping to 29% and collision counts increasing to 6.6 (excluding failed runs). These results show that autonomous navigation is achievable for attitude-stable flapping wing air vehicles using only ToF sensors. While PID control offers reliable, conservative navigation under minimal sensing, RL enables more exploratory behaviors and adaptability in dynamic environments.},
 	author    = {Blaga, S.},
@@ -1843,6 +1922,19 @@
 	year      = {2022}
 }
 
+@mastersthesis{uuid:f46c66f3-60e5-4285-9cf3-978826387526,
+	abstract  = {Flapping-Wing Air Vehicles (FWAV) are autonomously flying vehicles that use their flapping wings to simultaneously stay aloft and enable controllable flight. FWAVs that are capable of controllable flight are reported in literature, though a theoretical background of the aerodynamic performance of different attitude control mechanisms is absent in literature and the robustness of attitude control mechanisms with respect to body motions is oftentimes omitted. The aim of this thesis is to develop a theoretical framework for the aerodynamic response of flapping wings that includes variation of attitude control parameters and motion of the vehicle body. This framework can be used to assist in research into new attitude control mechanisms for FWAVs that are not yet capable of attitude control, such as the compliant Atalanta FWAV. Analytical aerodynamic and kinematic descriptions are combined to analyze the aerodynamic performance of two suggested attitude control mechanisms: stroke amplitude variations and control of the angle of attack by means of pitching stiffness variations. It is shown in this research that both mechanisms have a significant influence on the lift production of a flapping wing, though this influence changes significantly when body motions are introduced. It is found that variations of the stroke amplitude provide the most predictable variations in lift for all cases of body motion that were considered, provided that the wing’s pitching hinge stiffness is high enough to ensure stable flapping kinematics under the influence of body motion.},
+	author    = {Roulaux, A.S.},
+	keywords  = {Attitude Control; Flapping-Wing Air Vehicles; Flapping-Wing Aerodynamics},
+	note      = {Goosen, J.F.L. (mentor); Remes, B.D.W. (graduation committee member); van der Wijk, V. (graduation committee member); Delft University of Technology (degree granting institution); graduation 03-05-2021},
+	pdf       = {https://resolver.tudelft.nl/uuid:f46c66f3-60e5-4285-9cf3-978826387526},
+	school    = {TU Delft Mechanical Engineering},
+	title     = {Attitude Control of Flapping-Wing Air Vehicles},
+	type      = {mathesis},
+	url       = {https://resolver.tudelft.nl/uuid:f46c66f3-60e5-4285-9cf3-978826387526},
+	year      = {2021}
+}
+
 @mastersthesis{uuid:b18cead1-951b-4a21-a4bb-0ba36f1768ee,
 	abstract  = {The continuous improvement and miniaturisation of elements in drones have been essential for making flapping-wing drones a reality. This thesis presents an integral approach for accurate indoor position control and estimation on flapping-wing drones. The approach considers three main aspects to enhance transient response of the drone. The first one is an experimental velocity/attitude flapping-wing model for drag compensation, obtained through system identification techniques. The second one is a voltage-dependent variable thrust model for enhancing height control. Thirdly, a characterisation of ground effects to determine the height for stable hovering. For the state estimation, an extended Kalman filter fuses UWB position measurements with IMU data. Due to the well-known multi-path effects of UWB, the Kalman filter includes an adaptive noise parameter based on height. The novel control strategy was validated with real flight tests, where position control improved by a factor of 1.5, reaching a mean absolute error of 10cm in positions in x and y, and 4.9cm for position in z.},
 	author    = {Gonzalez Archundia, G.},
@@ -1853,6 +1945,19 @@
 	title     = {Position controller for a flapping-wing drone using ultra wide band},
 	type      = {mathesis},
 	url       = {https://resolver.tudelft.nl/uuid:b18cead1-951b-4a21-a4bb-0ba36f1768ee},
+	year      = {2021}
+}
+
+@mastersthesis{uuid:0f908624-ddf3-4329-817e-3170d2b6b656,
+	abstract  = {Flow sensing exists widely in nature to help animals perform certain tasks. It has also been widely adopted in engineering applications with different types of sensing instrumentation. In particular, in the field of aerospace engineering, airflow sensing is crucial to vehicle state evaluation and flight control. This project surveys the key mechanisms from biological features in nature that enable flow sensing and expands towards the application motivation to identify a suitable airflow sensor that can be equipped to a flapping wing micro air vehicle (FWMAV) for onboard airflow sensing. The selection of sensors is first narrowed down to three major types of airflow sensors from the state of art that have the most potential to be integrated onboard a flapping wing MAV, considering the sensor performance need, size, weight and power (SWaP) restrictions. Two thermal-based commercially available low-cost airflow sensors RevP and RevC from Modern Device have been selected after the trade-off analysis. A full workflow of calibrating and evaluating the two airflow sensors' directional sensitivity has been carried out through two wind tunnel campaigns. Their performance under grid-generated turbulence is compared with a constant temperature hot-wire anemometer. This series of tests leads to the conclusion that the RevP airflow sensor has better performance and is therefore chosen to be placed onboard a flapping wing MAV Delfly Nimble. Both mounted tests and tethered hovering tests with the Delfly Nimble are performed to further examine the airflow sensor RevP's measurement performance under different influence factors such as MAV throttle levels, MAV body pitch angles and freestream speeds. In the end, it is concluded that as a proof of concept, the RevP sensor is capable of performing effective measurements for low flow speeds less than 4 m/s, within the pitching angle range of -30 to 30 degrees. Although this is the first achieved tethered hover flight with onboard airflow sensing for a flapping wing MAV, its limited payload and onboard power supply demands an even smaller and less power consuming design of airflow sensors to enable further applications such as autonomous reactive control under wind disturbances.},
+	author    = {Wang, S.},
+	keywords  = {Sensor selection; Low speed; DelFly; Airflow sensing; Flapping Wing MAV},
+	note      = {van Oudheusden, B.W. (mentor); de Croon, G.C.H.E. (graduation committee member); Olejnik, D.A. (coach); Delft University of Technology (degree granting institution); graduation 28-09-2021},
+	pdf       = {https://resolver.tudelft.nl/uuid:0f908624-ddf3-4329-817e-3170d2b6b656},
+	school    = {TU Delft Aerospace Engineering},
+	title     = {Thermistor-based airflow sensing on a flapping wing micro air vehicle},
+	type      = {mathesis},
+	url       = {https://resolver.tudelft.nl/uuid:0f908624-ddf3-4329-817e-3170d2b6b656},
 	year      = {2021}
 }
 
@@ -1867,6 +1972,19 @@
 	type      = {mathesis},
 	url       = {https://resolver.tudelft.nl/uuid:ada45454-c19a-4fba-b842-62efd2320a6a},
 	year      = {2020}
+}
+
+@mastersthesis{uuid:cc607dbb-7116-4c9f-991f-988d832833a9,
+	abstract  = {This study investigates the wing deformation of the flapping-wing micro air vehicle (MAV) DelFly II in various flight configurations. Experiments were carried out with the MAV tethered in a windtunnel test section. To determine the best suited measurement approach, a trade-off study was carried out which showed that a point tracking approach with background illumination is most suitable. The therefore used high-speed camera pair and illumination were mounted on the same rotating frame with the DelFly, which allowed adequate viewing axes of the wings at for all pitch angles. Processing was done a purpose-build algorithm, allowing 136 points per wing to be measured simultaneously with an average lost point ratio of 3.4 % and an estimated accuracy of 0.25 mm. Results of hovering flight show some previously unnoticed behaviors. First, it was noted that the upper and lower wing on each side do not deform purely symmetric but show some considerable asymmetric behavior like heave and camber production. Furthermore, the upper wing shows a torsional wave and recoil behavior at faster flapping frequencies, which was shown to be beneficial in insect flight. Lastly, it was found that an air-buffer remains present between the wing surfaces at all times of the clap-and-peel motion (apart from the root trailing edge). This air-buffer increases once freestream velocity is added, which is investigated during the climbing flight study. Here, the reduced angle of attack of the wing is assumed to reduce the wing loading at faster climb, resulting in lower deformations outside the clap-and-peel motion. The isolated effect of a body pitch angle is also studied. Here, the asymmetrical freestream direction results in larger asymmetries such as wing alignment with the freestream direction and reduced camber and even camber reversal during the upstroke. In forward flight the pitch angle is changed simultaneously with the flapping frequency and freestream velocity. Due to the non-linear properties the wing deforms not directly as a superposition of the individual effects. Deviations are mostly present in increased asymmetry in incidence angle, while the camber behaves more linear and the clap-and-peel motion also remains relatively unchanged. The torsional wave and recoil are here however reduced. Descending flight was also tested. Velocities below 1m/s result in relatively minor deformation changes, while faster descent leads to large flapping frequency fluctuations, making interpretation of the results impossible.},
+	author    = {Heitzig, Dorian},
+	keywords  = {Deformation; Flapping Wing; Fluid Structure Interaction; DelFly},
+	note      = {van Oudheusden, Bas (mentor); De Breuker, Roeland (graduation committee member); de Wagter, Christophe (graduation committee member); Olejnik, Diana (mentor); Delft University of Technology (degree granting institution); graduation 30-08-2019},
+	pdf       = {https://resolver.tudelft.nl/uuid:cc607dbb-7116-4c9f-991f-988d832833a9},
+	school    = {TU Delft Aerospace Engineering},
+	title     = {Wing deformation measurements of the DelFly II in different flight conditions},
+	type      = {mathesis},
+	url       = {https://resolver.tudelft.nl/uuid:cc607dbb-7116-4c9f-991f-988d832833a9},
+	year      = {2019}
 }
 
 @mastersthesis{uuid:a37b96b7-90de-4f22-99ce-87cc97d414d9,
