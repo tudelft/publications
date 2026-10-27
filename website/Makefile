@@ -1,16 +1,18 @@
 
+# the bib files that make up all.bib
+SOURCES = ../arxiv_nopub.bib ../dataverse.bib ../mavlab_nopure.bib ../mediacoverage.bib ../pure.bib ../msc.bib ../4tu.bib
+
 all:
 	# cd  ../ && python ./filter_pure_mavlab.py
 	cd  ../ && python ./filter_arxiv.py
-	cat ../arxiv_nopub.bib > all.bib
-	cat ../dataverse.bib >> all.bib
-	cat ../mavlab_nopure.bib >> all.bib
-	cat ../mediacoverage.bib >> all.bib
-	cat ../pure.bib >> all.bib
-	cat ../msc.bib >> all.bib
-	cat ../4tu.bib >> all.bib
+	cat $(SOURCES) > all.bib
 	cd  ../ && python ./filter_delfly.py
 	python ./mavlab_bibtex_merge.py
+	-python ./check_duplicates.py $(SOURCES)
+
+# publications that occur more than once in the sources (exit code 1)
+check:
+	python ./check_duplicates.py $(SOURCES)
 
 
 clean:
