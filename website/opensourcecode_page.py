@@ -59,7 +59,7 @@ def main():
         out.append('<h3 class="mavlab-code-year">%d</h3>' % year)
         for c in items:
             out.append('<div class="mavlab-code">')
-            out.append('<p class="mavlab-code-name"><a href="%s">%s</a> <span class="mavlab-code-repo">%s</span></p>'
+            out.append('<p class="mavlab-code-name"><a href="%s" target="_blank" rel="noopener">%s</a> <span class="mavlab-code-repo">%s</span></p>'
                        % (e(c['repo']), e(c['name']), e(repo_label(c['repo']))))
             if c['papers']:
                 out.append('<div class="mavlab-code-papers">')
