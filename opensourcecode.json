@@ -151,6 +151,18 @@
     ]
   },
   {
+    "name": "indiflight",
+    "repo": "https://github.com/tudelft/indiflight",
+    "year": 2024,
+    "papers": [
+      "2601.15222",
+      "bacf9b22a0d24e7097cf4a4ab16508f3",
+      "e4014e4389df46ed8caaadd73580bb1b",
+      "8077f8cca0884573aac841bf31c19b1c"
+    ],
+    "posts": []
+  },
+  {
     "name": "indiflightSupport",
     "repo": "https://github.com/tudelft/indiflightSupport",
     "year": 2024,
