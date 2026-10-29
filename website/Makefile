@@ -23,6 +23,10 @@ check-web:
 	python ./check_duplicates.py website_export.bib
 
 
+# the open-source code page of the website (opensourcecode.html) from ../opensourcecode.json
+code-page:
+	python ./opensourcecode_page.py
+
 clean:
 	rm -f not_delfly.bib
 	rm -f mavlab_merged.bib

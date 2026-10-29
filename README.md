@@ -17,6 +17,7 @@ This repo keeps a history of all publications of the Micro Air Vehicle Laborator
 | `mediacoverage.bib` | media coverage | by hand |
 | `mavlab_nopure.bib` | publications missing in Pure / the repository | by hand |
 | `opensourcecode.json` | open-source code of the MAVLab, with its papers and website posts | by hand |
+| `website/opensourcecode.html` | the open-source code page of the website | `make -C website code-page` |
 | `website/all.bib` | all of the above combined | `make -C website` |
 | `website/delfly.bib` | DelFly / flapping-wing subset of `all.bib` | `filter_delfly.py` |
 | `userbibs/user_*.bib` | per-staff subsets of `all.bib` | `filter_by_user.py` |
@@ -66,6 +67,9 @@ The GitHub Action `.github/workflows/monthly_import.yml` runs on the 1st of ever
 
 The entries are sorted newest year first, then by name. Inside `papers` and `posts`, add new items at the top of the list. Keep the layout of `json.dumps(..., indent=2, ensure_ascii=False)` (one item per line), so a git diff shows a new repository or a new link as added lines only.
 
+A page on https://mavlab.tudelft.nl shows this list from `website/opensourcecode.html`, made by `make -C website code-page` (`website/opensourcecode_page.py`). WordPress loads that file from the master branch of this repository with the shortcode `[mavlab_github file="website/opensourcecode.html"]` of `website/wordpress/mavlab_github_include.php`, a PHP snippet in WPCode (the page itself: `website/wordpress/opensourcecode_page_content.html`); the papers are teachPress `[tpsingle key=...]` shortcodes, so they look like on the rest of the website. Changes are online within an hour after the merge.
+
+## Test
 `test/test.tex` builds all bib files with LaTeX/BibTeX to check that they still compile: `cd test && pdflatex test && bibtex test && pdflatex test`.
 
 ## Contributing
