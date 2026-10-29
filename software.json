@@ -1,0 +1,288 @@
+[
+  {
+    "name": "Bee-Nav",
+    "repo": "https://github.com/tudelft/Bee-Nav",
+    "year": 2026,
+    "papers": [
+      "c6052628b49b4ab0abcb61996006b162"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/honeybees-teach-drones-how-to-navigate/"
+    ]
+  },
+  {
+    "name": "speck-optical-flow",
+    "repo": "https://github.com/tudelft/speck-optical-flow",
+    "year": 2026,
+    "papers": [
+      "uuid:1fb03e01-f60b-4129-ad36-a3d258a2d14d"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/speck-optical-flow/"
+    ]
+  },
+  {
+    "name": "DepthTransfer",
+    "repo": "https://github.com/tudelft/DepthTransfer",
+    "year": 2025,
+    "papers": [
+      "f96284d7a45a4b84b0fb25d6783cea52"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/depth-transfer-learning-to-see-like-a-simulator-for-real-world-drone-navigation/"
+    ]
+  },
+  {
+    "name": "attitude_from_events",
+    "repo": "https://github.com/tudelft/attitude_from_events",
+    "year": 2024,
+    "papers": [
+      "76fd3602bc5343378d3c83c26ee527f7"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/all-eyes-no-imu-learning-flight-attitude-from-vision-alone/"
+    ]
+  },
+  {
+    "name": "cuda_event_ops",
+    "repo": "https://github.com/tudelft/cuda_event_ops",
+    "year": 2024,
+    "papers": [
+      "2412.06359"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/depth_from_events/"
+    ]
+  },
+  {
+    "name": "depth_from_events",
+    "repo": "https://github.com/tudelft/depth_from_events",
+    "year": 2024,
+    "papers": [
+      "2412.06359"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/depth_from_events/"
+    ]
+  },
+  {
+    "name": "event_orin_drone",
+    "repo": "https://github.com/tudelft/event_orin_drone",
+    "year": 2024,
+    "papers": [
+      "76fd3602bc5343378d3c83c26ee527f7",
+      "2412.06359"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/all-eyes-no-imu-learning-flight-attitude-from-vision-alone/",
+      "https://mavlab.tudelft.nl/depth_from_events/"
+    ]
+  },
+  {
+    "name": "event_planar",
+    "repo": "https://github.com/tudelft/event_planar",
+    "year": 2024,
+    "papers": [
+      "6cbe83a31f8648b0b47888e71f807546"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/fully_neuromorphic_drone/"
+    ]
+  },
+  {
+    "name": "learning2home-icra24-bearingNet",
+    "repo": "https://github.com/tudelft/learning2home-icra24-bearingNet",
+    "year": 2024,
+    "papers": [
+      "ceb073e4b4234d5a82dc48c543b335d9"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/learning_to_home/"
+    ]
+  },
+  {
+    "name": "learning2home-icra24-flightmare",
+    "repo": "https://github.com/tudelft/learning2home-icra24-flightmare",
+    "year": 2024,
+    "papers": [
+      "ceb073e4b4234d5a82dc48c543b335d9"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/learning_to_home/"
+    ]
+  },
+  {
+    "name": "learning2home-icra24-flightmare_unity",
+    "repo": "https://github.com/tudelft/learning2home-icra24-flightmare_unity",
+    "year": 2024,
+    "papers": [
+      "ceb073e4b4234d5a82dc48c543b335d9"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/learning_to_home/"
+    ]
+  },
+  {
+    "name": "mavrl",
+    "repo": "https://github.com/tudelft/mavrl",
+    "year": 2024,
+    "papers": [
+      "45143aecd9ac4771a01758dbaa4bc7b0"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/mavrl-learn-to-fly-in-cluttered-environments-with-varying-speed/"
+    ]
+  },
+  {
+    "name": "ole_ros",
+    "repo": "https://github.com/tudelft/ole_ros",
+    "year": 2024,
+    "papers": [
+      "76fd3602bc5343378d3c83c26ee527f7"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/all-eyes-no-imu-learning-flight-attitude-from-vision-alone/"
+    ]
+  },
+  {
+    "name": "taming_event_flow",
+    "repo": "https://github.com/tudelft/taming_event_flow",
+    "year": 2023,
+    "papers": [
+      "fbeb5c823153469baa4a8cf32bb00099"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/taming_event_flow/"
+    ]
+  },
+  {
+    "name": "AvoidBench",
+    "repo": "https://github.com/tudelft/AvoidBench",
+    "year": 2022,
+    "papers": [
+      "75c3f28dc3b04b29b1a55dee7e293c6c"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/avoidbench-icra-2023/"
+    ]
+  },
+  {
+    "name": "event_flow",
+    "repo": "https://github.com/tudelft/event_flow",
+    "year": 2021,
+    "papers": [
+      "2106.01862"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/event_flow/"
+    ]
+  },
+  {
+    "name": "ssl_e2vid",
+    "repo": "https://github.com/tudelft/ssl_e2vid",
+    "year": 2021,
+    "papers": [
+      "e5319318c7074937b49de4d2f52f6607"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/ssl_e2v/"
+    ]
+  },
+  {
+    "name": "loihi",
+    "repo": "https://github.com/tudelft/loihi",
+    "year": 2020,
+    "papers": [
+      "f3602a9cc14d43009571062d2481863a"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/loihi/"
+    ]
+  },
+  {
+    "name": "cuSNN",
+    "repo": "https://github.com/tudelft/cuSNN",
+    "year": 2018,
+    "papers": [
+      "160fcfa507614338ba72f8cf914add6a"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/cusnn/"
+    ]
+  },
+  {
+    "name": "coursePaparazzi",
+    "repo": "https://github.com/tudelft/coursePaparazzi",
+    "year": 2017,
+    "papers": [],
+    "posts": [
+      "https://mavlab.tudelft.nl/autonomous-flight-mav-course/"
+    ]
+  },
+  {
+    "name": "EdgeFlow_matlab",
+    "repo": "https://github.com/knmcguire/EdgeFlow_matlab",
+    "year": 2016,
+    "papers": [
+      "caf22050b8fd469f9b2d337fcd7b4571"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/towards-autonomous-pocket-drone/"
+    ]
+  },
+  {
+    "name": "iridium",
+    "repo": "https://github.com/tudelft/iridium",
+    "year": 2016,
+    "papers": [],
+    "posts": [
+      "https://mavlab.tudelft.nl/iridium-communication/"
+    ]
+  },
+  {
+    "name": "monocular_distance",
+    "repo": "https://github.com/guidoAI/monocular_distance",
+    "year": 2016,
+    "papers": [
+      "2a0caf1b3fae4418873ac6f5a54dfd98"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/new-theory-allows-drones-to-see-distances-with-one-eye/"
+    ]
+  },
+  {
+    "name": "first_release_OF_slope_estimation",
+    "repo": "https://mavlab.tudelft.nl/wp-content/uploads/2015/12/first_release_OF_slope_estimation.zip",
+    "year": 2015,
+    "papers": [
+      "d7932ce4335a4f2c9fe1d6fee4cc1d0a",
+      "4728fdce6fe543e2bab29ea001910a54"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/optical-flow-based-slope-estimation/"
+    ]
+  },
+  {
+    "name": "paparazzi (divergence_landing)",
+    "repo": "https://github.com/guidoAI/paparazzi/tree/divergence_landing",
+    "year": 2015,
+    "papers": [
+      "2a0caf1b3fae4418873ac6f5a54dfd98"
+    ],
+    "posts": [
+      "https://mavlab.tudelft.nl/new-theory-allows-drones-to-see-distances-with-one-eye/"
+    ]
+  },
+  {
+    "name": "paparazzi",
+    "repo": "https://github.com/paparazzi/paparazzi",
+    "year": 2010,
+    "papers": [],
+    "posts": [
+      "https://mavlab.tudelft.nl/first-place-and-innovation-award-at-imav-2018/",
+      "https://mavlab.tudelft.nl/cyclone/",
+      "https://mavlab.tudelft.nl/autonomous-flight-mav-course/",
+      "https://mavlab.tudelft.nl/tu-delft-first-autonomous-drone-race/"
+    ]
+  }
+]
