@@ -67,7 +67,7 @@ The GitHub Action `.github/workflows/monthly_import.yml` runs on the 1st of ever
 
 The entries are sorted newest year first, then by name. Inside `papers` and `posts`, add new items at the top of the list. Keep the layout of `json.dumps(..., indent=2, ensure_ascii=False)` (one item per line), so a git diff shows a new repository or a new link as added lines only.
 
-A page on https://mavlab.tudelft.nl shows this list from `website/opensourcecode.html`, made by `make -C website code-page` (`website/opensourcecode_page.py`; the monthly import also runs it). WordPress loads that file from the master branch of this repository with the shortcode `[mavlab_github file="website/opensourcecode.html"]` of `website/wordpress/mavlab_github_include.php`, a PHP snippet in WPCode (the page itself: `website/wordpress/opensourcecode_page_content.html`); the papers are teachPress `[tpsingle key=...]` shortcodes, so they look like on the rest of the website. Changes are online within an hour after the merge.
+A page on https://mavlab.tudelft.nl shows this list from `website/opensourcecode.html`, made by `make -C website code-page` (`website/opensourcecode_page.py`). WordPress loads that file from the master branch of this repository with the shortcode `[mavlab_github file="website/opensourcecode.html"]` of `website/wordpress/mavlab_github_include.php`, a PHP snippet in WPCode (the page itself: `website/wordpress/opensourcecode_page_content.html`); the papers are teachPress `[tpsingle key=...]` shortcodes, so they look like on the rest of the website. Changes are online within an hour after the merge.
 
 ## Test
 `test/test.tex` builds all bib files with LaTeX/BibTeX to check that they still compile: `cd test && pdflatex test && bibtex test && pdflatex test`.
