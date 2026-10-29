@@ -11,6 +11,22 @@
     ]
   },
   {
+    "name": "MonoRaceGate",
+    "repo": "https://github.com/tudelft/MonoRaceGate",
+    "year": 2026,
+    "papers": [
+      "2601.15222"
+    ],
+    "posts": []
+  },
+  {
+    "name": "rendering-free-event-nav",
+    "repo": "https://github.com/tudelft/rendering-free-event-nav",
+    "year": 2026,
+    "papers": [],
+    "posts": []
+  },
+  {
     "name": "speck-optical-flow",
     "repo": "https://github.com/tudelft/speck-optical-flow",
     "year": 2026,
@@ -22,6 +38,15 @@
     ]
   },
   {
+    "name": "Aerial_To_Aerial_Interception",
+    "repo": "https://github.com/tudelft/Aerial_To_Aerial_Interception",
+    "year": 2025,
+    "papers": [
+      "uuid:28823cd3-e24b-401e-b328-a10fefb7af78"
+    ],
+    "posts": []
+  },
+  {
     "name": "DepthTransfer",
     "repo": "https://github.com/tudelft/DepthTransfer",
     "year": 2025,
@@ -31,6 +56,42 @@
     "posts": [
       "https://mavlab.tudelft.nl/depth-transfer-learning-to-see-like-a-simulator-for-real-world-drone-navigation/"
     ]
+  },
+  {
+    "name": "nsga-drone-evolve",
+    "repo": "https://github.com/tudelft/nsga-drone-evolve",
+    "year": 2025,
+    "papers": [
+      "2502.01197"
+    ],
+    "posts": []
+  },
+  {
+    "name": "propeller_airspeed_sensor",
+    "repo": "https://github.com/tudelft/propeller_airspeed_sensor",
+    "year": 2025,
+    "papers": [
+      "7e2450c2f066460b9bdffa8ce5680924"
+    ],
+    "posts": []
+  },
+  {
+    "name": "quadintercept_drl",
+    "repo": "https://github.com/tudelft/quadintercept_drl",
+    "year": 2025,
+    "papers": [
+      "uuid:22d13eff-4198-4d4b-927a-01edaddd990a"
+    ],
+    "posts": []
+  },
+  {
+    "name": "SwitchDivServ",
+    "repo": "https://github.com/tudelft/SwitchDivServ",
+    "year": 2025,
+    "papers": [
+      "df12e022a92f4659828b01ab403bd169"
+    ],
+    "posts": []
   },
   {
     "name": "attitude_from_events",
@@ -90,6 +151,25 @@
     ]
   },
   {
+    "name": "indiflightSupport",
+    "repo": "https://github.com/tudelft/indiflightSupport",
+    "year": 2024,
+    "papers": [
+      "e4014e4389df46ed8caaadd73580bb1b",
+      "8077f8cca0884573aac841bf31c19b1c"
+    ],
+    "posts": []
+  },
+  {
+    "name": "inertiaEstimation",
+    "repo": "https://github.com/tudelft/inertiaEstimation",
+    "year": 2024,
+    "papers": [
+      "7e290606fb3e4d37850e88b7bbc4fb15"
+    ],
+    "posts": []
+  },
+  {
     "name": "learning2home-icra24-bearingNet",
     "repo": "https://github.com/tudelft/learning2home-icra24-bearingNet",
     "year": 2024,
@@ -134,6 +214,15 @@
     ]
   },
   {
+    "name": "neuromorphic_att_est_and_control",
+    "repo": "https://github.com/tudelft/neuromorphic_att_est_and_control",
+    "year": 2024,
+    "papers": [
+      "681381df4e9848f1a3ea66fe874aee77"
+    ],
+    "posts": []
+  },
+  {
     "name": "ole_ros",
     "repo": "https://github.com/tudelft/ole_ros",
     "year": 2024,
@@ -143,6 +232,35 @@
     "posts": [
       "https://mavlab.tudelft.nl/all-eyes-no-imu-learning-flight-attitude-from-vision-alone/"
     ]
+  },
+  {
+    "name": "idnet",
+    "repo": "https://github.com/tudelft/idnet",
+    "year": 2023,
+    "papers": [
+      "250de48bf50e4c74aa71f9ad9a14b705"
+    ],
+    "posts": []
+  },
+  {
+    "name": "nanoflownet",
+    "repo": "https://github.com/tudelft/nanoflownet",
+    "year": 2023,
+    "papers": [
+      "334f5d9a68de4ae9951aa8fd40c78215"
+    ],
+    "posts": []
+  },
+  {
+    "name": "optimal_quad_control_RL",
+    "repo": "https://github.com/tudelft/optimal_quad_control_RL",
+    "year": 2023,
+    "papers": [
+      "2601.15222",
+      "bacf9b22a0d24e7097cf4a4ab16508f3",
+      "16169a19bf6b46818ecc18a9f2bd5e0f"
+    ],
+    "posts": []
   },
   {
     "name": "taming_event_flow",
@@ -167,6 +285,87 @@
     ]
   },
   {
+    "name": "CUAHN-VIO",
+    "repo": "https://github.com/tudelft/CUAHN-VIO",
+    "year": 2022,
+    "papers": [
+      "7b1e7dd1814941d8a1d6560a3c1e9210"
+    ],
+    "posts": []
+  },
+  {
+    "name": "depth_avoider_crazyflie",
+    "repo": "https://github.com/tudelft/depth_avoider_crazyflie",
+    "year": 2022,
+    "papers": [
+      "8939194787f34d19846218a767667b53"
+    ],
+    "posts": []
+  },
+  {
+    "name": "gas-seeking-gui",
+    "repo": "https://github.com/tudelft/gas-seeking-gui",
+    "year": 2022,
+    "papers": [
+      "c3228644f1df4281a73cef1bf5fc35fb"
+    ],
+    "posts": []
+  },
+  {
+    "name": "IP-STDP-FlowNet",
+    "repo": "https://github.com/tudelft/IP-STDP-FlowNet",
+    "year": 2022,
+    "papers": [
+      "160fcfa507614338ba72f8cf914add6a"
+    ],
+    "posts": []
+  },
+  {
+    "name": "NavDataset",
+    "repo": "https://github.com/tudelft/NavDataset",
+    "year": 2022,
+    "papers": [
+      "f60a4d00d79a4b759bdbe427f3e8328b"
+    ],
+    "posts": []
+  },
+  {
+    "name": "neuromorphic_attitude_estimation",
+    "repo": "https://github.com/tudelft/neuromorphic_attitude_estimation",
+    "year": 2022,
+    "papers": [
+      "6cab4d240eb14224a4b4cae6ea882878"
+    ],
+    "posts": []
+  },
+  {
+    "name": "risk-sensitive-rl",
+    "repo": "https://github.com/tudelft/risk-sensitive-rl",
+    "year": 2022,
+    "papers": [
+      "f53b6aea479944049cbfdcf6d5a85242"
+    ],
+    "posts": []
+  },
+  {
+    "name": "AutoGDM",
+    "repo": "https://github.com/tudelft/AutoGDM",
+    "year": 2021,
+    "papers": [
+      "c3228644f1df4281a73cef1bf5fc35fb"
+    ],
+    "posts": []
+  },
+  {
+    "name": "blimp_snn",
+    "repo": "https://github.com/tudelft/blimp_snn",
+    "year": 2021,
+    "papers": [
+      "8546fb365658485abee847e5e67316ea"
+    ],
+    "posts": []
+  },
+  {
     "name": "event_flow",
     "repo": "https://github.com/tudelft/event_flow",
     "year": 2021,
@@ -176,6 +375,60 @@
     "posts": [
       "https://mavlab.tudelft.nl/event_flow/"
     ]
+  },
+  {
+    "name": "faith",
+    "repo": "https://github.com/tudelft/faith",
+    "year": 2021,
+    "papers": [
+      "2102.12823"
+    ],
+    "posts": []
+  },
+  {
+    "name": "filled-disparity-monodepth",
+    "repo": "https://github.com/tudelft/filled-disparity-monodepth",
+    "year": 2021,
+    "papers": [
+      "2106.12958"
+    ],
+    "posts": []
+  },
+  {
+    "name": "ODA_Dataset",
+    "repo": "https://github.com/tudelft/ODA_Dataset",
+    "year": 2021,
+    "papers": [
+      "e2f12fc107bf4209989819fcf3163261"
+    ],
+    "posts": []
+  },
+  {
+    "name": "PoseNet_Planar",
+    "repo": "https://github.com/tudelft/PoseNet_Planar",
+    "year": 2021,
+    "papers": [
+      "8ae714c4290b4bd7a3a8f1ca78774fdd"
+    ],
+    "posts": []
+  },
+  {
+    "name": "sniffy-bug",
+    "repo": "https://github.com/tudelft/sniffy-bug",
+    "year": 2021,
+    "papers": [
+      "c3228644f1df4281a73cef1bf5fc35fb"
+    ],
+    "posts": []
+  },
+  {
+    "name": "SpikeCoding",
+    "repo": "https://github.com/tudelft/SpikeCoding",
+    "year": 2021,
+    "papers": [
+      "2103.02751"
+    ],
+    "posts": []
   },
   {
     "name": "ssl_e2vid",
@@ -200,6 +453,34 @@
     ]
   },
   {
+    "name": "rovio2",
+    "repo": "https://github.com/tudelft/rovio2",
+    "year": 2020,
+    "papers": [
+      "b4c869ece0b34c1c863cad462c79f190"
+    ],
+    "posts": []
+  },
+  {
+    "name": "SGBA_CF2_App_layer",
+    "repo": "https://github.com/tudelft/SGBA_CF2_App_layer",
+    "year": 2019,
+    "papers": [
+      "7e3210b7eccd458d93c3d2c989d36285"
+    ],
+    "posts": []
+  },
+  {
+    "name": "SGBA_code_SR_2019",
+    "repo": "https://github.com/tudelft/SGBA_code_SR_2019",
+    "year": 2019,
+    "papers": [
+      "7e3210b7eccd458d93c3d2c989d36285",
+      "bf7ddfc05a0747918bd6179bfe8c186f"
+    ],
+    "posts": []
+  },
+  {
     "name": "cuSNN",
     "repo": "https://github.com/tudelft/cuSNN",
     "year": 2018,
@@ -209,6 +490,15 @@
     "posts": [
       "https://mavlab.tudelft.nl/cusnn/"
     ]
+  },
+  {
+    "name": "cuSNN-samples",
+    "repo": "https://github.com/tudelft/cuSNN-samples",
+    "year": 2018,
+    "papers": [
+      "160fcfa507614338ba72f8cf914add6a"
+    ],
+    "posts": []
   },
   {
     "name": "coursePaparazzi",
@@ -221,7 +511,7 @@
   },
   {
     "name": "EdgeFlow_matlab",
-    "repo": "https://github.com/knmcguire/EdgeFlow_matlab",
+    "repo": "https://github.com/tudelft/EdgeFlow_matlab",
     "year": 2016,
     "papers": [
       "caf22050b8fd469f9b2d337fcd7b4571"
