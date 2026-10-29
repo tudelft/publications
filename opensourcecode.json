@@ -465,11 +465,29 @@
     ]
   },
   {
+    "name": "multi-robot-localization",
+    "repo": "https://github.com/shushuai3/multi-robot-localization",
+    "year": 2020,
+    "papers": [
+      "03c5d38c1de14d66bb9f963fee555910"
+    ],
+    "posts": []
+  },
+  {
     "name": "rovio2",
     "repo": "https://github.com/tudelft/rovio2",
     "year": 2020,
     "papers": [
       "b4c869ece0b34c1c863cad462c79f190"
+    ],
+    "posts": []
+  },
+  {
+    "name": "cf_onboard_swarm",
+    "repo": "https://github.com/shushuai3/cf_onboard_swarm",
+    "year": 2019,
+    "papers": [
+      "03c5d38c1de14d66bb9f963fee555910"
     ],
     "posts": []
   },
