@@ -16,6 +16,8 @@ WordPress with the teachPress plugin (9.0.12). The publication list on the websi
    - `mavlab_merged.bib` / `mavlab_merged_web.bib`: matched pairs
 4. After importing in teachPress, run step 1 and 2 again: `mavlab_pure_extra.bib` should be (nearly) empty.
 
+The open-source code page: `make -C website code-page` writes `website/opensourcecode.html` from `opensourcecode.json`; WordPress loads it from GitHub master with the WPCode PHP snippet `website/wordpress/mavlab_github_include.php` (shortcode `[mavlab_github]`, cached 1 h, only `[tpsingle]` expanded). Papers are `[tpsingle key=...]`, so every paper key must be on the website.
+
 teachPress exposes no REST route to list or add publications (only `teachpress/v1/autopublish/update_all`, which triggers its auto-publish import from configured BibTeX URLs; do not call it without asking). Never commit WordPress credentials or screenshots of them.
 
 ## Known issues
