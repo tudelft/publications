@@ -9,6 +9,7 @@ all:
 	cd  ../ && python ./filter_delfly.py
 	python ./mavlab_bibtex_merge.py
 	-python ./check_duplicates.py $(SOURCES)
+	-python ./opensourcecode_page.py
 
 # publications that occur more than once in the sources (exit code 1)
 check:
