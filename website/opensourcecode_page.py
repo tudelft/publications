@@ -59,16 +59,18 @@ def main():
         out.append('<h3 class="mavlab-code-year">%d</h3>' % year)
         for c in items:
             out.append('<div class="mavlab-code">')
-            out.append('<p class="mavlab-code-name"><a href="%s">%s</a> <span class="mavlab-code-repo">%s</span></p>'
+            out.append('<p class="mavlab-code-name"><a href="%s" target="_blank" rel="noopener">%s <span class="mavlab-code-repo">%s</span></a></p>'
                        % (e(c['repo']), e(c['name']), e(repo_label(c['repo']))))
             if c['papers']:
-                out.append('<div class="mavlab-code-papers">')
-                out += [TPSINGLE % e(k) for k in c['papers']]
-                out.append('</div>')
+                out.append('<ul class="mavlab-code-papers">')
+                out += ['<li>' + TPSINGLE % e(k) + '</li>' for k in c['papers']]
+                out.append('</ul>')
             posts = [(u, titles.get(u)) for u in c['posts'] if titles.get(u)]
             if posts:
-                out.append('<p class="mavlab-code-posts">On this website: %s</p>'
-                           % ', '.join('<a href="%s">%s</a>' % (e(u), e(t)) for u, t in posts))
+                out.append('<p class="mavlab-code-posts-head">On this website:</p>')
+                out.append('<ul class="mavlab-code-posts">')
+                out += ['<li><a href="%s">%s</a></li>' % (e(u), e(t)) for u, t in posts]
+                out.append('</ul>')
             out.append('</div>')
     out.append('</div>')
 
