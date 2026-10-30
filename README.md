@@ -15,6 +15,7 @@ This repo keeps a history of all publications of the Micro Air Vehicle Laborator
 | `msc.bib` | M.Sc. theses supervised (mentor) by a MAVLab member (staff, postdoc or PhD student), from repository.tudelft.nl | `import_repository.py` |
 | `msc_all.bib` | M.Sc. theses with MAVLab staff in any role, also graduation committee only | `import_repository.py` |
 | `mediacoverage.bib` | media coverage | by hand |
+| `website/logos/` | logos of the media outlets, used by `mediacoverage.bib` | by hand |
 | `mavlab_nopure.bib` | publications missing in Pure / the repository | by hand |
 | `opensourcecode.json` | open-source code of the MAVLab, with its papers and website posts | by hand |
 | `website/opensourcecode.html` | the open-source code page of the website | `make -C website code-page` |
@@ -68,6 +69,11 @@ The GitHub Action `.github/workflows/monthly_import.yml` runs on the 1st of ever
 The entries are sorted newest year first, then by name. Inside `papers` and `posts`, add new items at the top of the list. Keep the layout of `json.dumps(..., indent=2, ensure_ascii=False)` (one item per line), so a git diff shows a new repository or a new link as added lines only.
 
 A page on https://mavlab.tudelft.nl shows this list from `website/opensourcecode.html`, made by `make -C website code-page` (`website/opensourcecode_page.py`; `make -C website` and so the monthly import also run it). WordPress loads that file from the master branch of this repository with the shortcode `[mavlab_github file="website/opensourcecode.html"]` of `website/wordpress/mavlab_github_include.php`, a PHP snippet in WPCode (the page itself: `website/wordpress/opensourcecode_page_content.html`); the papers are teachPress `[tpsingle key=...]` shortcodes, so they look like on the rest of the website. Changes are online within an hour after the merge.
+
+## Media coverage logos
+Each entry of `mediacoverage.bib` has an `image_url` field: the logo of the outlet, shown next to the item on https://mavlab.tudelft.nl/media-coverage/. The logos are in `website/logos/<outlet>.png` (PNG, at most 400 px), and the same files are in the WordPress media library as `media-logo-<outlet>.png`, so the URL is `https://mavlab.tudelft.nl/wp-content/uploads/<year>/<month>/media-logo-<outlet>.png`. All items of one outlet use the same logo. For a new outlet: add the logo to `website/logos/`, upload it to the media library with that file name, and use its URL.
+
+teachPress does not export `image_url`, but its BibTeX import stores any field with the name of a teachPress column, so `image_url` sets the logo. Importing `mediacoverage.bib` in teachPress with "overwrite" switched on updates the logos (and the other fields) of the items that are already on the website, matched by BibTeX key.
 
 ## Test
 `test/test.tex` builds all bib files with LaTeX/BibTeX to check that they still compile: `cd test && pdflatex test && bibtex test && pdflatex test`.
