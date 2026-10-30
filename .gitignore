@@ -14,3 +14,5 @@ arxiv_nopub.bib
 arxiv_pub.bib
 __pycache__/
 pure/cs_import.bib
+test/report.txt
+test/validate_report.csv

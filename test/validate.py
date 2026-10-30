@@ -1,116 +1,162 @@
 #!/usr/bin/env python
+# Check the DOIs, URLs, PDF links, ISBNs and ISSNs of a bib file.
+#
+# usage: python validate.py [file.bib] [--offline]   (default: ../website/all.bib)
+#
+# - ISBN and ISSN: check digit only (no lookup: isbndb.com is a paid service now and
+#   portal.issn.org answers 200 for any ISSN, so neither can tell a wrong number)
+# - DOI: registered at doi.org (its handle API, so the publishers' bot checks do not matter)
+# - URL, PDF, FILE: the link answers (HEAD, or GET when HEAD is not allowed)
+# --offline only does the check digits. Online, every unique DOI and link is one request
+# (~1500 for all.bib, ~20 min; a host that keeps timing out is skipped), so do not run it too often.
+# The result is validate_report.csv (all checks); the problems are printed. A link that
+# answers 403/429 or a bot check is 'blocked': the page may be fine, check it by hand.
+import csv
+import re
+import sys
+import time
+from urllib.parse import urlparse
 
-import pandas as pd
 import requests
+import bibtexparser
+from bibtexparser.bparser import BibTexParser
 
-df = pd.DataFrame()
+HEADERS = {'User-Agent': 'MAVLab-publications-validate/1.0 (https://github.com/tudelft/publications)'}
+TIMEOUT = 30
+HOST_PAUSE = 1.0   # seconds between two requests to the same host
+REPORT = 'validate_report.csv'
 
-#import httplib
-#from urlparse import urlparse
+HOST_FAILS = 3     # a host that times out this many times in a row is skipped
+last_request = {}
+host_fails = {}
 
-count_url = 0
-count_good = 0
 
-def checkUrl(url_type, url):
-    global count_url #, count_good
-    global df
-    count_url += 1
+def polite_get(url, method):
+    host = urlparse(url).netloc
+    wait = last_request.get(host, 0) + HOST_PAUSE - time.time()
+    if wait > 0:
+        time.sleep(wait)
+    try:
+        return requests.request(method, url, headers=HEADERS, timeout=TIMEOUT,
+                                allow_redirects=True, stream=True)
+    finally:
+        last_request[host] = time.time()
 
-    if True: # not ('resolver.tudelft.nl/uuid' in url) and not ('arxiv.org/' in url):
-        status = 'FAIL'
-        redir = ''
 
-        try:
-            r = requests.head(url)
-            status = r.status_code
-            redir = r.headers['Location']
-        except:
-            print(url, 'FAILED')
-        
-        dfr = {'url': url, 'type':url_type, 'status': status, 'redirect': redir}
-        df = df.append(dfr, ignore_index = True)
-        print(dfr)
+def check_isbn(isbn):
+    d = re.sub(r'[^0-9Xx]', '', isbn).upper()
+    if len(d) == 10:
+        ok = sum((10 - i) * (10 if c == 'X' else int(c)) for i, c in enumerate(d)) % 11 == 0
+    elif len(d) == 13 and d.isdigit():
+        ok = sum((3 if i % 2 else 1) * int(c) for i, c in enumerate(d)) % 10 == 0
     else:
-        print(url_type, url)
-        
-#    try:
-#        p = urlparse(url)
-#        conn = httplib.HTTPConnection(p.netloc)
-#        conn.request('HEAD', p.path)
-#        resp = conn.getresponse()
-#        if resp.status >= 400:
-#            print ("ERROR: link to " + url + " is failing.")
-#        else:
-#            count_good += 1
-#        if (resp.status >= 301) & (resp.status <= 303):
-#            # MOVED:
-#            new_url = resp.getheader('location')
-#            #if new_url != url:
-#            #    print("WARNING: MOVED from", url, " to ", new_url )
-#        return resp.status
-#    except ValueError:
-#        print("ERROR: Failed to load")
-#        return 404
-#    # < 400
+        return 'bad', 'not 10 or 13 digits'
+    return ('ok', '') if ok else ('bad', 'wrong check digit')
 
 
-
-def unlatex( string ):
-    return string.replace("{\\%}","%")
-
-
-def noaccent( txt ):
-    return ''.join(x for x in unicodedata.normalize('NFKD', txt) if x in string.ascii_letters).lower()
-
-
-def bib_tag( line):
-    return line.split("=", 1)[0].strip();
-
-def bib_tag_content( line):
-    return unlatex(line.split("=", 1)[-1].strip().lstrip("=").rstrip(",").strip().lstrip("\"").rstrip("\"").lstrip("{").rstrip("}").strip());
+def check_issn(issn):
+    d = re.sub(r'[^0-9Xx]', '', issn).upper()
+    if len(d) != 8 or not d[:7].isdigit():
+        return 'bad', 'not 8 digits'
+    check = (11 - sum((8 - i) * int(c) for i, c in enumerate(d[:7])) % 11) % 11
+    return ('ok', '') if d[7] == ('X' if check == 10 else str(check)) else ('bad', 'wrong check digit')
 
 
-with open("../website/all.bib", encoding="utf8") as ft:
-    bibfile = ft.read().splitlines()
+def check_doi(doi):
+    try:
+        r = polite_get('https://doi.org/api/handles/' + doi, 'GET')
+    except requests.RequestException as e:
+        return 'error', type(e).__name__
+    if r.status_code == 200:
+        return 'ok', ''
+    if r.status_code == 404:
+        return 'bad', 'not registered at doi.org'
+    return 'error', 'doi.org answered %d' % r.status_code
 
 
-def find_url( line ):
-    if "=" in line:
-        tag = bib_tag(line).lower()
-        #print("TAG:", tag)
-        if tag == "url":
-            url = bib_tag_content(line) 
-            resp_code = checkUrl ( "URL", url )
-            #print( resp_code, "URL", url )
-        if tag == "pdf":
-            url = bib_tag_content(line) 
-            resp_code = checkUrl ( "PDF", url )
-            #print( resp_code, "PDF", url )
-        if tag == "file":
-            url = bib_tag_content(line) 
-            resp_code = checkUrl ( "FILE", url )
-            #print( resp_code, "FILE", url )
-        if tag == "doi":
-            doi = bib_tag_content(line)
-            resp_code = checkUrl ( "DOI", "https://doi.org/" + doi )
-            #print( resp_code, "DOI", doi )
-        if tag == "isbn":
-            isbn = bib_tag_content(line)
-            resp_code = checkUrl ( "ISBN", "http://isbndb.com/search/all?query=" + isbn )
-            #print( resp_code, "ISBN", isbn )
-        if tag == "issn":
-            issn = bib_tag_content(line)
-            #resp_code = checkUrl ( "https://journals4free.com/?q=" + issn )
-            resp_code = checkUrl ( "ISSN", "https://portal.issn.org/resource/ISSN/" + issn )
-            #print( resp_code, "ISSN", issn )
+def check_url(url):
+    if not re.match(r'https?://', url):
+        return 'bad', 'not a web link'
+    host = urlparse(url).netloc
+    if host_fails.get(host, 0) >= HOST_FAILS:
+        return 'error', 'host does not answer'
+    try:
+        r = polite_get(url, 'HEAD')
+        if r.status_code in (400, 403, 404, 405, 501):   # many servers do not answer HEAD
+            r = polite_get(url, 'GET')
+            r.close()
+    except requests.exceptions.SSLError:
+        return 'bad', 'certificate error'
+    except requests.exceptions.ConnectionError:
+        return 'bad', 'no connection (domain gone?)'
+    except requests.RequestException as e:
+        host_fails[host] = host_fails.get(host, 0) + 1
+        return 'error', type(e).__name__
+    host_fails[host] = 0
+    moved = r.url if r.url.rstrip('/') != url.rstrip('/') else ''
+    if r.status_code in (403, 429) or r.headers.get('cf-mitigated'):
+        return 'blocked', '%d %s' % (r.status_code, moved)
+    if r.status_code >= 400:
+        return 'bad', '%d %s' % (r.status_code, moved)
+    return 'ok', moved
+
+
+def split(value):
+    return [v for v in re.split(r'[,;\s]+', value) if v]
+
+
+def unlatex(value):
+    return value.replace('\\%', '%').replace('\\_', '_').replace('\\&', '&').replace('{', '').replace('}', '')
+
+
+def main():
+    args = [a for a in sys.argv[1:] if not a.startswith('--')]
+    offline = '--offline' in sys.argv
+    bibname = args[0] if args else '../website/all.bib'
+    parser = BibTexParser(common_strings=True, ignore_nonstandard_types=False)
+    with open(bibname, encoding='utf8') as f:
+        entries = bibtexparser.load(f, parser).entries
+
+    checks = []   # (key, field, value)
+    for e in entries:
+        for field in ('isbn', 'issn', 'doi', 'url', 'pdf', 'file'):
+            if field not in e:
+                continue
+            values = split(e[field]) if field in ('isbn', 'issn') else [unlatex(e[field]).strip()]
+            checks += [(e['ID'], field, v) for v in values]
+    print(len(entries), 'entries,', len(checks), 'values to check', '(check digits only)' if offline else '')
+
+    done = {}
+    rows = []
+    for key, field, value in checks:
+        if field == 'isbn':
+            result = check_isbn(value)
+        elif field == 'issn':
+            result = check_issn(value)
+        elif offline:
+            continue
+        elif (field, value) in done:
+            result = done[(field, value)]
+        elif field == 'doi':
+            doi = re.sub(r'^(https?://(dx\.)?doi\.org/|doi:?\s*)', '', value, flags=re.I)
+            result = check_doi(doi)
+            if result[0] == 'ok' and doi != value:
+                result = ('bad', 'registered, but write only the DOI: ' + doi)
+        else:
+            result = check_url(value)
+        done[(field, value)] = result
+        rows.append([key, field, value, *result])
+        if result[0] != 'ok':
+            print('%-8s %-5s %-45s %s %s' % (result[0], field, key, value, result[1]))
+
+    with open(REPORT, 'w', newline='', encoding='utf8') as f:
+        w = csv.writer(f)
+        w.writerow(['key', 'field', 'value', 'status', 'detail'])
+        w.writerows(rows)
+    counts = {s: sum(1 for r in rows if r[3] == s) for s in ('ok', 'bad', 'blocked', 'error')}
+    print('Report:', ', '.join('%d %s' % (n, s) for s, n in counts.items()), '- all checks in', REPORT)
+    return counts['bad'] == 0
+
 
 if __name__ == '__main__':
-    for line in bibfile:
-        find_url( line )
-    print("Report: ", count_good, " good out of ", count_url)
-    df.to_csv('all_urls_from_bib.csv')
-    
-    #print checkUrl('http://www.stackoverflow.com') # True
-    #print checkUrl('http://stackoverflow.com/notarealpage.html') # False
-
-    
+    sys.exit(0 if main() else 1)

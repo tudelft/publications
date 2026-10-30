@@ -19,6 +19,7 @@
 # Entries that cannot be downloaded keep their previous version, and theses that
 # the search no longer returns are kept, so a failed run never empties the files.
 import codecs
+import html
 import os
 import re
 import sys
@@ -90,8 +91,9 @@ def value(record, name):
 
 
 def clean(txt):
-    txt = re.sub(r'<[^>]+>', ' ', txt or '')
-    return ' '.join(txt.replace('{', '(').replace('}', ')').split())
+    # no HTML tags or entities (&amp;); '&' is a LaTeX special character
+    txt = html.unescape(re.sub(r'<[^>]+>', ' ', txt or ''))
+    return ' '.join(txt.replace('{', '(').replace('}', ')').replace('&', r'\&').split())
 
 
 def bib_name(person):

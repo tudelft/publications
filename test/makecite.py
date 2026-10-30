@@ -1,33 +1,20 @@
 #!/usr/bin/env python
+# Write a LaTeX document (to stdout) that cites every entry of a bib file, so that
+# LaTeX/BibTeX show the entries that do not compile or render badly.
+#
+# usage: python makecite.py [file.bib]   (default: ../website/all.bib)
+import re
+import sys
 
-bibname = '../pure'
+bibname = sys.argv[1] if len(sys.argv) > 1 else '../website/all.bib'
 
-with open(bibname+'.bib', encoding="utf8") as ft:
-    bibfile = ft.read().splitlines()
-
-count = 0
-year = 2016
-bibitem = ''
-
-def find_cite( line ):
-    global count
-    global bibitem
-    global year
-    if "## " + str(year) in line:
-        #print("\\section{"+str(year)+"}")
-        year = year - 1
-    if len(line) > 0 and line[0] == '@' :
-        cite=line.split("{")
-        if len(cite) > 1:
-            if cite[0].lstrip("@").strip() != bibitem:
-                bibitem = cite[0].lstrip("@").strip()
-                #print("\\subsection{"+bibitem+"}")
-            print("\\cite{"+cite[1].rstrip(",").strip().rstrip(",").strip()+"}, ")
-        count = count + 1;
+with open(bibname, encoding="utf8") as ft:
+    keys = re.findall(r'^\s*@\s*(?!comment|string|preamble)\w+\s*\{\s*([^,\s]+)\s*,', ft.read(), re.M | re.I)
 
 if __name__ == '__main__':
-    print("\\documentclass{article}\n\\title{Test}\n\\author{BibTest}\n\\begin{document}\n\n")
-    for line in bibfile:
-        #update_year( line )
-        find_cite( line )
-    print("\nBib file has ",count, " entries.\n\n\\bibliographystyle{unsrt}\n\\bibliography{"+(bibname)+"}\n\n\\end{document}\n")
+    print("\\documentclass{article}\n\\usepackage[T1]{fontenc}\n\\usepackage{url}\n"
+          "\\title{Test}\n\\author{BibTest}\n\\begin{document}\n")
+    for key in keys:
+        print("\\cite{" + key + "}, ")
+    print("\nBib file has ", len(keys), " entries.\n\n\\bibliographystyle{unsrt}\n"
+          "\\bibliography{" + re.sub(r'\.bib$', '', bibname) + "}\n\n\\end{document}")
