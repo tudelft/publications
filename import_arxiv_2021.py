@@ -8,6 +8,10 @@
 # kept, and when a search fails no papers are removed. The summary lists what
 # changed and what failed; run the script again later to retry. The exit code is
 # 1 when not everything could be downloaded.
+#
+# Withdrawn papers are left out: arXiv withdraws a paper by adding a version without
+# a PDF, which the API does not mark, so the PDF of the latest version is checked
+# for every paper with more than one version (one request each).
 import codecs
 import os
 import re
@@ -90,6 +94,15 @@ def query(params):
     return None
 
 
+def is_withdrawn(code, version):
+    # a withdrawn version has no PDF (404); when arXiv does not answer the paper stays
+    time.sleep(PAUSE)
+    try:
+        return requests.head('https://arxiv.org/pdf/%sv%d' % (code, version), timeout=60).status_code == 404
+    except requests.RequestException:
+        return False
+
+
 def text(entry, tag):
     e = entry.find(tag, NS)
     return ' '.join(e.text.split()) if e is not None and e.text else ''
@@ -98,6 +111,12 @@ def text(entry, tag):
 def arxiv_code(entry):
     # http://arxiv.org/abs/2304.08802v1 -> 2304.08802
     return re.sub(r'v\d+$', '', text(entry, 'atom:id').split('/abs/')[-1])
+
+
+def version(entry):
+    # http://arxiv.org/abs/2304.08802v3 -> 3
+    m = re.search(r'v(\d+)$', text(entry, 'atom:id'))
+    return int(m.group(1)) if m else 1
 
 
 def to_bibtex(entry):
@@ -151,6 +170,7 @@ def import_arxiv(filename):
 
     # Download the metadata of all papers
     entries = {}
+    versions = {}
     for i in range(0, len(codes), BATCH):
         batch = codes[i:i + BATCH]
         print('- Download', i + 1, '-', i + len(batch), 'of', len(codes))
@@ -158,8 +178,15 @@ def import_arxiv(filename):
         for e in found or []:
             if arxiv_code(e) in batch and e.find('atom:title', NS) is not None:
                 entries[arxiv_code(e)] = to_bibtex(e)
+                versions[arxiv_code(e)] = version(e)
 
-    report = {'new': [], 'updated': [], 'unchanged': [], 'kept previous version': [], 'failed': [], 'removed': removed}
+    # Leave out withdrawn papers
+    later = [code for code in codes if versions.get(code, 1) > 1]
+    print('- Check', len(later), 'papers with more than one version for withdrawal')
+    withdrawn = [code for code in later if is_withdrawn(code, versions[code])]
+    codes = [code for code in codes if not code in withdrawn]
+
+    report = {'new': [], 'updated': [], 'unchanged': [], 'kept previous version': [], 'failed': [], 'removed': removed, 'withdrawn': withdrawn}
     for code in codes:
         old = previous.get(code)
         if code in entries:
@@ -179,7 +206,7 @@ def import_arxiv(filename):
 
     print('================================================================')
     print('Summary:', ', '.join('%d %s' % (len(v), k) for k, v in report.items()))
-    for k in ['new', 'updated', 'kept previous version', 'failed', 'removed']:
+    for k in ['new', 'updated', 'kept previous version', 'failed', 'removed', 'withdrawn']:
         if report[k]:
             print(' -', k + ':', ' '.join(report[k]))
     complete = not (report['kept previous version'] or report['failed'] or '# Search failed' in header)
