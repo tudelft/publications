@@ -59,24 +59,29 @@ jobs:
         git add -A && git diff --cached --stat
         git diff --cached --quiet || git commit -q -m "Imported M.Sc. theses"
 
-    - name: Import 4TU
-      run: |
-        python ./import_4tu_2021.py || echo "::warning title=4TU import::4tu.bib not changed; run it again later (see the log)"
-        git add -A && git diff --cached --stat
-        git diff --cached --quiet || git commit -q -m "Imported 4TU"
-
     - name: Import PURE - CS
       run: |
         python ./import_pure_2021.py || echo "::warning title=Pure import::bad time to import, pure/cs.bib not changed; run it again later (see the log)"
         git add -A && git diff --cached --stat
         git diff --cached --quiet || git commit -q -m "Imported PURE"
 
-    - name: Filter papers and website export
+    - name: Filter papers
       run: |
         python ./filter_pure_mavlab.py || echo "::warning title=filter_pure_mavlab.py::failed (see the log)"
         git add -A && { git diff --cached --quiet || git commit -q -m "Filtered MAVLab papers from PURE"; }
         python ./filter_arxiv.py || echo "::warning title=filter_arxiv.py::failed (see the log)"
         git add -A && { git diff --cached --quiet || git commit -q -m "Filtered arXiv papers"; }
+
+    # after the filters: 4TU also finds datasets that reference a paper in pure.bib or
+    # arxiv_nopub.bib (not committed, made by filter_arxiv.py)
+    - name: Import 4TU
+      run: |
+        python ./import_4tu_2021.py || echo "::warning title=4TU import::4tu.bib not changed; run it again later (see the log)"
+        git add -A && git diff --cached --stat
+        git diff --cached --quiet || git commit -q -m "Imported 4TU"
+
+    - name: Website export
+      run: |
         make -C ./website || echo "::warning title=website merge::failed (see the log)"
         make -C ./website check || echo "::warning title=Duplicate publications::the same publication is in all.bib more than once (see the log)"
         git add -A && { git diff --cached --quiet || git commit -q -m "Updated list of papers for website"; }

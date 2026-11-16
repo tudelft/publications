@@ -16,6 +16,7 @@
 #   when that is intended), 4tu.bib is not changed and the exit code is 1
 import argparse
 import codecs
+import html
 import os
 import re
 import sys
@@ -89,8 +90,9 @@ def version(doi):
 
 
 def clean(txt):
-    txt = re.sub(r'<[^>]+>', ' ', txt or '')
-    return ' '.join(txt.replace('{', '(').replace('}', ')').split())
+    # no HTML tags or entities (&amp;, &lt;); '&' is a LaTeX special character
+    txt = html.unescape(re.sub(r'<[^>]+>', ' ', txt or ''))
+    return ' '.join(txt.replace('{', '(').replace('}', ')').replace('&', r'\&').split())
 
 
 def bib_name(creator):
@@ -138,6 +140,11 @@ def read_previous(filename):
 
 
 def import_4tu(force=False):
+    # arxiv_nopub.bib is not committed: filter_arxiv.py makes it, so run that first
+    missing = [f for f in PAPERS if not os.path.exists(f)]
+    if missing:
+        print('%s not found (run filter_arxiv.py first): %s not changed.' % (', '.join(missing), OUTPUT))
+        return False
     previous = read_previous(OUTPUT)
 
     # newest record per concept DOI
